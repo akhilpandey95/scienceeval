@@ -1,0 +1,24 @@
+{
+  "name": "scienceeval",
+  "version": "1.0.0",
+  "description": "Helpful evals for understanding the capabilities of models across a broad swath of science benchmarks.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akhilpandey95/scienceeval.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/akhilpandey95/scienceeval/issues"
+  },
+  "homepage": "https://github.com/akhilpandey95/scienceeval#readme",
+  "dependencies": {
+    "playwright": "^1.59.1"
+  }
+}

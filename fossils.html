@@ -21,7 +21,7 @@
       <div class="page-noise" aria-hidden="true"></div>
 
       <header class="site-header">
-        <p class="site-mark">scienceeval</p>
+        <a class="site-mark" href="index.html">scienceeval</a>
         <nav class="site-nav" aria-label="Primary">
           <a href="index.html#about">TLDR;</a>
           <a href="index.html#benchmarks">Benchmarks</a>
@@ -30,6 +30,232 @@
       </header>
 
       <main>
+        <section class="model-sheet reveal visible" id="model-gpt4o">
+          <div class="model-sheet-shell">
+            <figure class="model-sheet-visual">
+              <img
+                src="images/gpt4o-fossil-imprint.png"
+                alt="A scientific plot of GPT-4o benchmark values over benchmark introduction year, with measured points for each fossil."
+              />
+            </figure>
+
+            <div class="model-sheet-intro">
+              <p class="model-sheet-heading">Model fossil</p>
+              <h1 class="model-sheet-title">GPT-4o</h1>
+            </div>
+
+            <div class="model-sheet-meta" aria-label="Model summary">
+              <div class="model-sheet-stat">
+                <p class="model-sheet-stat-label">Coverage</p>
+                <p class="model-sheet-stat-value">9 / 9 fossils</p>
+              </div>
+              <div class="model-sheet-stat">
+                <p class="model-sheet-stat-label">Model type</p>
+                <p class="model-sheet-stat-value">Private frontier model</p>
+              </div>
+              <div class="model-sheet-stat">
+                <p class="model-sheet-stat-label">Reading rule</p>
+                <p class="model-sheet-stat-value">Compare within protocol</p>
+              </div>
+            </div>
+
+            <div class="model-sheet-ledger" role="list" aria-label="GPT-4o benchmark ledger">
+              <article class="model-sheet-entry" role="listitem">
+                <div class="model-sheet-entry-head">
+                  <div>
+                    <p class="model-sheet-entry-index">01</p>
+                    <h2 class="model-sheet-entry-title">
+                      <a href="#fossil-frontierscience"
+                        >FrontierScience<sup class="benchmark-origin-marker">**</sup></a
+                      >
+                    </h2>
+                  </div>
+                  <p class="model-sheet-entry-value">12.3 / 0.4</p>
+                </div>
+                <p class="model-sheet-entry-metric">Olympiad acc. / Research acc.</p>
+                <p class="model-sheet-entry-source">
+                  <a
+                    href="https://cdn.openai.com/pdf/2fcd284c-b468-4c21-8ee0-7a783933efcc/frontierscience-paper.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    >FrontierScience paper, 2026</a
+                  >
+                </p>
+              </article>
+
+              <article class="model-sheet-entry" role="listitem">
+                <div class="model-sheet-entry-head">
+                  <div>
+                    <p class="model-sheet-entry-index">02</p>
+                    <h2 class="model-sheet-entry-title">
+                      <a href="#fossil-gpqa">GPQA<sup class="benchmark-origin-marker">**</sup></a>
+                    </h2>
+                  </div>
+                  <p class="model-sheet-entry-value">53.6%</p>
+                </div>
+                <p class="model-sheet-entry-metric">GPQA (science)</p>
+                <p class="model-sheet-entry-source">
+                  <a
+                    href="https://openai.com/index/introducing-gpt-4-5/"
+                    target="_blank"
+                    rel="noreferrer"
+                    >OpenAI, 2025</a
+                  >
+                </p>
+              </article>
+
+              <article class="model-sheet-entry" role="listitem">
+                <div class="model-sheet-entry-head">
+                  <div>
+                    <p class="model-sheet-entry-index">03</p>
+                    <h2 class="model-sheet-entry-title">
+                      <a href="#fossil-pubmedqa"
+                        >PubMedQA<sup class="benchmark-origin-marker">**</sup></a
+                      >
+                    </h2>
+                  </div>
+                  <p class="model-sheet-entry-value">53.65%</p>
+                </div>
+                <p class="model-sheet-entry-metric">Label-F1, PubMedQA-labeled</p>
+                <p class="model-sheet-entry-source">
+                  <a
+                    href="https://aclanthology.org/2024.findings-emnlp.482.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    >MedINST, 2024</a
+                  >
+                </p>
+              </article>
+
+              <article class="model-sheet-entry" role="listitem">
+                <div class="model-sheet-entry-head">
+                  <div>
+                    <p class="model-sheet-entry-index">04</p>
+                    <h2 class="model-sheet-entry-title">
+                      <a href="#fossil-bioasq">BioASQ<sup class="benchmark-origin-marker">**</sup></a>
+                    </h2>
+                  </div>
+                  <p class="model-sheet-entry-value">86.19%</p>
+                </div>
+                <p class="model-sheet-entry-metric">Label-F1, Task-B yes/no</p>
+                <p class="model-sheet-entry-source">
+                  <a
+                    href="https://aclanthology.org/2024.findings-emnlp.482.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    >MedINST, 2024</a
+                  >
+                </p>
+              </article>
+
+              <article class="model-sheet-entry" role="listitem">
+                <div class="model-sheet-entry-head">
+                  <div>
+                    <p class="model-sheet-entry-index">05</p>
+                    <h2 class="model-sheet-entry-title">
+                      <a href="#fossil-biored">BioRED<sup class="benchmark-origin-marker">**</sup></a>
+                    </h2>
+                  </div>
+                  <p class="model-sheet-entry-value">72.45%</p>
+                </div>
+                <p class="model-sheet-entry-metric">Entity-F1, BioRED NER slice</p>
+                <p class="model-sheet-entry-source">
+                  <a
+                    href="https://aclanthology.org/2024.findings-emnlp.482.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    >MedINST, 2024</a
+                  >
+                </p>
+              </article>
+
+              <article class="model-sheet-entry" role="listitem">
+                <div class="model-sheet-entry-head">
+                  <div>
+                    <p class="model-sheet-entry-index">06</p>
+                    <h2 class="model-sheet-entry-title">
+                      <a href="#fossil-scierc">SciERC<sup class="benchmark-origin-marker">**</sup></a>
+                    </h2>
+                  </div>
+                  <p class="model-sheet-entry-value">70.35%</p>
+                </div>
+                <p class="model-sheet-entry-metric">G-BS-F1, plotted on a percent scale</p>
+                <p class="model-sheet-entry-source">
+                  <a
+                    href="https://aclanthology.org/2025.emnlp-main.554.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    >GraphJudge, 2025</a
+                  >
+                </p>
+              </article>
+
+              <article class="model-sheet-entry" role="listitem">
+                <div class="model-sheet-entry-head">
+                  <div>
+                    <p class="model-sheet-entry-index">07</p>
+                    <h2 class="model-sheet-entry-title">
+                      <a href="#fossil-mmlu">MMLU<sup class="benchmark-origin-marker">*</sup></a>
+                    </h2>
+                  </div>
+                  <p class="model-sheet-entry-value">85.7%</p>
+                </div>
+                <p class="model-sheet-entry-metric">MMLU</p>
+                <p class="model-sheet-entry-source">
+                  <a
+                    href="https://openai.com/index/gpt-4-1/"
+                    target="_blank"
+                    rel="noreferrer"
+                    >OpenAI, 2025</a
+                  >
+                </p>
+              </article>
+
+              <article class="model-sheet-entry" role="listitem">
+                <div class="model-sheet-entry-head">
+                  <div>
+                    <p class="model-sheet-entry-index">08</p>
+                    <h2 class="model-sheet-entry-title">
+                      <a href="#fossil-simpleqa">SimpleQA<sup class="benchmark-origin-marker">*</sup></a>
+                    </h2>
+                  </div>
+                  <p class="model-sheet-entry-value">38.2%</p>
+                </div>
+                <p class="model-sheet-entry-metric">Correct</p>
+                <p class="model-sheet-entry-source">
+                  <a
+                    href="https://openai.com/index/introducing-simpleqa/"
+                    target="_blank"
+                    rel="noreferrer"
+                    >OpenAI, 2024</a
+                  >
+                </p>
+              </article>
+
+              <article class="model-sheet-entry" role="listitem">
+                <div class="model-sheet-entry-head">
+                  <div>
+                    <p class="model-sheet-entry-index">09</p>
+                    <h2 class="model-sheet-entry-title">
+                      <a href="#fossil-sciriff">SciRIFF<sup class="benchmark-origin-marker">**</sup></a>
+                    </h2>
+                  </div>
+                  <p class="model-sheet-entry-value">60.4</p>
+                </div>
+                <p class="model-sheet-entry-metric">Avg., SciRIFF-Eval</p>
+                <p class="model-sheet-entry-source">
+                  <a
+                    href="https://aclanthology.org/2025.emnlp-main.310.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    >SciRIFF, 2025</a
+                  >
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
         <section class="section section-fossils-page reveal visible" id="fossils">
           <div class="section-heading">
             <p class="section-label">Fossils</p>
@@ -38,8 +264,17 @@
 
           <div class="section-body">
             <p>
-              Open any card to see what the benchmark is about, which capability
-              slice it probes, and the exact paper that introduced it.
+              The full specimen cards sit below the model sheet. Open any fossil
+              to see what the benchmark is about, which capability slice it
+              probes, and the exact paper that introduced it.
+            </p>
+            <p class="benchmark-origin-legend">
+              <span><sup class="benchmark-origin-marker">*</sup> general-purpose</span>
+              <span><sup class="benchmark-origin-marker">**</sup> science-native</span>
+            </p>
+            <p class="benchmark-origin-note">
+              General-purpose fossils stay in the record as contrast baselines
+              for separating broad model strength from science-specific skill.
             </p>
           </div>
 
@@ -53,7 +288,7 @@
               >
                 <span class="benchmark-index">01</span>
                 <p class="benchmark-card-kind">Research reasoning</p>
-                <h3>FrontierScience</h3>
+                <h3>FrontierScience<sup class="benchmark-origin-marker">**</sup></h3>
                 <p class="benchmark-card-summary">
                   Expert-level science reasoning across physics, chemistry, and
                   biology.
@@ -78,7 +313,7 @@
               >
                 <span class="benchmark-index">02</span>
                 <p class="benchmark-card-kind">Graduate QA</p>
-                <h3>GPQA</h3>
+                <h3>GPQA<sup class="benchmark-origin-marker">**</sup></h3>
                 <p class="benchmark-card-summary">
                   Google-proof graduate science questions built to resist cheap
                   lookup.
@@ -102,7 +337,7 @@
               >
                 <span class="benchmark-index">03</span>
                 <p class="benchmark-card-kind">Biomedical QA</p>
-                <h3>PubMedQA</h3>
+                <h3>PubMedQA<sup class="benchmark-origin-marker">**</sup></h3>
                 <p class="benchmark-card-summary">
                   Question answering grounded in biomedical abstracts and
                   evidence-sensitive reading.
@@ -127,7 +362,7 @@
               >
                 <span class="benchmark-index">04</span>
                 <p class="benchmark-card-kind">Biomedical benchmark suite</p>
-                <h3>BioASQ</h3>
+                <h3>BioASQ<sup class="benchmark-origin-marker">**</sup></h3>
                 <p class="benchmark-card-summary">
                   Factoid, list, and summary tasks that expose several answer
                   modes at once.
@@ -152,7 +387,7 @@
               >
                 <span class="benchmark-index">05</span>
                 <p class="benchmark-card-kind">Relation extraction</p>
-                <h3>BioRED</h3>
+                <h3>BioRED<sup class="benchmark-origin-marker">**</sup></h3>
                 <p class="benchmark-card-summary">
                   Dense biomedical text turned into structured entity and
                   relation signals.
@@ -176,7 +411,7 @@
               >
                 <span class="benchmark-index">06</span>
                 <p class="benchmark-card-kind">Scientific IE</p>
-                <h3>SciERC</h3>
+                <h3>SciERC<sup class="benchmark-origin-marker">**</sup></h3>
                 <p class="benchmark-card-summary">
                   Scientific entity and relation extraction at the document
                   structure level.
@@ -201,7 +436,7 @@
               >
                 <span class="benchmark-index">07</span>
                 <p class="benchmark-card-kind">General baseline</p>
-                <h3>MMLU</h3>
+                <h3>MMLU<sup class="benchmark-origin-marker">*</sup></h3>
                 <p class="benchmark-card-summary">
                   Broad knowledge coverage with science subdomains still useful
                   as a reference baseline.
@@ -225,7 +460,7 @@
               >
                 <span class="benchmark-index">08</span>
                 <p class="benchmark-card-kind">Direct QA</p>
-                <h3>SimpleQA</h3>
+                <h3>SimpleQA<sup class="benchmark-origin-marker">*</sup></h3>
                 <p class="benchmark-card-summary">
                   Concise factual QA for comparing direct answer quality against
                   harder science tasks.
@@ -249,7 +484,7 @@
               >
                 <span class="benchmark-index">09</span>
                 <p class="benchmark-card-kind">Scientific instruction following</p>
-                <h3>SciRIFF</h3>
+                <h3>SciRIFF<sup class="benchmark-origin-marker">**</sup></h3>
                 <p class="benchmark-card-summary">
                   Scientific literature instruction-following across extraction,
                   summarization, QA, verification, and classification.
@@ -264,57 +499,57 @@
                 <span class="benchmark-card-cta">Open fossil</span>
               </button>
             </article>
-          </div>
-
-          <article
-            class="benchmark-detail"
-            id="benchmark-detail"
-            hidden
-            aria-live="polite"
-          >
-            <div class="benchmark-detail-shell">
-              <div class="benchmark-detail-header">
-                <div>
-                  <p class="benchmark-detail-label">Selected fossil</p>
-                  <h3 class="benchmark-detail-title"></h3>
+            <div
+              class="benchmark-detail"
+              id="benchmark-detail"
+              hidden
+              role="region"
+              aria-live="polite"
+            >
+              <div class="benchmark-detail-shell">
+                <div class="benchmark-detail-header">
+                  <div>
+                    <p class="benchmark-detail-label">Selected fossil</p>
+                    <h3 class="benchmark-detail-title"></h3>
+                  </div>
+                  <button
+                    class="benchmark-detail-close"
+                    id="benchmark-detail-close"
+                    type="button"
+                    aria-label="Close benchmark detail"
+                  >
+                    Close
+                  </button>
                 </div>
-                <button
-                  class="benchmark-detail-close"
-                  id="benchmark-detail-close"
-                  type="button"
-                  aria-label="Close benchmark detail"
-                >
-                  Close
-                </button>
-              </div>
 
-              <div class="benchmark-detail-meta">
-                <p class="benchmark-detail-kind"></p>
-                <p class="benchmark-detail-signal"></p>
-              </div>
+                <div class="benchmark-detail-meta">
+                  <p class="benchmark-detail-kind"></p>
+                  <p class="benchmark-detail-signal"></p>
+                </div>
 
-              <div class="benchmark-detail-body">
-                <p class="benchmark-detail-summary"></p>
-                <p class="benchmark-detail-about"></p>
-              </div>
+                <div class="benchmark-detail-body">
+                  <p class="benchmark-detail-summary"></p>
+                  <p class="benchmark-detail-about"></p>
+                </div>
 
-              <div class="benchmark-detail-paper">
-                <p class="benchmark-detail-paper-label">Introduction paper</p>
+                <div class="benchmark-detail-paper">
+                  <p class="benchmark-detail-paper-label">Introduction paper</p>
+                  <a
+                    class="benchmark-detail-paper-link"
+                    target="_blank"
+                    rel="noreferrer"
+                  ></a>
+                  <p class="benchmark-detail-paper-note" hidden></p>
+                </div>
+
                 <a
-                  class="benchmark-detail-paper-link"
+                  class="benchmark-detail-link"
                   target="_blank"
                   rel="noreferrer"
                 ></a>
-                <p class="benchmark-detail-paper-note" hidden></p>
               </div>
-
-              <a
-                class="benchmark-detail-link"
-                target="_blank"
-                rel="noreferrer"
-              ></a>
             </div>
-          </article>
+          </div>
         </section>
       </main>
 

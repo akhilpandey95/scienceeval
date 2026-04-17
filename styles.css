@@ -257,6 +257,31 @@ h2 {
   max-width: 44rem;
 }
 
+.benchmark-origin-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 1.25rem;
+  align-items: center;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: rgba(23, 19, 16, 0.72);
+}
+
+.benchmark-origin-note {
+  max-width: 36rem;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: rgba(23, 19, 16, 0.68);
+}
+
+.benchmark-origin-marker {
+  margin-left: 0.12rem;
+  font-size: 0.62em;
+  line-height: 0;
+  vertical-align: super;
+  color: var(--accent);
+}
+
 .section-tldr {
   grid-template-columns: minmax(260px, 0.78fr) minmax(0, 1.22fr);
   gap: clamp(2rem, 5vw, 5rem);
@@ -337,6 +362,224 @@ h2 {
 }
 
 .tldr-attribution a {
+  color: var(--accent);
+  border-bottom: 1px solid currentColor;
+}
+
+.model-sheet {
+  width: var(--content-width);
+  margin: 0 auto;
+  padding: 2.75rem 0 2rem;
+}
+
+.model-sheet-shell {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-areas:
+    "visual visual visual"
+    "intro intro intro"
+    "meta meta meta"
+    "ledger ledger ledger";
+  align-items: start;
+  gap: 0.8rem 1.1rem;
+  padding: clamp(1.4rem, 2vw, 1.85rem);
+  border: 1px solid rgba(23, 19, 16, 0.12);
+  border-radius: 32px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.34)),
+    linear-gradient(135deg, rgba(111, 63, 43, 0.08), rgba(111, 63, 43, 0));
+  box-shadow: 0 24px 72px rgba(23, 19, 16, 0.08);
+}
+
+.model-sheet-shell::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 196, 141, 0.46), transparent 28%),
+    radial-gradient(circle at 84% 20%, rgba(182, 194, 255, 0.42), transparent 32%),
+    radial-gradient(circle at 58% 84%, rgba(240, 152, 186, 0.26), transparent 34%);
+  filter: blur(18px);
+  z-index: 0;
+}
+
+.model-sheet-intro,
+.model-sheet-meta,
+.model-sheet-visual,
+.model-sheet-ledger {
+  position: relative;
+  z-index: 1;
+}
+
+.model-sheet-intro {
+  grid-area: intro;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.85rem;
+  align-self: start;
+}
+
+.model-sheet-heading {
+  margin: 0;
+  font-family: "Fraunces", "Source Serif 4", Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: rgba(23, 19, 16, 0.74);
+}
+
+.model-sheet-kicker {
+  margin: 0 0 0.4rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: rgba(23, 19, 16, 0.72);
+}
+
+.model-sheet-title {
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.model-sheet-summary {
+  margin: 0.55rem 0 0;
+  max-width: 34rem;
+  font-size: 0.92rem;
+  line-height: 1.48;
+  color: rgba(23, 19, 16, 0.8);
+}
+
+.model-sheet-visual {
+  grid-area: visual;
+  margin: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.65rem;
+}
+
+.model-sheet-visual img {
+  width: 100%;
+  padding: 0.2rem;
+  border: 1px solid rgba(23, 19, 16, 0.08);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 18px 56px rgba(23, 19, 16, 0.08);
+}
+
+.model-sheet-visual figcaption {
+  margin: 0;
+  max-width: 52rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(23, 19, 16, 0.68);
+  text-align: center;
+  margin-inline: auto;
+}
+
+.model-sheet-meta {
+  grid-area: meta;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+  align-content: start;
+}
+
+.model-sheet-stat {
+  display: grid;
+  gap: 0.18rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(23, 19, 16, 0.12);
+}
+
+.model-sheet-stat-label {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.62rem;
+  color: rgba(23, 19, 16, 0.54);
+}
+
+.model-sheet-stat-value {
+  margin: 0;
+  font-family: "Fraunces", "Source Serif 4", Georgia, serif;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: rgba(23, 19, 16, 0.88);
+}
+
+.model-sheet-ledger {
+  grid-area: ledger;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem 0.9rem;
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(23, 19, 16, 0.12);
+}
+
+.model-sheet-entry {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  padding-top: 0.28rem;
+  border-top: 1px solid rgba(23, 19, 16, 0.12);
+}
+
+.model-sheet-entry-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.model-sheet-entry-index {
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.6rem;
+  color: rgba(23, 19, 16, 0.54);
+}
+
+.model-sheet-entry-title {
+  font-size: 1rem;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.model-sheet-entry-title a {
+  transition: color 180ms ease;
+}
+
+.model-sheet-entry-title a:hover,
+.model-sheet-entry-title a:focus-visible {
+  color: var(--accent);
+}
+
+.model-sheet-entry-value {
+  margin: 0;
+  padding-top: 0.08rem;
+  font-family: "Fraunces", "Source Serif 4", Georgia, serif;
+  font-size: 1.02rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.model-sheet-entry-metric,
+.model-sheet-entry-source {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.42;
+  color: rgba(23, 19, 16, 0.72);
+}
+
+.model-sheet-entry-source a {
   color: var(--accent);
   border-bottom: 1px solid currentColor;
 }
@@ -512,6 +755,9 @@ h2 {
 
 .benchmark-card {
   min-width: 0;
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
 }
 
 .benchmark-card-button {
@@ -519,7 +765,6 @@ h2 {
   isolation: isolate;
   overflow: hidden;
   width: 100%;
-  height: 100%;
   min-height: 21rem;
   display: grid;
   gap: 0.9rem;
@@ -554,12 +799,12 @@ h2 {
 
 .benchmark-card-button::before {
   background:
-    radial-gradient(circle at 18% 26%, var(--card-c1, rgba(255, 198, 141, 0.92)), transparent 34%),
-    radial-gradient(circle at 78% 22%, var(--card-c2, rgba(201, 194, 255, 0.86)), transparent 36%),
-    radial-gradient(circle at 52% 82%, var(--card-c3, rgba(242, 152, 186, 0.82)), transparent 42%),
-    radial-gradient(circle at 30% 74%, var(--card-c4, rgba(255, 231, 176, 0.66)), transparent 30%),
-    linear-gradient(135deg, rgba(255, 244, 231, 0.9), rgba(240, 233, 247, 0.78));
-  filter: blur(10px) saturate(115%);
+    radial-gradient(circle at 18% 26%, var(--card-c1, rgba(223, 183, 138, 0.7)), transparent 34%),
+    radial-gradient(circle at 78% 22%, var(--card-c2, rgba(190, 198, 229, 0.64)), transparent 36%),
+    radial-gradient(circle at 52% 82%, var(--card-c3, rgba(219, 177, 186, 0.58)), transparent 42%),
+    radial-gradient(circle at 30% 74%, var(--card-c4, rgba(232, 214, 181, 0.48)), transparent 30%),
+    linear-gradient(135deg, rgba(247, 241, 233, 0.94), rgba(241, 236, 229, 0.8));
+  filter: blur(12px) saturate(104%);
   transform: scale(1.06);
 }
 
@@ -590,6 +835,10 @@ h2 {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.38),
     0 28px 70px rgba(23, 19, 16, 0.14);
+}
+
+.benchmark-card.is-open .benchmark-card-button {
+  transform: translateY(-1px);
 }
 
 .benchmark-index {
@@ -666,83 +915,83 @@ h2 {
 }
 
 .benchmark-card:nth-child(1) .benchmark-card-button {
-  --card-c1: rgba(253, 189, 98, 0.95);
-  --card-c2: rgba(173, 192, 255, 0.9);
-  --card-c3: rgba(238, 140, 184, 0.84);
-  --card-c4: rgba(255, 223, 154, 0.72);
+  --card-c1: rgba(219, 183, 132, 0.72);
+  --card-c2: rgba(189, 201, 231, 0.68);
+  --card-c3: rgba(217, 173, 182, 0.56);
+  --card-c4: rgba(231, 214, 182, 0.48);
 }
 
 .benchmark-card:nth-child(2) .benchmark-card-button {
-  --card-c1: rgba(255, 176, 132, 0.92);
-  --card-c2: rgba(194, 184, 255, 0.9);
-  --card-c3: rgba(241, 157, 195, 0.82);
-  --card-c4: rgba(255, 232, 180, 0.68);
+  --card-c1: rgba(223, 185, 146, 0.7);
+  --card-c2: rgba(198, 190, 223, 0.62);
+  --card-c3: rgba(224, 180, 191, 0.54);
+  --card-c4: rgba(233, 217, 190, 0.46);
 }
 
 .benchmark-card:nth-child(3) .benchmark-card-button {
-  --card-c1: rgba(169, 193, 255, 0.9);
-  --card-c2: rgba(240, 155, 186, 0.86);
-  --card-c3: rgba(255, 196, 135, 0.84);
-  --card-c4: rgba(232, 208, 255, 0.68);
+  --card-c1: rgba(185, 198, 230, 0.66);
+  --card-c2: rgba(221, 180, 190, 0.56);
+  --card-c3: rgba(225, 189, 150, 0.56);
+  --card-c4: rgba(212, 203, 223, 0.44);
 }
 
 .benchmark-card:nth-child(4) .benchmark-card-button {
-  --card-c1: rgba(255, 196, 141, 0.9);
-  --card-c2: rgba(189, 206, 255, 0.88);
-  --card-c3: rgba(215, 158, 224, 0.82);
-  --card-c4: rgba(255, 231, 188, 0.68);
+  --card-c1: rgba(224, 190, 149, 0.7);
+  --card-c2: rgba(190, 203, 228, 0.66);
+  --card-c3: rgba(205, 181, 213, 0.52);
+  --card-c4: rgba(234, 220, 194, 0.48);
 }
 
 .benchmark-card:nth-child(5) .benchmark-card-button {
-  --card-c1: rgba(245, 169, 181, 0.9);
-  --card-c2: rgba(171, 191, 255, 0.88);
-  --card-c3: rgba(255, 190, 122, 0.82);
-  --card-c4: rgba(238, 218, 255, 0.66);
+  --card-c1: rgba(223, 178, 184, 0.62);
+  --card-c2: rgba(184, 197, 229, 0.66);
+  --card-c3: rgba(227, 186, 141, 0.56);
+  --card-c4: rgba(214, 204, 223, 0.44);
 }
 
 .benchmark-card:nth-child(6) .benchmark-card-button {
-  --card-c1: rgba(255, 201, 146, 0.92);
-  --card-c2: rgba(197, 182, 255, 0.86);
-  --card-c3: rgba(243, 145, 176, 0.8);
-  --card-c4: rgba(193, 220, 255, 0.64);
+  --card-c1: rgba(224, 190, 150, 0.68);
+  --card-c2: rgba(201, 191, 222, 0.6);
+  --card-c3: rgba(219, 173, 182, 0.54);
+  --card-c4: rgba(190, 206, 226, 0.42);
 }
 
 .benchmark-card:nth-child(7) .benchmark-card-button {
-  --card-c1: rgba(188, 205, 255, 0.9);
-  --card-c2: rgba(253, 176, 164, 0.86);
-  --card-c3: rgba(255, 209, 138, 0.8);
-  --card-c4: rgba(222, 201, 255, 0.64);
+  --card-c1: rgba(190, 202, 230, 0.66);
+  --card-c2: rgba(224, 182, 174, 0.58);
+  --card-c3: rgba(231, 197, 155, 0.52);
+  --card-c4: rgba(215, 204, 222, 0.42);
 }
 
 .benchmark-card:nth-child(8) .benchmark-card-button {
-  --card-c1: rgba(255, 186, 135, 0.92);
-  --card-c2: rgba(174, 196, 255, 0.88);
-  --card-c3: rgba(231, 151, 203, 0.8);
-  --card-c4: rgba(255, 234, 191, 0.68);
+  --card-c1: rgba(224, 186, 144, 0.7);
+  --card-c2: rgba(187, 199, 229, 0.66);
+  --card-c3: rgba(214, 176, 196, 0.54);
+  --card-c4: rgba(235, 220, 191, 0.46);
 }
 
 .benchmark-card:nth-child(9) .benchmark-card-button {
-  --card-c1: rgba(209, 193, 255, 0.88);
-  --card-c2: rgba(255, 185, 167, 0.84);
-  --card-c3: rgba(255, 211, 144, 0.8);
-  --card-c4: rgba(177, 205, 255, 0.62);
+  --card-c1: rgba(202, 192, 221, 0.58);
+  --card-c2: rgba(226, 186, 173, 0.56);
+  --card-c3: rgba(232, 198, 153, 0.52);
+  --card-c4: rgba(186, 201, 227, 0.42);
 }
 
 .benchmark-detail {
   grid-column: 1 / -1;
-  margin-top: 1.4rem;
+  margin-top: 0;
 }
 
 .benchmark-detail-shell {
   display: grid;
   gap: 1.35rem;
-  padding: 1.6rem;
+  padding: 1.45rem;
   border: 1px solid rgba(23, 19, 16, 0.12);
-  border-radius: 28px;
+  border-radius: 26px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.38)),
     linear-gradient(135deg, rgba(111, 63, 43, 0.1), rgba(111, 63, 43, 0));
-  box-shadow: 0 24px 72px rgba(23, 19, 16, 0.08);
+  box-shadow: 0 22px 60px rgba(23, 19, 16, 0.08);
 }
 
 .benchmark-detail-header {
@@ -786,13 +1035,13 @@ h2 {
 .benchmark-detail-summary,
 .benchmark-detail-about {
   margin: 0;
-  font-size: 1.08rem;
+  font-size: 1.05rem;
   line-height: 1.75;
 }
 
 .benchmark-detail-summary {
   font-family: "Fraunces", "Source Serif 4", Georgia, serif;
-  font-size: 1.3rem;
+  font-size: 1.24rem;
   line-height: 1.55;
 }
 
@@ -888,6 +1137,23 @@ h2 {
     grid-template-columns: 1fr;
   }
 
+  .model-sheet-shell {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "visual"
+      "intro"
+      "meta"
+      "ledger";
+  }
+
+  .model-sheet-ledger {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .model-sheet-meta {
+    grid-template-columns: 1fr;
+  }
+
   .hero {
     min-height: auto;
     padding-top: 4.5rem;
@@ -939,6 +1205,7 @@ h2 {
   .hero-summary,
   .section-body p,
   .principles p,
+  .model-sheet-summary,
   .benchmark-card-summary,
   .benchmark-detail-summary,
   .benchmark-detail-about {
@@ -946,6 +1213,10 @@ h2 {
   }
 
   .benchmark-list {
+    grid-template-columns: 1fr;
+  }
+
+  .model-sheet-ledger {
     grid-template-columns: 1fr;
   }
 

@@ -150,10 +150,11 @@ const benchmarkData = {
 };
 
 const benchmarkButtons = document.querySelectorAll(".benchmark-card-button");
+const benchmarkList = document.querySelector(".benchmark-list");
 const benchmarkDetail = document.getElementById("benchmark-detail");
 const benchmarkClose = document.getElementById("benchmark-detail-close");
 
-if (benchmarkDetail && benchmarkButtons.length > 0) {
+if (benchmarkList && benchmarkDetail && benchmarkButtons.length > 0) {
   const detailTitle = benchmarkDetail.querySelector(".benchmark-detail-title");
   const detailKind = benchmarkDetail.querySelector(".benchmark-detail-kind");
   const detailSignal = benchmarkDetail.querySelector(".benchmark-detail-signal");
@@ -164,6 +165,21 @@ if (benchmarkDetail && benchmarkButtons.length > 0) {
   const detailLink = benchmarkDetail.querySelector(".benchmark-detail-link");
 
   let activeBenchmarkId = null;
+  let activeBenchmarkCard = null;
+
+  const benchmarkCards = () => [...benchmarkList.querySelectorAll(".benchmark-card")];
+
+  const benchmarkColumns = () => {
+    if (window.matchMedia("(max-width: 640px)").matches) {
+      return 1;
+    }
+
+    if (window.matchMedia("(max-width: 980px)").matches) {
+      return 2;
+    }
+
+    return 3;
+  };
 
   const setActiveButtonState = (selectedId) => {
     benchmarkButtons.forEach((button) => {
@@ -175,6 +191,9 @@ if (benchmarkDetail && benchmarkButtons.length > 0) {
 
   const closeBenchmarkDetail = () => {
     activeBenchmarkId = null;
+    activeBenchmarkCard?.classList.remove("is-open");
+    activeBenchmarkCard = null;
+    benchmarkList.appendChild(benchmarkDetail);
     benchmarkDetail.hidden = true;
     setActiveButtonState(null);
   };
@@ -191,9 +210,18 @@ if (benchmarkDetail && benchmarkButtons.length > 0) {
 
   const openBenchmarkDetail = (benchmarkId) => {
     const benchmark = benchmarkData[benchmarkId];
+    const selectedButton = [...benchmarkButtons].find(
+      (button) => button.dataset.benchmark === benchmarkId
+    );
+    const selectedCard = selectedButton?.closest(".benchmark-card");
+    const cards = benchmarkCards();
 
-    if (!benchmark) {
+    if (!benchmark || !selectedButton || !selectedCard) {
       return;
+    }
+
+    if (activeBenchmarkCard && activeBenchmarkCard !== selectedCard) {
+      activeBenchmarkCard.classList.remove("is-open");
     }
 
     detailTitle.textContent = benchmark.title;
@@ -226,13 +254,20 @@ if (benchmarkDetail && benchmarkButtons.length > 0) {
       detailLink.textContent = "";
     }
 
+    const selectedIndex = cards.indexOf(selectedCard);
+    const columns = benchmarkColumns();
+    const rowEndIndex = Math.min(
+      cards.length - 1,
+      Math.floor(selectedIndex / columns) * columns + columns - 1
+    );
+    cards[rowEndIndex].after(benchmarkDetail);
     benchmarkDetail.hidden = false;
     activeBenchmarkId = benchmarkId;
+    activeBenchmarkCard = selectedCard;
+    activeBenchmarkCard.classList.add("is-open");
     setActiveButtonState(benchmarkId);
 
-    if (window.matchMedia("(max-width: 980px)").matches) {
-      benchmarkDetail.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    benchmarkDetail.scrollIntoView({ behavior: "smooth", block: "nearest" });
   };
 
   benchmarkButtons.forEach((button) => {
@@ -258,7 +293,6 @@ if (benchmarkDetail && benchmarkButtons.length > 0) {
     }
 
     openBenchmarkDetail(benchmarkId);
-    benchmarkDetail.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   openBenchmarkFromHash();
