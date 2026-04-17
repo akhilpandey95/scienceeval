@@ -1151,12 +1151,12 @@ h2 {
   }
 
   .model-sheet-meta {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .hero {
     min-height: auto;
-    padding-top: 4.5rem;
+    padding-top: 3.5rem;
   }
 
   .hero-ledger {
@@ -1182,6 +1182,34 @@ h2 {
   }
 }
 
+@media (min-width: 700px) and (max-width: 980px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.06fr) minmax(220px, 0.74fr);
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .hero-summary {
+    max-width: 32rem;
+  }
+
+  .hero-ledger {
+    padding: 0.75rem 0 0.75rem 1.1rem;
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+
+  .section-tldr {
+    grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .tldr-statement {
+    max-width: 14ch;
+    font-size: clamp(2rem, 4vw, 2.7rem);
+  }
+}
+
 @media (max-width: 640px) {
   :root {
     --content-width: min(100vw - 1.5rem, 1100px);
@@ -1202,6 +1230,31 @@ h2 {
     padding: 3.25rem 0 3rem;
   }
 
+  .hero h1 {
+    max-width: 10.5ch;
+    font-size: clamp(2rem, 10vw, 2.85rem);
+  }
+
+  .hero-intro {
+    margin-top: 1.1rem;
+    font-size: 1.02rem;
+  }
+
+  .hero-summary {
+    margin-top: 1.2rem;
+    font-size: 1rem;
+    line-height: 1.62;
+  }
+
+  .hero-links {
+    margin-top: 1.55rem;
+  }
+
+  .hero-ledger li {
+    padding: 0.7rem 0;
+    font-size: 1rem;
+  }
+
   .hero-summary,
   .section-body p,
   .principles p,
@@ -1216,20 +1269,105 @@ h2 {
     grid-template-columns: 1fr;
   }
 
+  .tldr-copy {
+    gap: 1.15rem;
+  }
+
+  .tldr-statement {
+    max-width: none;
+    font-size: clamp(1.7rem, 8vw, 2.3rem);
+  }
+
+  .tldr-hook {
+    font-size: 1.05rem;
+    line-height: 1.62;
+  }
+
+  .tldr-attribution p {
+    font-size: 0.92rem;
+  }
+
+  .model-sheet-shell {
+    padding: 1rem;
+    gap: 0.7rem;
+    border-radius: 24px;
+  }
+
+  .model-sheet-visual img {
+    border-radius: 20px;
+  }
+
+  .model-sheet-heading,
+  .model-sheet-title {
+    font-size: 0.98rem;
+  }
+
+  .model-sheet-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem 0.8rem;
+  }
+
+  .model-sheet-stat:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .model-sheet-stat-label {
+    font-size: 0.66rem;
+  }
+
+  .model-sheet-stat-value {
+    font-size: 0.95rem;
+  }
+
   .model-sheet-ledger {
     grid-template-columns: 1fr;
   }
 
   .benchmark-detail-shell {
-    padding: 1.25rem;
+    padding: 1.15rem;
   }
 
   .benchmark-detail-header {
-    flex-direction: column;
+    flex-direction: row;
+    align-items: start;
+  }
+
+  .benchmark-detail-close {
+    margin-left: auto;
+    font-size: 0.95rem;
+  }
+
+  .benchmark-detail-meta {
+    gap: 0.5rem;
+  }
+
+  .benchmark-detail-kind,
+  .benchmark-detail-signal {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.82rem;
+  }
+
+  .benchmark-detail-summary {
+    font-size: 1.08rem;
+    line-height: 1.5;
+  }
+
+  .benchmark-detail-about {
+    font-size: 0.98rem;
+    line-height: 1.68;
   }
 
   .benchmark-card-button {
-    padding: 1.15rem;
+    min-height: 18rem;
+    padding: 1.05rem;
+  }
+
+  .benchmark-card-button h3 {
+    font-size: 1.45rem;
+  }
+
+  .benchmark-card-paper-title {
+    font-size: 0.9rem;
   }
 
   .timeline-date-main {
