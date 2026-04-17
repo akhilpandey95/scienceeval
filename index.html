@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>scienceeval</title>
+    <meta
+      name="description"
+      content="Helpful evals for understanding the capabilities of models across a broad swath of science benchmarks."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Source+Serif+4:opsz,wght@8..60,300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="page-noise" aria-hidden="true"></div>
+
+      <header class="site-header">
+        <p class="site-mark">scienceeval</p>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="#about">TLDR;</a>
+          <a href="#benchmarks">Benchmarks</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero reveal visible">
+          <div class="hero-copy">
+            <p class="eyebrow">/about</p>
+            <h1>
+              Helpful evals for understanding model capability across science.
+            </h1>
+            <p class="hero-summary">
+              A calm, readable home for benchmark notes, capability slices, and
+              the harder question beneath leaderboard scores: what can a model
+              actually do across biology, chemistry, physics, and scientific QA?
+            </p>
+
+            <div class="hero-links">
+              <a class="primary-link" href="#benchmarks">Browse evals</a>
+              <a class="secondary-link" href="README.md">Read the repo notes</a>
+            </div>
+          </div>
+
+          <aside class="hero-ledger" aria-label="Project focus">
+            <p class="ledger-label">Current focus</p>
+            <ul>
+              <li>Scientific reasoning</li>
+              <li>Domain QA</li>
+              <li>Information extraction</li>
+              <li>Benchmark fit and saturation</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section class="section section-tldr reveal" id="about">
+          <div class="tldr-media">
+            <figure class="tldr-figure">
+              <img
+                class="tldr-image"
+                src="images/coral-fossil.jpg"
+                alt="A fossilized coral specimen photographed against a pale background."
+              />
+              <figcaption
+                class="tldr-attribution"
+                aria-label="Image source attribution"
+              >
+                <p class="tldr-attribution-title">Coral Fossil</p>
+                <p>
+                  Some specimens of coral, like the one in this photograph, were
+                  fossilized more than 450 million years ago. The presence of
+                  coral fossils in areas like the U.S. state of Kansas or the
+                  country of Mongolia help show that such landlocked areas were
+                  once part of large, inland seas.
+                </p>
+                <p>
+                  Photograph by Marci Matthews, MyShot
+                  <a href="https://education.nationalgeographic.org/resource/fossil/"
+                    >National Geographic</a
+                  >
+                </p>
+              </figcaption>
+            </figure>
+          </div>
+          <div class="tldr-copy">
+            <p class="tldr-statement">
+              Collection of benchmarks useful for scientists evaluating the
+              capabilities of frontier models across open-weight and private
+              systems.
+            </p>
+            <p class="tldr-hook">
+              Fossils preserve the imprint of vanished worlds; benchmarks do
+              something similar for language models, pressing on their weights
+              until hidden structure becomes visible through what they can
+              recover, connect, and reason about.
+            </p>
+            <div class="section-body">
+              <p>
+                The premise is simple: gather helpful evals for understanding
+                the capabilities of models across a broad swath of science
+                benchmarks, then make the material easy to compare, annotate,
+                and revisit.
+              </p>
+              <p>
+                Rather than flatten science evaluation into a single
+                scoreboard, the site should show what each benchmark actually
+                probes: retrieval, multi-step reasoning, structured
+                extraction, and the problems where frontier models still have
+                real room to improve.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section reveal" id="benchmarks">
+          <div class="section-heading">
+            <p class="section-label">Fossils in consideration</p>
+            <h2>A working ledger of the benchmark traces worth examining.</h2>
+          </div>
+
+          <div class="benchmark-list" role="list" aria-label="Benchmark cards">
+            <article class="benchmark-card" role="listitem">
+              <button
+                class="benchmark-card-button"
+                type="button"
+                data-benchmark="frontierscience"
+                aria-expanded="false"
+              >
+                <span class="benchmark-index">01</span>
+                <p class="benchmark-card-kind">Research reasoning</p>
+                <h3>FrontierScience</h3>
+                <p class="benchmark-card-summary">
+                  Expert-level science reasoning across physics, chemistry, and
+                  biology.
+                </p>
+                <span class="benchmark-card-cta">Open fossil</span>
+              </button>
+            </article>
+
+            <article class="benchmark-card" role="listitem">
+              <button
+                class="benchmark-card-button"
+                type="button"
+                data-benchmark="gpqa"
+                aria-expanded="false"
+              >
+                <span class="benchmark-index">02</span>
+                <p class="benchmark-card-kind">Graduate QA</p>
+                <h3>GPQA</h3>
+                <p class="benchmark-card-summary">
+                  Google-proof graduate science questions built to resist cheap
+                  lookup.
+                </p>
+                <span class="benchmark-card-cta">Open fossil</span>
+              </button>
+            </article>
+
+            <article class="benchmark-card" role="listitem">
+              <button
+                class="benchmark-card-button"
+                type="button"
+                data-benchmark="pubmedqa"
+                aria-expanded="false"
+              >
+                <span class="benchmark-index">03</span>
+                <p class="benchmark-card-kind">Biomedical QA</p>
+                <h3>PubMedQA</h3>
+                <p class="benchmark-card-summary">
+                  Question answering grounded in biomedical abstracts and
+                  evidence-sensitive reading.
+                </p>
+                <span class="benchmark-card-cta">Open fossil</span>
+              </button>
+            </article>
+
+            <article class="benchmark-card" role="listitem">
+              <button
+                class="benchmark-card-button"
+                type="button"
+                data-benchmark="bioasq"
+                aria-expanded="false"
+              >
+                <span class="benchmark-index">04</span>
+                <p class="benchmark-card-kind">Biomedical benchmark suite</p>
+                <h3>BioASQ</h3>
+                <p class="benchmark-card-summary">
+                  Factoid, list, and summary tasks that expose several answer
+                  modes at once.
+                </p>
+                <span class="benchmark-card-cta">Open fossil</span>
+              </button>
+            </article>
+
+            <article class="benchmark-card" role="listitem">
+              <button
+                class="benchmark-card-button"
+                type="button"
+                data-benchmark="biored"
+                aria-expanded="false"
+              >
+                <span class="benchmark-index">05</span>
+                <p class="benchmark-card-kind">Relation extraction</p>
+                <h3>BioRED</h3>
+                <p class="benchmark-card-summary">
+                  Dense biomedical text turned into structured entity and
+                  relation signals.
+                </p>
+                <span class="benchmark-card-cta">Open fossil</span>
+              </button>
+            </article>
+
+            <article class="benchmark-card" role="listitem">
+              <button
+                class="benchmark-card-button"
+                type="button"
+                data-benchmark="scierc"
+                aria-expanded="false"
+              >
+                <span class="benchmark-index">06</span>
+                <p class="benchmark-card-kind">Scientific IE</p>
+                <h3>SciERC</h3>
+                <p class="benchmark-card-summary">
+                  Scientific entity and relation extraction at the document
+                  structure level.
+                </p>
+                <span class="benchmark-card-cta">Open fossil</span>
+              </button>
+            </article>
+
+            <article class="benchmark-card" role="listitem">
+              <button
+                class="benchmark-card-button"
+                type="button"
+                data-benchmark="mmlu"
+                aria-expanded="false"
+              >
+                <span class="benchmark-index">07</span>
+                <p class="benchmark-card-kind">General baseline</p>
+                <h3>MMLU</h3>
+                <p class="benchmark-card-summary">
+                  Broad knowledge coverage with science subdomains still useful
+                  as a reference baseline.
+                </p>
+                <span class="benchmark-card-cta">Open fossil</span>
+              </button>
+            </article>
+
+            <article class="benchmark-card" role="listitem">
+              <button
+                class="benchmark-card-button"
+                type="button"
+                data-benchmark="simpleqa"
+                aria-expanded="false"
+              >
+                <span class="benchmark-index">08</span>
+                <p class="benchmark-card-kind">Direct QA</p>
+                <h3>SimpleQA</h3>
+                <p class="benchmark-card-summary">
+                  Concise factual QA for comparing direct answer quality against
+                  harder science tasks.
+                </p>
+                <span class="benchmark-card-cta">Open fossil</span>
+              </button>
+            </article>
+
+            <article class="benchmark-card" role="listitem">
+              <button
+                class="benchmark-card-button"
+                type="button"
+                data-benchmark="ei"
+                aria-expanded="false"
+              >
+                <span class="benchmark-index">09</span>
+                <p class="benchmark-card-kind">Open question</p>
+                <h3>EI</h3>
+                <p class="benchmark-card-summary">
+                  Still being framed, but useful as a placeholder for a missing
+                  capability slice.
+                </p>
+                <span class="benchmark-card-cta">Open fossil</span>
+              </button>
+            </article>
+          </div>
+
+          <article
+            class="benchmark-detail"
+            id="benchmark-detail"
+            hidden
+            aria-live="polite"
+          >
+            <div class="benchmark-detail-shell">
+              <div class="benchmark-detail-header">
+                <div>
+                  <p class="benchmark-detail-label">Selected fossil</p>
+                  <h3 class="benchmark-detail-title"></h3>
+                </div>
+                <button
+                  class="benchmark-detail-close"
+                  id="benchmark-detail-close"
+                  type="button"
+                  aria-label="Close benchmark detail"
+                >
+                  Close
+                </button>
+              </div>
+
+              <div class="benchmark-detail-meta">
+                <p class="benchmark-detail-kind"></p>
+                <p class="benchmark-detail-signal"></p>
+              </div>
+
+              <div class="benchmark-detail-body">
+                <p class="benchmark-detail-summary"></p>
+                <p class="benchmark-detail-about"></p>
+              </div>
+
+              <a
+                class="benchmark-detail-link"
+                target="_blank"
+                rel="noreferrer"
+              ></a>
+            </div>
+          </article>
+        </section>
+
+      </main>
+
+      <footer class="site-footer">
+        <p>
+          Site content by
+          <a href="https://akhilpandey95.github.io/about/">Akhil Pandey Akella</a>
+          is licensed under
+          <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+            >CC BY-NC-SA 4.0</a
+          >.
+        </p>
+        <p>
+          The
+          <a href="https://github.com/akhilpandey95/scienceeval"
+            >scienceeval GitHub project</a
+          >
+          is
+          <a href="LICENSE">MIT licensed</a>.
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
