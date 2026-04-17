@@ -7,7 +7,7 @@ Helpful evals for understanding the capabilities of models across a broad swath 
 - SciERC
 - BioASQ
 - BioRED
-- EI
+- SciRIFF
 - MMLU
 - SimpleQA
 - PubMedQA

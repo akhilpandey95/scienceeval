@@ -25,6 +25,7 @@
         <nav class="site-nav" aria-label="Primary">
           <a href="#about">TLDR;</a>
           <a href="#benchmarks">Benchmarks</a>
+          <a href="fossils.html">Fossils</a>
         </nav>
       </header>
 
@@ -35,15 +36,23 @@
             <h1>
               Helpful evals for understanding model capability across science.
             </h1>
+            <p class="hero-intro">Benchmarks are fossils;</p>
             <p class="hero-summary">
-              A calm, readable home for benchmark notes, capability slices, and
-              the harder question beneath leaderboard scores: what can a model
-              actually do across biology, chemistry, physics, and scientific QA?
+              Across familiar science evals used for frontier models, both
+              closed-source and open-weight, it is easy to get lost in tables
+              that force us to second-guess where benchmarks overlap, where
+              they saturate, and which capabilities still remain weakly
+              measured. This page gathers those fossils and gives you a single
+              artifact per model for evaluating scientific capability.
             </p>
 
             <div class="hero-links">
-              <a class="primary-link" href="#benchmarks">Browse evals</a>
-              <a class="secondary-link" href="README.md">Read the repo notes</a>
+              <a class="primary-link" href="fossils.html">Browse evals</a>
+              <a
+                class="secondary-link"
+                href="https://github.com/akhilpandey95/scienceeval"
+                >Github</a
+              >
             </div>
           </div>
 
@@ -101,17 +110,13 @@
             </p>
             <div class="section-body">
               <p>
-                The premise is simple: gather helpful evals for understanding
-                the capabilities of models across a broad swath of science
-                benchmarks, then make the material easy to compare, annotate,
-                and revisit.
-              </p>
-              <p>
-                Rather than flatten science evaluation into a single
-                scoreboard, the site should show what each benchmark actually
-                probes: retrieval, multi-step reasoning, structured
-                extraction, and the problems where frontier models still have
-                real room to improve.
+                The goal here is to gather evals helpful for understanding the
+                capabilities of models across a broad swath of science
+                benchmarks, then make the material judgement to compare,
+                annotate, and revisit, while showing what each benchmark
+                actually probes when it comes to retrieval, multi-step
+                reasoning, structured extraction, and the problems where
+                frontier models still have real room to improve.
               </p>
             </div>
           </div>
@@ -119,213 +124,186 @@
 
         <section class="section reveal" id="benchmarks">
           <div class="section-heading">
-            <p class="section-label">Fossils in consideration</p>
-            <h2>A working ledger of the benchmark traces worth examining.</h2>
+            <p class="section-label">Benchmarks</p>
+            <h2>When the current fossil record entered the literature.</h2>
           </div>
 
-          <div class="benchmark-list" role="list" aria-label="Benchmark cards">
-            <article class="benchmark-card" role="listitem">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="frontierscience"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">01</span>
-                <p class="benchmark-card-kind">Research reasoning</p>
-                <h3>FrontierScience</h3>
-                <p class="benchmark-card-summary">
-                  Expert-level science reasoning across physics, chemistry, and
-                  biology.
-                </p>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="gpqa"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">02</span>
-                <p class="benchmark-card-kind">Graduate QA</p>
-                <h3>GPQA</h3>
-                <p class="benchmark-card-summary">
-                  Google-proof graduate science questions built to resist cheap
-                  lookup.
-                </p>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="pubmedqa"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">03</span>
-                <p class="benchmark-card-kind">Biomedical QA</p>
-                <h3>PubMedQA</h3>
-                <p class="benchmark-card-summary">
-                  Question answering grounded in biomedical abstracts and
-                  evidence-sensitive reading.
-                </p>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="bioasq"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">04</span>
-                <p class="benchmark-card-kind">Biomedical benchmark suite</p>
-                <h3>BioASQ</h3>
-                <p class="benchmark-card-summary">
-                  Factoid, list, and summary tasks that expose several answer
-                  modes at once.
-                </p>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="biored"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">05</span>
-                <p class="benchmark-card-kind">Relation extraction</p>
-                <h3>BioRED</h3>
-                <p class="benchmark-card-summary">
-                  Dense biomedical text turned into structured entity and
-                  relation signals.
-                </p>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="scierc"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">06</span>
-                <p class="benchmark-card-kind">Scientific IE</p>
-                <h3>SciERC</h3>
-                <p class="benchmark-card-summary">
-                  Scientific entity and relation extraction at the document
-                  structure level.
-                </p>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="mmlu"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">07</span>
-                <p class="benchmark-card-kind">General baseline</p>
-                <h3>MMLU</h3>
-                <p class="benchmark-card-summary">
-                  Broad knowledge coverage with science subdomains still useful
-                  as a reference baseline.
-                </p>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="simpleqa"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">08</span>
-                <p class="benchmark-card-kind">Direct QA</p>
-                <h3>SimpleQA</h3>
-                <p class="benchmark-card-summary">
-                  Concise factual QA for comparing direct answer quality against
-                  harder science tasks.
-                </p>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="ei"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">09</span>
-                <p class="benchmark-card-kind">Open question</p>
-                <h3>EI</h3>
-                <p class="benchmark-card-summary">
-                  Still being framed, but useful as a placeholder for a missing
-                  capability slice.
-                </p>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
+          <div class="section-body">
+            <p>
+              A compact introduction timeline for the benchmarks collected on
+              this site. For the full specimen cards and expandable notes, open
+              the
+              <a class="inline-link" href="fossils.html">Fossils page</a>.
+            </p>
           </div>
 
-          <article
-            class="benchmark-detail"
-            id="benchmark-detail"
-            hidden
-            aria-live="polite"
-          >
-            <div class="benchmark-detail-shell">
-              <div class="benchmark-detail-header">
-                <div>
-                  <p class="benchmark-detail-label">Selected fossil</p>
-                  <h3 class="benchmark-detail-title"></h3>
-                </div>
-                <button
-                  class="benchmark-detail-close"
-                  id="benchmark-detail-close"
-                  type="button"
-                  aria-label="Close benchmark detail"
-                >
-                  Close
-                </button>
+          <div class="timeline" aria-label="Benchmark introduction timeline">
+            <article class="timeline-item">
+              <div class="timeline-date">
+                <p class="timeline-date-main">2015</p>
+                <p class="timeline-date-sub">BioASQ</p>
               </div>
-
-              <div class="benchmark-detail-meta">
-                <p class="benchmark-detail-kind"></p>
-                <p class="benchmark-detail-signal"></p>
+              <div class="timeline-node" aria-hidden="true"></div>
+              <div class="timeline-content">
+                <h3><a href="fossils.html#fossil-bioasq">BioASQ</a></h3>
+                <p class="timeline-paper">
+                  An overview of the BIOASQ large-scale biomedical semantic
+                  indexing and question answering competition
+                </p>
+                <p class="timeline-note">
+                  One of the earlier large-scale biomedical QA benchmarks in the
+                  current record.
+                </p>
               </div>
+            </article>
 
-              <div class="benchmark-detail-body">
-                <p class="benchmark-detail-summary"></p>
-                <p class="benchmark-detail-about"></p>
+            <article class="timeline-item">
+              <div class="timeline-date">
+                <p class="timeline-date-main">Oct 2018</p>
+                <p class="timeline-date-sub">SciERC</p>
               </div>
+              <div class="timeline-node" aria-hidden="true"></div>
+              <div class="timeline-content">
+                <h3><a href="fossils.html#fossil-scierc">SciERC</a></h3>
+                <p class="timeline-paper">
+                  Multi-Task Identification of Entities, Relations, and
+                  Coreference for Scientific Knowledge Graph Construction
+                </p>
+                <p class="timeline-note">
+                  Established a scientific IE benchmark centered on entities,
+                  relations, and document structure.
+                </p>
+              </div>
+            </article>
 
-              <a
-                class="benchmark-detail-link"
-                target="_blank"
-                rel="noreferrer"
-              ></a>
-            </div>
-          </article>
+            <article class="timeline-item">
+              <div class="timeline-date">
+                <p class="timeline-date-main">Nov 2019</p>
+                <p class="timeline-date-sub">PubMedQA</p>
+              </div>
+              <div class="timeline-node" aria-hidden="true"></div>
+              <div class="timeline-content">
+                <h3><a href="fossils.html#fossil-pubmedqa">PubMedQA</a></h3>
+                <p class="timeline-paper">
+                  PubMedQA: A Dataset for Biomedical Research Question Answering
+                </p>
+                <p class="timeline-note">
+                  Framed biomedical abstract reading as evidence-sensitive
+                  yes-no-maybe question answering.
+                </p>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <div class="timeline-date">
+                <p class="timeline-date-main">Sep 2020</p>
+                <p class="timeline-date-sub">MMLU</p>
+              </div>
+              <div class="timeline-node" aria-hidden="true"></div>
+              <div class="timeline-content">
+                <h3><a href="fossils.html#fossil-mmlu">MMLU</a></h3>
+                <p class="timeline-paper">
+                  Measuring Massive Multitask Language Understanding
+                </p>
+                <p class="timeline-note">
+                  Became the broad general-purpose baseline against which later
+                  science-focused benchmarks are often contextualized.
+                </p>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <div class="timeline-date">
+                <p class="timeline-date-main">Apr 2022</p>
+                <p class="timeline-date-sub">BioRED</p>
+              </div>
+              <div class="timeline-node" aria-hidden="true"></div>
+              <div class="timeline-content">
+                <h3><a href="fossils.html#fossil-biored">BioRED</a></h3>
+                <p class="timeline-paper">
+                  BioRED: A Rich Biomedical Relation Extraction Dataset
+                </p>
+                <p class="timeline-note">
+                  Added a richer document-level biomedical relation extraction
+                  specimen to the record.
+                </p>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <div class="timeline-date">
+                <p class="timeline-date-main">Nov 2023</p>
+                <p class="timeline-date-sub">GPQA</p>
+              </div>
+              <div class="timeline-node" aria-hidden="true"></div>
+              <div class="timeline-content">
+                <h3><a href="fossils.html#fossil-gpqa">GPQA</a></h3>
+                <p class="timeline-paper">
+                  GPQA: A Graduate-Level Google-Proof Q&amp;A Benchmark
+                </p>
+                <p class="timeline-note">
+                  Raised the bar for hard science QA by emphasizing
+                  Google-proof, graduate-level difficulty.
+                </p>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <div class="timeline-date">
+                <p class="timeline-date-main">Jun 2024</p>
+                <p class="timeline-date-sub">SciRIFF</p>
+              </div>
+              <div class="timeline-node" aria-hidden="true"></div>
+              <div class="timeline-content">
+                <h3><a href="fossils.html#fossil-sciriff">SciRIFF</a></h3>
+                <p class="timeline-paper">
+                  SciRIFF: A Resource to Enhance Language Model
+                  Instruction-Following over Scientific Literature
+                </p>
+                <p class="timeline-note">
+                  Shifted attention toward instruction-following over long,
+                  literature-grounded scientific contexts.
+                </p>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <div class="timeline-date">
+                <p class="timeline-date-main">Nov 2024</p>
+                <p class="timeline-date-sub">SimpleQA</p>
+              </div>
+              <div class="timeline-node" aria-hidden="true"></div>
+              <div class="timeline-content">
+                <h3><a href="fossils.html#fossil-simpleqa">SimpleQA</a></h3>
+                <p class="timeline-paper">
+                  Measuring short-form factuality in large language models
+                </p>
+                <p class="timeline-note">
+                  Provided a cleaner fossil for direct factuality and concise QA
+                  behavior.
+                </p>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <div class="timeline-date">
+                <p class="timeline-date-main">Jan 2026</p>
+                <p class="timeline-date-sub">FrontierScience</p>
+              </div>
+              <div class="timeline-node" aria-hidden="true"></div>
+              <div class="timeline-content">
+                <h3><a href="fossils.html#fossil-frontierscience">FrontierScience</a></h3>
+                <p class="timeline-paper">
+                  FrontierScience: Evaluating AI's Ability to Perform
+                  Expert-Level Scientific Tasks
+                </p>
+                <p class="timeline-note">
+                  Marked a move beyond saturated science exams toward olympiad
+                  and research-style scientific reasoning.
+                </p>
+              </div>
+            </article>
+          </div>
         </section>
 
       </main>
