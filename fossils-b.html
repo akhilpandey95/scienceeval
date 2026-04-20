@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>scienceeval | fossils-b | gpqa</title>
+    <title>scienceeval | fossils-b</title>
     <meta
       name="description"
-      content="Benchmark-first fossil sheet for GPQA across OpenAI GPT-family releases with public GPQA Diamond records."
+      content="Benchmark-first fossil sheet across model families."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="page-shell">
+    <div class="page-shell" data-fossils-b-root>
       <div class="page-noise" aria-hidden="true"></div>
 
       <header class="site-header">
@@ -37,21 +37,17 @@
               <details class="catalog-select" name="fossil-specimen">
                 <summary>
                   <span class="catalog-select-meta">Fossil specimen</span>
-                  <span class="catalog-select-value">GPQA</span>
+                  <span class="catalog-select-value" data-fossils-b-specimen-value>Loading...</span>
                 </summary>
-                <div class="catalog-select-menu" role="list">
-                  <a class="catalog-select-option is-current" href="fossils-b.html">GPQA</a>
-                  <span class="catalog-select-option is-upcoming">FrontierScience<span>Soon</span></span>
-                  <span class="catalog-select-option is-upcoming">PubMedQA<span>Soon</span></span>
-                  <span class="catalog-select-option is-upcoming">BioASQ<span>Soon</span></span>
-                </div>
+                <div class="catalog-select-menu" role="list" data-fossils-b-specimen-menu></div>
               </details>
             </div>
 
             <figure class="benchmark-sheet-visual">
               <img
+                data-fossils-b-plot
                 src="images/gpqa-fossil-grove.png"
-                alt="A botanical scientific fossil for GPQA in which OpenAI GPT-family models branch from one shared root and rise to their measured GPQA Diamond values."
+                alt="Benchmark fossil plot loading."
               />
             </figure>
           </div>
@@ -60,30 +56,24 @@
         <section class="section section-gpqa-ledger reveal visible" id="gpqa-record">
           <div class="section-heading section-heading-control">
             <div>
-              <p class="section-label">Measured record</p>
-              <h2>Public GPQA Diamond values across model families.</h2>
+              <p class="section-label" data-fossils-b-section-label>Measured record</p>
+              <h2 data-fossils-b-heading>Loading fossil record...</h2>
             </div>
             <details class="catalog-select catalog-select-compact" name="model-family">
               <summary>
                 <span class="catalog-select-meta">Model family</span>
-                <span class="catalog-select-value">OpenAI</span>
+                <span class="catalog-select-value" data-fossils-b-family-value>Loading...</span>
               </summary>
-              <div class="catalog-select-menu" role="list">
-                <a class="catalog-select-option is-current" href="fossils-b.html">OpenAI</a>
-                <a class="catalog-select-option" href="fossils-b-anthropic.html">Anthropic</a>
-                <span class="catalog-select-option is-upcoming">Google<span>Soon</span></span>
-              </div>
+              <div class="catalog-select-menu" role="list" data-fossils-b-family-menu></div>
             </details>
           </div>
 
           <div class="section-body">
-            <p>
-              Model names link to the release page, and the source column links
-              to the page or paper where the GPQA Diamond value was published.
-            </p>
+            <p data-fossils-b-copy>Loading fossil record...</p>
+            <p data-fossils-b-status>Loading fossil record...</p>
           </div>
 
-          <div class="gpqa-ledger" role="table" aria-label="OpenAI GPT GPQA Diamond record">
+          <div class="gpqa-ledger" role="table" data-fossils-b-ledger>
             <div class="gpqa-ledger-head" role="row">
               <p role="columnheader">Model</p>
               <p role="columnheader">Released</p>
@@ -91,235 +81,12 @@
               <p role="columnheader">Source</p>
               <p role="columnheader">Record note</p>
             </div>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">01</span>
-                <a href="https://openai.com/index/gpt-4-research/" target="_blank" rel="noreferrer">GPT-4</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Mar 14, 2023</p>
-              <p class="gpqa-ledger-score" role="cell">38.8</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://arxiv.org/abs/2311.12022" target="_blank" rel="noreferrer">GPQA paper, 2023</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Few-shot CoT baseline from the original GPQA paper.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">02</span>
-                <a href="https://openai.com/index/function-calling-and-other-api-updates/" target="_blank" rel="noreferrer">GPT-3.5-turbo-16k</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Jun 13, 2023</p>
-              <p class="gpqa-ledger-score" role="cell">29.6</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://arxiv.org/abs/2311.12022" target="_blank" rel="noreferrer">GPQA paper, 2023</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Few-shot CoT baseline from the original GPQA paper.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">03</span>
-                <a href="https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/" target="_blank" rel="noreferrer">GPT-4o mini</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Jul 18, 2024</p>
-              <p class="gpqa-ledger-score" role="cell">40.2</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noreferrer">GPT-4.1 appendix, 2025</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Public GPQA Diamond score was published later in the GPT-4.1 appendix.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">04</span>
-                <a href="https://platform.openai.com/docs/models/gpt-4o" target="_blank" rel="noreferrer">GPT-4o (2024-11-20)</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Nov 20, 2024</p>
-              <p class="gpqa-ledger-score" role="cell">46.0</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noreferrer">GPT-4.1 appendix, 2025</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Evaluated as the GPT-4o(2024-11-20) snapshot in OpenAI's GPT-4.1 appendix.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">05</span>
-                <a href="https://openai.com/index/introducing-gpt-4-5/" target="_blank" rel="noreferrer">GPT-4.5</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Feb 27, 2025</p>
-              <p class="gpqa-ledger-score" role="cell">69.5</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noreferrer">GPT-4.1 appendix, 2025</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">The launch post reported GPQA (science) 71.4%; this page uses GPQA Diamond for cross-model consistency.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">06</span>
-                <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noreferrer">GPT-4.1 nano</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Apr 14, 2025</p>
-              <p class="gpqa-ledger-score" role="cell">50.3</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noreferrer">GPT-4.1 appendix, 2025</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">OpenAI's first nano GPT model.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">07</span>
-                <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noreferrer">GPT-4.1 mini</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Apr 14, 2025</p>
-              <p class="gpqa-ledger-score" role="cell">65.0</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noreferrer">GPT-4.1 appendix, 2025</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Released with the GPT-4.1 API family.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">08</span>
-                <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noreferrer">GPT-4.1</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Apr 14, 2025</p>
-              <p class="gpqa-ledger-score" role="cell">66.3</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/gpt-4-1/" target="_blank" rel="noreferrer">GPT-4.1 appendix, 2025</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Main GPT-4.1 release.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">09</span>
-                <a href="https://openai.com/index/introducing-gpt-5-for-developers/" target="_blank" rel="noreferrer">GPT-5 nano</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Aug 7, 2025</p>
-              <p class="gpqa-ledger-score" role="cell">71.2</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/introducing-gpt-5-for-developers/" target="_blank" rel="noreferrer">GPT-5 for developers, 2025</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Reported with reasoning effort high.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">10</span>
-                <a href="https://openai.com/index/introducing-gpt-5-for-developers/" target="_blank" rel="noreferrer">GPT-5 mini</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Aug 7, 2025</p>
-              <p class="gpqa-ledger-score" role="cell">82.3</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/introducing-gpt-5-for-developers/" target="_blank" rel="noreferrer">GPT-5 for developers, 2025</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Reported with reasoning effort high.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">11</span>
-                <a href="https://openai.com/index/introducing-gpt-5-for-developers/" target="_blank" rel="noreferrer">GPT-5</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Aug 7, 2025</p>
-              <p class="gpqa-ledger-score" role="cell">85.7</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/introducing-gpt-5-for-developers/" target="_blank" rel="noreferrer">GPT-5 for developers, 2025</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Reported with reasoning effort high.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">12</span>
-                <a href="https://openai.com/index/gpt-5-1-for-developers/" target="_blank" rel="noreferrer">GPT-5.1</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Nov 13, 2025</p>
-              <p class="gpqa-ledger-score" role="cell">88.1</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/gpt-5-1-for-developers/" target="_blank" rel="noreferrer">GPT-5.1 for developers, 2025</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Reported with reasoning effort high.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">13</span>
-                <a href="https://openai.com/index/introducing-gpt-5-2/" target="_blank" rel="noreferrer">GPT-5.2 Thinking</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Dec 11, 2025</p>
-              <p class="gpqa-ledger-score" role="cell">92.4</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/introducing-gpt-5-2/" target="_blank" rel="noreferrer">Introducing GPT-5.2, 2025</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">No tools; maximum available reasoning effort.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">14</span>
-                <a href="https://openai.com/index/introducing-gpt-5-2/" target="_blank" rel="noreferrer">GPT-5.2 Pro</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Dec 11, 2025</p>
-              <p class="gpqa-ledger-score" role="cell">93.2</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/introducing-gpt-5-2/" target="_blank" rel="noreferrer">Introducing GPT-5.2, 2025</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">No tools; maximum available reasoning effort.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">15</span>
-                <a href="https://openai.com/index/introducing-gpt-5-3-codex/" target="_blank" rel="noreferrer">GPT-5.3-Codex</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Feb 5, 2026</p>
-              <p class="gpqa-ledger-score" role="cell">92.6</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/introducing-gpt-5-4/" target="_blank" rel="noreferrer">GPT-5.4 evaluations, 2026</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">GPQA Diamond was published in the GPT-5.4 comparison table.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">16</span>
-                <a href="https://openai.com/index/introducing-gpt-5-4/" target="_blank" rel="noreferrer">GPT-5.4</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Mar 5, 2026</p>
-              <p class="gpqa-ledger-score" role="cell">92.8</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/introducing-gpt-5-4/" target="_blank" rel="noreferrer">Introducing GPT-5.4, 2026</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Reported at reasoning effort xhigh.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">17</span>
-                <a href="https://openai.com/index/introducing-gpt-5-4/" target="_blank" rel="noreferrer">GPT-5.4 Pro</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Mar 5, 2026</p>
-              <p class="gpqa-ledger-score" role="cell">94.4</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/introducing-gpt-5-4/" target="_blank" rel="noreferrer">Introducing GPT-5.4, 2026</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Highest public OpenAI GPT-family GPQA Diamond score in this record.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">18</span>
-                <a href="https://openai.com/index/introducing-gpt-5-4-mini-and-nano/" target="_blank" rel="noreferrer">GPT-5.4 mini</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Mar 17, 2026</p>
-              <p class="gpqa-ledger-score" role="cell">88.0</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/introducing-gpt-5-4-mini-and-nano/" target="_blank" rel="noreferrer">GPT-5.4 mini and nano, 2026</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Reported at reasoning effort xhigh.</p>
-            </article>
-            <article class="gpqa-ledger-row" role="row">
-              <p class="gpqa-ledger-model" role="cell">
-                <span class="gpqa-ledger-index">19</span>
-                <a href="https://openai.com/index/introducing-gpt-5-4-mini-and-nano/" target="_blank" rel="noreferrer">GPT-5.4 nano</a>
-              </p>
-              <p class="gpqa-ledger-release" role="cell">Mar 17, 2026</p>
-              <p class="gpqa-ledger-score" role="cell">82.8</p>
-              <p class="gpqa-ledger-source" role="cell">
-                <a href="https://openai.com/index/introducing-gpt-5-4-mini-and-nano/" target="_blank" rel="noreferrer">GPT-5.4 mini and nano, 2026</a>
-              </p>
-              <p class="gpqa-ledger-note" role="cell">Reported at reasoning effort xhigh.</p>
-            </article>
+            <div data-fossils-b-rows></div>
           </div>
+
+          <noscript>
+            <p>This page needs JavaScript enabled to load the specimen record.</p>
+          </noscript>
         </section>
       </main>
 
@@ -344,5 +111,6 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="fossils-b.js"></script>
   </body>
 </html>

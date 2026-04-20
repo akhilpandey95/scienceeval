@@ -1,0 +1,53 @@
+{
+  "defaults": {
+    "specimen": "gpqa",
+    "family": "openai"
+  },
+  "specimens": {
+    "gpqa": {
+      "status": "available",
+      "label": "GPQA",
+      "sectionLabel": "Measured record",
+      "sectionHeading": "Public GPQA Diamond values across model families.",
+      "sectionCopy": "Model names link to the release page, and the source column links to the page or paper where the GPQA Diamond value was published.",
+      "families": {
+        "openai": {
+          "label": "OpenAI",
+          "pageTitle": "scienceeval | fossils-b | gpqa | openai",
+          "description": "Benchmark-first fossil sheet for GPQA across OpenAI GPT-family releases with public GPQA Diamond records.",
+          "plot": "images/gpqa-fossil-grove.png",
+          "plotAlt": "A botanical scientific fossil for GPQA in which OpenAI GPT-family models branch from one shared root and rise to their measured GPQA Diamond values.",
+          "data": "data/gpqa-openai-gpt-models.json",
+          "ledgerAriaLabel": "OpenAI GPT GPQA Diamond record"
+        },
+        "anthropic": {
+          "label": "Anthropic",
+          "pageTitle": "scienceeval | fossils-b | gpqa | anthropic",
+          "description": "Benchmark-first fossil sheet for GPQA across Anthropic Claude-family releases with public GPQA Diamond records.",
+          "plot": "images/gpqa-fossil-grove-anthropic.png",
+          "plotAlt": "A botanical scientific fossil for GPQA in which Anthropic Claude-family models branch from one shared root and rise to their measured GPQA Diamond values.",
+          "data": "data/gpqa-anthropic-claude-models.json",
+          "ledgerAriaLabel": "Anthropic Claude GPQA Diamond record"
+        }
+      },
+      "upcomingFamilies": [
+        {
+          "id": "google",
+          "label": "Google"
+        }
+      ]
+    },
+    "frontierscience": {
+      "status": "upcoming",
+      "label": "FrontierScience"
+    },
+    "pubmedqa": {
+      "status": "upcoming",
+      "label": "PubMedQA"
+    },
+    "bioasq": {
+      "status": "upcoming",
+      "label": "BioASQ"
+    }
+  }
+}
