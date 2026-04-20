@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>scienceeval | fossils-b | gpqa | anthropic</title>
+    <meta
+      name="description"
+      content="Benchmark-first fossil sheet for GPQA across Anthropic Claude-family releases with public GPQA Diamond records."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Source+Serif+4:opsz,wght@8..60,300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="page-noise" aria-hidden="true"></div>
+
+      <header class="site-header">
+        <a class="site-mark" href="index.html">scienceeval</a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="index.html#about">TLDR;</a>
+          <a href="index.html#benchmarks">Benchmarks</a>
+          <a href="fossils.html">Fossils-M</a>
+          <a href="fossils-b.html" aria-current="page">Fossils-B</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="benchmark-sheet reveal visible" id="gpqa-sheet">
+          <div class="benchmark-sheet-shell">
+            <div class="benchmark-sheet-toolbar">
+              <details class="catalog-select" name="fossil-specimen">
+                <summary>
+                  <span class="catalog-select-meta">Fossil specimen</span>
+                  <span class="catalog-select-value">GPQA</span>
+                </summary>
+                <div class="catalog-select-menu" role="list">
+                  <a class="catalog-select-option is-current" href="fossils-b-anthropic.html">GPQA</a>
+                  <span class="catalog-select-option is-upcoming">FrontierScience<span>Soon</span></span>
+                  <span class="catalog-select-option is-upcoming">PubMedQA<span>Soon</span></span>
+                  <span class="catalog-select-option is-upcoming">BioASQ<span>Soon</span></span>
+                </div>
+              </details>
+            </div>
+
+            <figure class="benchmark-sheet-visual">
+              <img
+                src="images/gpqa-fossil-grove-anthropic.png"
+                alt="A botanical scientific fossil for GPQA in which Anthropic Claude-family models branch from one shared root and rise to their measured GPQA Diamond values."
+              />
+            </figure>
+          </div>
+        </section>
+
+        <section class="section section-gpqa-ledger reveal visible" id="gpqa-record">
+          <div class="section-heading section-heading-control">
+            <div>
+              <p class="section-label">Measured record</p>
+              <h2>Public GPQA Diamond values across model families.</h2>
+            </div>
+            <details class="catalog-select catalog-select-compact" name="model-family">
+              <summary>
+                <span class="catalog-select-meta">Model family</span>
+                <span class="catalog-select-value">Anthropic</span>
+              </summary>
+              <div class="catalog-select-menu" role="list">
+                <a class="catalog-select-option" href="fossils-b.html">OpenAI</a>
+                <a class="catalog-select-option is-current" href="fossils-b-anthropic.html">Anthropic</a>
+                <span class="catalog-select-option is-upcoming">Google<span>Soon</span></span>
+              </div>
+            </details>
+          </div>
+
+          <div class="section-body">
+            <p>
+              Model names link to the release page, and the source column links
+              to the page or paper where the GPQA Diamond value was published.
+            </p>
+          </div>
+
+          <div class="gpqa-ledger" role="table" aria-label="Anthropic Claude GPQA Diamond record">
+            <div class="gpqa-ledger-head" role="row">
+              <p role="columnheader">Model</p>
+              <p role="columnheader">Released</p>
+              <p role="columnheader">GPQA Diamond</p>
+              <p role="columnheader">Source</p>
+              <p role="columnheader">Record note</p>
+            </div>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">01</span>
+                <a href="https://www.anthropic.com/news/claude-3-family" target="_blank" rel="noreferrer">Claude 3 Opus</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Mar 4, 2024</p>
+              <p class="gpqa-ledger-score" role="cell">50.4</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www-cdn.anthropic.com/c6a80a657af445f40e31afac050f3bf76d3b1404.pdf" target="_blank" rel="noreferrer">Claude 3 model card, 2024</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">0-shot CoT from the updated Claude 3 model card.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">02</span>
+                <a href="https://www.anthropic.com/news/claude-3-family" target="_blank" rel="noreferrer">Claude 3 Sonnet</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Mar 4, 2024</p>
+              <p class="gpqa-ledger-score" role="cell">40.4</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www-cdn.anthropic.com/c6a80a657af445f40e31afac050f3bf76d3b1404.pdf" target="_blank" rel="noreferrer">Claude 3 model card, 2024</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">0-shot CoT from the updated Claude 3 model card.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">03</span>
+                <a href="https://docs.anthropic.com/en/docs/about-claude/models/all-models" target="_blank" rel="noreferrer">Claude 3 Haiku</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Mar 7, 2024</p>
+              <p class="gpqa-ledger-score" role="cell">33.3</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www-cdn.anthropic.com/c6a80a657af445f40e31afac050f3bf76d3b1404.pdf" target="_blank" rel="noreferrer">Claude 3 model card, 2024</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">Uses Anthropic's 2024-03-07 model version date; the GPQA value is 0-shot CoT from the updated model card.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">04</span>
+                <a href="https://www.anthropic.com/news/claude-3-5-sonnet" target="_blank" rel="noreferrer">Claude 3.5 Sonnet</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Jun 20, 2024</p>
+              <p class="gpqa-ledger-score" role="cell">59.4</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www-cdn.anthropic.com/c6a80a657af445f40e31afac050f3bf76d3b1404.pdf" target="_blank" rel="noreferrer">Claude 3 model card addendum, 2024</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">0-shot CoT from Anthropic's June 2024 Claude 3.5 Sonnet addendum.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">05</span>
+                <a href="https://docs.anthropic.com/en/docs/about-claude/models/all-models" target="_blank" rel="noreferrer">Claude 3.5 Sonnet (New)</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Oct 22, 2024</p>
+              <p class="gpqa-ledger-score" role="cell">65.0</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www-cdn.anthropic.com/c6a80a657af445f40e31afac050f3bf76d3b1404.pdf" target="_blank" rel="noreferrer">Claude 3 model card addendum, 2024</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">Upgraded Claude 3.5 Sonnet from Anthropic's October 2024 addendum; 0-shot CoT.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">06</span>
+                <a href="https://docs.anthropic.com/en/docs/about-claude/models/all-models" target="_blank" rel="noreferrer">Claude 3.5 Haiku</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Oct 22, 2024</p>
+              <p class="gpqa-ledger-score" role="cell">41.6</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www-cdn.anthropic.com/c6a80a657af445f40e31afac050f3bf76d3b1404.pdf" target="_blank" rel="noreferrer">Claude 3 model card addendum, 2024</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">0-shot CoT from Anthropic's October 2024 addendum.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">07</span>
+                <a href="https://www.anthropic.com/news/claude-3-7-sonnet" target="_blank" rel="noreferrer">Claude 3.7 Sonnet</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Feb 24, 2025</p>
+              <p class="gpqa-ledger-score" role="cell">68.0</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://alignment.anthropic.com/2025/subtle-reasoning/" target="_blank" rel="noreferrer">Anthropic Alignment, 2025</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">Anthropic's alignment post reports 68% on GPQA Diamond for Claude 3.7 Sonnet.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">08</span>
+                <a href="https://www.anthropic.com/news/claude-4" target="_blank" rel="noreferrer">Claude Sonnet 4</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">May 22, 2025</p>
+              <p class="gpqa-ledger-score" role="cell">70.0</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www.anthropic.com/news/claude-4" target="_blank" rel="noreferrer">Claude 4 launch, 2025</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">Reported in the Claude 4 launch comparison table without extended thinking.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">09</span>
+                <a href="https://www.anthropic.com/news/claude-4" target="_blank" rel="noreferrer">Claude Opus 4</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">May 22, 2025</p>
+              <p class="gpqa-ledger-score" role="cell">74.9</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www.anthropic.com/news/claude-4" target="_blank" rel="noreferrer">Claude 4 launch, 2025</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">Reported in the Claude 4 launch comparison table without extended thinking.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">10</span>
+                <a href="https://www.anthropic.com/news/claude-opus-4-1" target="_blank" rel="noreferrer">Claude Opus 4.1</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Aug 5, 2025</p>
+              <p class="gpqa-ledger-score" role="cell">81.0</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www.anthropic.com/news/claude-opus-4-1" target="_blank" rel="noreferrer">Claude Opus 4.1 launch, 2025</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">Launch page reports GPQA Diamond at a 64K max-thinking budget.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">11</span>
+                <a href="https://www.anthropic.com/news/claude-sonnet-4-5" target="_blank" rel="noreferrer">Claude Sonnet 4.5</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Sep 29, 2025</p>
+              <p class="gpqa-ledger-score" role="cell">83.4</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www-cdn.anthropic.com/bf10f64990cfda0ba858290be7b8cc6317685f47.pdf" target="_blank" rel="noreferrer">Claude 4.5 system card, 2025</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">The Claude 4.5 system card reports GPQA Diamond with a 64K max-thinking budget.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">12</span>
+                <a href="https://www.anthropic.com/news/claude-haiku-4-5" target="_blank" rel="noreferrer">Claude Haiku 4.5</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Oct 15, 2025</p>
+              <p class="gpqa-ledger-score is-missing" role="cell">&mdash;</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www.anthropic.com/news/claude-haiku-4-5" target="_blank" rel="noreferrer">No public GPQA Diamond value</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">No public Anthropic GPQA Diamond value was found for Claude Haiku 4.5 as of Apr 20, 2026.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">13</span>
+                <a href="https://www.anthropic.com/news/claude-opus-4-5" target="_blank" rel="noreferrer">Claude Opus 4.5</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Nov 24, 2025</p>
+              <p class="gpqa-ledger-score" role="cell">87.0</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www-cdn.anthropic.com/bf10f64990cfda0ba858290be7b8cc6317685f47.pdf" target="_blank" rel="noreferrer">Claude 4.5 system card, 2025</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">The Claude 4.5 system card reports GPQA Diamond with a 64K max-thinking budget.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">14</span>
+                <a href="https://www.anthropic.com/news/claude-opus-4-6" target="_blank" rel="noreferrer">Claude Opus 4.6</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Feb 5, 2026</p>
+              <p class="gpqa-ledger-score" role="cell">91.3</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www-cdn.anthropic.com/78073f739564e986ff3e28522761a7a0b4484f84.pdf" target="_blank" rel="noreferrer">Claude 4.6 system card, 2026</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">The Claude 4.6 system card reports GPQA Diamond at Anthropic's maximum thinking budget.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">15</span>
+                <a href="https://www.anthropic.com/news/claude-sonnet-4-6" target="_blank" rel="noreferrer">Claude Sonnet 4.6</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Feb 17, 2026</p>
+              <p class="gpqa-ledger-score" role="cell">89.9</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://www-cdn.anthropic.com/78073f739564e986ff3e28522761a7a0b4484f84.pdf" target="_blank" rel="noreferrer">Claude 4.6 system card, 2026</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">The Claude 4.6 system card reports GPQA Diamond at Anthropic's maximum thinking budget.</p>
+            </article>
+            <article class="gpqa-ledger-row" role="row">
+              <p class="gpqa-ledger-model" role="cell">
+                <span class="gpqa-ledger-index">16</span>
+                <a href="https://www.anthropic.com/news/claude-opus-4-7" target="_blank" rel="noreferrer">Claude Opus 4.7</a>
+              </p>
+              <p class="gpqa-ledger-release" role="cell">Apr 16, 2026</p>
+              <p class="gpqa-ledger-score" role="cell">94.2</p>
+              <p class="gpqa-ledger-source" role="cell">
+                <a href="https://cdn.sanity.io/files/4zrzovbb/website/037f06850df7fbe871e206dad004c3db5fd50340.pdf" target="_blank" rel="noreferrer">Claude Opus 4.7 system card, 2026</a>
+              </p>
+              <p class="gpqa-ledger-note" role="cell">The Claude Opus 4.7 system card reports 94.2% on GPQA Diamond, averaged over 10 trials.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>
+          Site content by
+          <a href="https://akhilpandey95.github.io/about/">Akhil Pandey Akella</a>
+          is licensed under
+          <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+            >CC BY-NC-SA 4.0</a
+          >.
+        </p>
+        <p>
+          The
+          <a href="https://github.com/akhilpandey95/scienceeval"
+            >scienceeval GitHub project</a
+          >
+          is
+          <a href="LICENSE">MIT licensed</a>.
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

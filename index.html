@@ -25,7 +25,8 @@
         <nav class="site-nav" aria-label="Primary">
           <a href="#about">TLDR;</a>
           <a href="#benchmarks">Benchmarks</a>
-          <a href="fossils.html">Fossils</a>
+          <a href="fossils.html">Fossils-M</a>
+          <a href="fossils-b.html">Fossils-B</a>
         </nav>
       </header>
 
@@ -131,9 +132,12 @@
           <div class="section-body">
             <p>
               A compact introduction timeline for the benchmarks collected on
-              this site. For the full specimen cards and expandable notes, open
-              the
-              <a class="inline-link" href="fossils.html">Fossils page</a>.
+              this site. For the model-first specimen cards and expandable
+              notes, open
+              <a class="inline-link" href="fossils.html">Fossils-M</a>. The
+              first benchmark-first sheet, starting with GPQA across the OpenAI
+              GPT family, lives on
+              <a class="inline-link" href="fossils-b.html">Fossils-B</a>.
             </p>
           </div>
 
@@ -154,6 +158,20 @@
                   One of the earlier large-scale biomedical QA benchmarks in the
                   current record.
                 </p>
+                <ul class="timeline-meta-list" aria-label="BioASQ benchmark metadata">
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Samples</span>
+                    <span class="timeline-meta-value">4,721 QA pairs</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Cadence</span>
+                    <span class="timeline-meta-value">~500 expert questions per year</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Format</span>
+                    <span class="timeline-meta-value">Yes-no, factoid, list, summary</span>
+                  </li>
+                </ul>
               </div>
             </article>
 
@@ -173,6 +191,20 @@
                   Established a scientific IE benchmark centered on entities,
                   relations, and document structure.
                 </p>
+                <ul class="timeline-meta-list" aria-label="SciERC benchmark metadata">
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Samples</span>
+                    <span class="timeline-meta-value">500 scientific abstracts</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Coverage</span>
+                    <span class="timeline-meta-value">8,089 entities, 4,716 relations</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Focus</span>
+                    <span class="timeline-meta-value">Entities, relations, coreference</span>
+                  </li>
+                </ul>
               </div>
             </article>
 
@@ -191,6 +223,20 @@
                   Framed biomedical abstract reading as evidence-sensitive
                   yes-no-maybe question answering.
                 </p>
+                <ul class="timeline-meta-list" aria-label="PubMedQA benchmark metadata">
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Samples</span>
+                    <span class="timeline-meta-value">1,000 labeled QA items</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Grounding</span>
+                    <span class="timeline-meta-value">PubMed abstracts</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Answers</span>
+                    <span class="timeline-meta-value">Yes, no, maybe</span>
+                  </li>
+                </ul>
               </div>
             </article>
 
@@ -209,6 +255,20 @@
                   Became the broad general-purpose baseline against which later
                   science-focused benchmarks are often contextualized.
                 </p>
+                <ul class="timeline-meta-list" aria-label="MMLU benchmark metadata">
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Samples</span>
+                    <span class="timeline-meta-value">15,908 questions</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Coverage</span>
+                    <span class="timeline-meta-value">57 subjects</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Format</span>
+                    <span class="timeline-meta-value">Four-choice exam questions</span>
+                  </li>
+                </ul>
               </div>
             </article>
 
@@ -227,6 +287,20 @@
                   Added a richer document-level biomedical relation extraction
                   specimen to the record.
                 </p>
+                <ul class="timeline-meta-list" aria-label="BioRED benchmark metadata">
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Samples</span>
+                    <span class="timeline-meta-value">600 PubMed abstracts</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Task</span>
+                    <span class="timeline-meta-value">Document-level relation extraction</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Signal</span>
+                    <span class="timeline-meta-value">Novel vs background relations</span>
+                  </li>
+                </ul>
               </div>
             </article>
 
@@ -237,7 +311,7 @@
               </div>
               <div class="timeline-node" aria-hidden="true"></div>
               <div class="timeline-content">
-                <h3><a href="fossils.html#fossil-gpqa">GPQA</a></h3>
+                <h3><a href="fossils-b.html#gpqa-sheet">GPQA</a></h3>
                 <p class="timeline-paper">
                   GPQA: A Graduate-Level Google-Proof Q&amp;A Benchmark
                 </p>
@@ -245,6 +319,20 @@
                   Raised the bar for hard science QA by emphasizing
                   Google-proof, graduate-level difficulty.
                 </p>
+                <ul class="timeline-meta-list" aria-label="GPQA benchmark metadata">
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Samples</span>
+                    <span class="timeline-meta-value">448 expert-written MCQs</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Coverage</span>
+                    <span class="timeline-meta-value">Biology, chemistry, physics</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Design</span>
+                    <span class="timeline-meta-value">Graduate level and Google-proof</span>
+                  </li>
+                </ul>
               </div>
             </article>
 
@@ -264,6 +352,20 @@
                   Shifted attention toward instruction-following over long,
                   literature-grounded scientific contexts.
                 </p>
+                <ul class="timeline-meta-list" aria-label="SciRIFF benchmark metadata">
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Samples</span>
+                    <span class="timeline-meta-value">137K train+val / 4.1K eval</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Coverage</span>
+                    <span class="timeline-meta-value">54 tasks / 9 held-out eval tasks</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Skills</span>
+                    <span class="timeline-meta-value">IE, QA, summarization, verification, classification</span>
+                  </li>
+                </ul>
               </div>
             </article>
 
@@ -282,6 +384,20 @@
                   Provided a cleaner fossil for direct factuality and concise QA
                   behavior.
                 </p>
+                <ul class="timeline-meta-list" aria-label="SimpleQA benchmark metadata">
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Samples</span>
+                    <span class="timeline-meta-value">4,326 questions</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Design</span>
+                    <span class="timeline-meta-value">Single-answer, evergreen prompts</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Collection</span>
+                    <span class="timeline-meta-value">Adversarially gathered against GPT-4</span>
+                  </li>
+                </ul>
               </div>
             </article>
 
@@ -301,6 +417,20 @@
                   Marked a move beyond saturated science exams toward olympiad
                   and research-style scientific reasoning.
                 </p>
+                <ul class="timeline-meta-list" aria-label="FrontierScience benchmark metadata">
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Samples</span>
+                    <span class="timeline-meta-value">160 gold / 700+ total questions</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Splits</span>
+                    <span class="timeline-meta-value">Olympiad and Research</span>
+                  </li>
+                  <li class="timeline-meta-item">
+                    <span class="timeline-meta-label">Coverage</span>
+                    <span class="timeline-meta-value">Physics, chemistry, biology</span>
+                  </li>
+                </ul>
               </div>
             </article>
           </div>
