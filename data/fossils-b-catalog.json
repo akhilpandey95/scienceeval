@@ -29,6 +29,17 @@
           "plotAlt": "A botanical scientific fossil for GPQA in which Anthropic Claude-family models branch from one shared root and rise to their measured GPQA Diamond values.",
           "data": "data/gpqa-anthropic-claude-models.json",
           "ledgerAriaLabel": "Anthropic Claude GPQA Diamond record"
+        },
+        "qwen": {
+          "label": "Qwen",
+          "pageTitle": "scienceeval | fossils-b | gpqa | qwen",
+          "description": "Benchmark-first fossil sheet for GPQA across Qwen text and reasoning releases with public GPQA records.",
+          "plot": "images/gpqa-fossil-grove-qwen.png",
+          "plotAlt": "A botanical scientific fossil for GPQA in which Qwen text and reasoning models branch from one shared root and rise to their measured GPQA values.",
+          "data": "data/gpqa-qwen-models.json",
+          "ledgerAriaLabel": "Qwen GPQA record",
+          "sectionMeasureLabelOverride": "GPQA",
+          "scoreColumnLabel": "GPQA"
         }
       },
       "upcomingFamilies": [

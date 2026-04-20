@@ -81,6 +81,7 @@ function renderFossilsB(catalog, specimenId, specimen, familyId, family, rows) {
   const copy = document.querySelector("[data-fossils-b-copy]");
   const ledger = document.querySelector("[data-fossils-b-ledger]");
   const ledgerRows = document.querySelector("[data-fossils-b-rows]");
+  const scoreHeading = document.querySelector("[data-fossils-b-score-heading]");
 
   document.title = family.pageTitle;
 
@@ -112,6 +113,10 @@ function renderFossilsB(catalog, specimenId, specimen, familyId, family, rows) {
   if (copy) {
     copy.textContent = specimen.sectionCopy || "";
     copy.hidden = !specimen.sectionCopy;
+  }
+
+  if (scoreHeading) {
+    scoreHeading.textContent = family.scoreColumnLabel || specimen.scoreColumnLabel || "GPQA value";
   }
 
   if (ledger) {
@@ -200,8 +205,9 @@ function renderLedgerRows(rows, container) {
 
   container.innerHTML = rows
     .map((row, index) => {
-      const score = row.gpqa_diamond == null ? "&mdash;" : escapeHTML(Number(row.gpqa_diamond).toFixed(1));
-      const scoreClass = row.gpqa_diamond == null ? "gpqa-ledger-score is-missing" : "gpqa-ledger-score";
+      const rawScore = row.gpqa_value ?? row.gpqa_diamond;
+      const score = rawScore == null ? "&mdash;" : escapeHTML(Number(rawScore).toFixed(1));
+      const scoreClass = rawScore == null ? "gpqa-ledger-score is-missing" : "gpqa-ledger-score";
 
       return `
         <article class="gpqa-ledger-row" role="row">
@@ -223,7 +229,7 @@ function renderLedgerRows(rows, container) {
 
 function buildSectionHeading(specimen, family) {
   const template = specimen.sectionHeadingTemplate || specimen.sectionHeading || "";
-  const measure = specimen.sectionMeasureLabel || specimen.label;
+  const measure = family.sectionMeasureLabelOverride || specimen.sectionMeasureLabel || specimen.label;
 
   return template
     .replaceAll("{measure}", measure)
