@@ -7,6 +7,7 @@ if (fossilsBRoot) {
     const status = document.querySelector("[data-fossils-b-status]");
     if (status) {
       status.textContent = "Unable to load the fossil record.";
+      status.hidden = false;
     }
   });
 }
@@ -105,11 +106,12 @@ function renderFossilsB(catalog, specimenId, specimen, familyId, family, rows) {
   }
 
   if (heading) {
-    heading.textContent = specimen.sectionHeading;
+    heading.textContent = buildSectionHeading(specimen, family);
   }
 
   if (copy) {
-    copy.textContent = specimen.sectionCopy;
+    copy.textContent = specimen.sectionCopy || "";
+    copy.hidden = !specimen.sectionCopy;
   }
 
   if (ledger) {
@@ -217,6 +219,15 @@ function renderLedgerRows(rows, container) {
       `;
     })
     .join("");
+}
+
+function buildSectionHeading(specimen, family) {
+  const template = specimen.sectionHeadingTemplate || specimen.sectionHeading || "";
+  const measure = specimen.sectionMeasureLabel || specimen.label;
+
+  return template
+    .replaceAll("{measure}", measure)
+    .replaceAll("{family}", family.label);
 }
 
 function resolveLinkedFamilyId(specimen, requestedFamilyId, defaultFamilyId) {

@@ -34,12 +34,34 @@
         <section class="benchmark-sheet reveal visible" id="gpqa-sheet">
           <div class="benchmark-sheet-shell">
             <div class="benchmark-sheet-toolbar">
+              <p class="section-label benchmark-sheet-toolbar-label" data-fossils-b-section-label>
+                Measured record
+              </p>
               <details class="catalog-select" name="fossil-specimen">
                 <summary>
                   <span class="catalog-select-meta">Fossil specimen</span>
                   <span class="catalog-select-value" data-fossils-b-specimen-value>Loading...</span>
                 </summary>
                 <div class="catalog-select-menu" role="list" data-fossils-b-specimen-menu></div>
+              </details>
+            </div>
+
+            <div class="benchmark-sheet-context">
+              <div class="benchmark-sheet-copy">
+                <h2 class="benchmark-sheet-heading" data-fossils-b-heading>
+                  Loading fossil record...
+                </h2>
+                <p class="benchmark-sheet-description" data-fossils-b-copy>
+                  Loading fossil record...
+                </p>
+              </div>
+
+              <details class="catalog-select catalog-select-compact benchmark-sheet-family" name="model-family">
+                <summary>
+                  <span class="catalog-select-meta">Model family</span>
+                  <span class="catalog-select-value" data-fossils-b-family-value>Loading...</span>
+                </summary>
+                <div class="catalog-select-menu" role="list" data-fossils-b-family-menu></div>
               </details>
             </div>
 
@@ -54,24 +76,9 @@
         </section>
 
         <section class="section section-gpqa-ledger reveal visible" id="gpqa-record">
-          <div class="section-heading section-heading-control">
-            <div>
-              <p class="section-label" data-fossils-b-section-label>Measured record</p>
-              <h2 data-fossils-b-heading>Loading fossil record...</h2>
-            </div>
-            <details class="catalog-select catalog-select-compact" name="model-family">
-              <summary>
-                <span class="catalog-select-meta">Model family</span>
-                <span class="catalog-select-value" data-fossils-b-family-value>Loading...</span>
-              </summary>
-              <div class="catalog-select-menu" role="list" data-fossils-b-family-menu></div>
-            </details>
-          </div>
-
-          <div class="section-body">
-            <p data-fossils-b-copy>Loading fossil record...</p>
-            <p data-fossils-b-status>Loading fossil record...</p>
-          </div>
+          <p class="fossils-b-status" data-fossils-b-status hidden>
+            Loading fossil record...
+          </p>
 
           <div class="gpqa-ledger" role="table" data-fossils-b-ledger>
             <div class="gpqa-ledger-head" role="row">

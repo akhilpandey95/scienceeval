@@ -8,8 +8,9 @@
       "status": "available",
       "label": "GPQA",
       "sectionLabel": "Measured record",
-      "sectionHeading": "Public GPQA Diamond values across model families.",
-      "sectionCopy": "Model names link to the release page, and the source column links to the page or paper where the GPQA Diamond value was published.",
+      "sectionHeadingTemplate": "Public {measure} values across {family} models.",
+      "sectionMeasureLabel": "GPQA Diamond",
+      "sectionCopy": "",
       "families": {
         "openai": {
           "label": "OpenAI",
