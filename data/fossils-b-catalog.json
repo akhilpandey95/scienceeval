@@ -40,6 +40,17 @@
           "ledgerAriaLabel": "Qwen GPQA record",
           "sectionMeasureLabelOverride": "GPQA",
           "scoreColumnLabel": "GPQA"
+        },
+        "meta": {
+          "label": "Meta",
+          "pageTitle": "scienceeval | fossils-b | gpqa | meta",
+          "description": "Benchmark-first fossil sheet for GPQA across Meta Llama releases with public GPQA records.",
+          "plot": "images/gpqa-fossil-grove-meta.png",
+          "plotAlt": "A botanical scientific fossil for GPQA in which Meta Llama releases branch from one shared root and rise to their measured GPQA values.",
+          "data": "data/gpqa-meta-models.json",
+          "ledgerAriaLabel": "Meta Llama GPQA record",
+          "sectionMeasureLabelOverride": "GPQA",
+          "scoreColumnLabel": "GPQA"
         }
       },
       "upcomingFamilies": [
