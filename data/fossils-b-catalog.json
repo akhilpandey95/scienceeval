@@ -51,14 +51,17 @@
           "ledgerAriaLabel": "Meta Llama GPQA record",
           "sectionMeasureLabelOverride": "GPQA",
           "scoreColumnLabel": "GPQA"
+        },
+        "google": {
+          "label": "Google",
+          "pageTitle": "scienceeval | fossils-b | gpqa | google",
+          "description": "Benchmark-first fossil sheet for GPQA across Google Gemma and Gemini releases with public GPQA Diamond records.",
+          "plot": "images/gpqa-fossil-grove-google.png",
+          "plotAlt": "A botanical scientific fossil for GPQA in which Google Gemma and Gemini releases branch from one shared root and rise to their measured GPQA Diamond values.",
+          "data": "data/gpqa-google-models.json",
+          "ledgerAriaLabel": "Google Gemma and Gemini GPQA Diamond record"
         }
-      },
-      "upcomingFamilies": [
-        {
-          "id": "google",
-          "label": "Google"
-        }
-      ]
+      }
     },
     "frontierscience": {
       "status": "upcoming",
