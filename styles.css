@@ -422,7 +422,7 @@ h2 {
   grid-area: toolbar;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   z-index: 6;
 }
@@ -432,11 +432,24 @@ h2 {
   padding-top: 0;
 }
 
+.benchmark-sheet-controls {
+  --catalog-control-size: 3.7rem;
+  --catalog-control-gap: 0.72rem;
+  display: grid;
+  grid-template-columns: repeat(2, var(--catalog-control-size));
+  align-items: flex-start;
+  justify-content: flex-end;
+  justify-items: end;
+  gap: var(--catalog-control-gap);
+  width: calc(var(--catalog-control-size) + var(--catalog-control-size) + var(--catalog-control-gap));
+  margin-left: auto;
+}
+
 .benchmark-sheet-context {
   grid-area: context;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(210px, 0.42fr);
-  gap: 1.2rem 2rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
   align-items: end;
   z-index: 5;
 }
@@ -444,7 +457,7 @@ h2 {
 .benchmark-sheet-copy {
   display: grid;
   gap: 0.9rem;
-  max-width: 46rem;
+  max-width: 58rem;
 }
 
 .benchmark-sheet-copy .section-label {
@@ -452,7 +465,10 @@ h2 {
 }
 
 .benchmark-sheet-heading {
-  max-width: 14ch;
+  max-width: 100%;
+  font-size: clamp(1.75rem, 3.2vw, 2.55rem);
+  letter-spacing: -0.035em;
+  text-wrap: balance;
 }
 
 .benchmark-sheet-description {
@@ -487,6 +503,15 @@ h2 {
   z-index: 2;
 }
 
+.catalog-select-icon {
+  width: var(--catalog-control-size);
+  justify-self: end;
+}
+
+.catalog-select-icon[open] {
+  width: min(100%, 14.5rem);
+}
+
 .catalog-select summary {
   position: relative;
   display: grid;
@@ -505,6 +530,21 @@ h2 {
     box-shadow 180ms ease;
 }
 
+.catalog-select summary:focus-visible {
+  outline: 2px solid rgba(111, 63, 43, 0.28);
+  outline-offset: 3px;
+}
+
+.catalog-select-icon summary {
+  width: 100%;
+  min-height: 3.45rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.72rem;
+  padding: 0.66rem 0.78rem;
+  overflow: hidden;
+}
+
 .catalog-select summary::-webkit-details-marker {
   display: none;
 }
@@ -517,6 +557,20 @@ h2 {
   transform: translateY(-50%);
   color: rgba(23, 19, 16, 0.5);
   font-size: 0.85rem;
+}
+
+.catalog-select-icon summary::after {
+  right: 0.78rem;
+  opacity: 0;
+  transform: translateY(-50%) translateX(0.18rem);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.catalog-select-icon[open] summary::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
 }
 
 .catalog-select[open] summary {
@@ -542,6 +596,61 @@ h2 {
   font-size: 1.02rem;
   line-height: 1.1;
   color: rgba(23, 19, 16, 0.84);
+}
+
+.catalog-select-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(23, 19, 16, 0.1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.52)),
+    linear-gradient(135deg, rgba(111, 63, 43, 0.08), rgba(111, 63, 43, 0.02));
+  color: rgba(111, 63, 43, 0.88);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.68);
+  flex-shrink: 0;
+}
+
+.catalog-select[data-control="family"] .catalog-select-glyph {
+  color: rgba(88, 102, 83, 0.9);
+}
+
+.catalog-select-glyph svg {
+  width: 1.08rem;
+  height: 1.08rem;
+}
+
+.catalog-select-trigger-copy {
+  display: grid;
+  gap: 0.16rem;
+  min-width: 0;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-0.3rem);
+  transition:
+    max-width 220ms ease,
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.catalog-select-icon .catalog-select-meta,
+.catalog-select-icon .catalog-select-value {
+  white-space: nowrap;
+}
+
+.catalog-select-icon .catalog-select-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.catalog-select-icon[open] .catalog-select-trigger-copy {
+  max-width: 8.8rem;
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .catalog-select-menu {
@@ -1717,21 +1826,37 @@ h2 {
   }
 
   .benchmark-sheet-toolbar {
-    justify-content: stretch;
+    justify-content: space-between;
   }
 
   .benchmark-sheet-toolbar-label {
-    width: 100%;
+    width: auto;
+    flex: 1 1 auto;
   }
 
-  .catalog-select,
-  .catalog-select-compact {
+  .catalog-select:not(.catalog-select-icon),
+  .catalog-select-compact:not(.catalog-select-icon) {
     width: 100%;
   }
 
   .catalog-select-menu {
     left: 0;
     right: 0;
+  }
+
+  .benchmark-sheet-controls {
+    --catalog-control-size: 3.45rem;
+    --catalog-control-gap: 0.55rem;
+    justify-content: flex-end;
+    gap: 0.55rem;
+  }
+
+  .catalog-select-icon {
+    width: var(--catalog-control-size);
+  }
+
+  .catalog-select-icon[open] {
+    width: min(100%, 13.5rem);
   }
 
   .benchmark-sheet-visual img {

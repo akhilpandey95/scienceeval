@@ -1,4 +1,5 @@
 const fossilsBRoot = document.querySelector("[data-fossils-b-root]");
+let catalogSelectsReady = false;
 
 if (fossilsBRoot) {
   initFossilsB().catch((error) => {
@@ -23,6 +24,7 @@ async function initFossilsB() {
   const rows = sortRows(await fetchJSON(family.data));
 
   renderFossilsB(catalog, specimenId, specimen, familyId, family, rows);
+  initCatalogSelects();
 }
 
 async function fetchJSON(path) {
@@ -225,6 +227,68 @@ function renderLedgerRows(rows, container) {
       `;
     })
     .join("");
+}
+
+function initCatalogSelects() {
+  if (!fossilsBRoot || catalogSelectsReady) {
+    return;
+  }
+
+  const selects = [...fossilsBRoot.querySelectorAll(".catalog-select")];
+  if (!selects.length) {
+    return;
+  }
+
+  selects.forEach((select) => {
+    const summary = select.querySelector("summary");
+    const closeOtherSelects = () => {
+      selects.forEach((otherSelect) => {
+        if (otherSelect !== select) {
+          otherSelect.open = false;
+        }
+      });
+    };
+
+    if (summary) {
+      summary.addEventListener("pointerdown", () => {
+        if (!select.open) {
+          closeOtherSelects();
+        }
+      });
+
+      summary.addEventListener("keydown", (event) => {
+        if (!select.open && (event.key === "Enter" || event.key === " ")) {
+          closeOtherSelects();
+        }
+      });
+    }
+
+    select.addEventListener("toggle", () => {
+      if (!select.open) {
+        return;
+      }
+
+      closeOtherSelects();
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!selects.some((select) => select.contains(event.target))) {
+      selects.forEach((select) => {
+        select.open = false;
+      });
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      selects.forEach((select) => {
+        select.open = false;
+      });
+    }
+  });
+
+  catalogSelectsReady = true;
 }
 
 function buildSectionHeading(specimen, family) {
