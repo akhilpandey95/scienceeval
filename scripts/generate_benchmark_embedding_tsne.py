@@ -21,6 +21,7 @@ from pathlib import Path
 import numpy as np
 import onnxruntime as ort
 import pyarrow.parquet as pq
+from scipy.ndimage import gaussian_filter
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from sklearn.neighbors import NearestNeighbors
@@ -66,8 +67,13 @@ GRID_DARK = "#2f2f32"
 LABEL_HALO = [pe.withStroke(linewidth=3.2, foreground=PAPER_DARK, alpha=0.95)]
 NEIGHBOR_COUNT = 5
 CROSS_NEIGHBOR_COUNT = 3
+CROSS_NEIGHBOR_SCAN_COUNT = 24
+CROSS_EDGE_MAX_COUNT = 80
+DENSITY_GRID_SIZE = 180
+DENSITY_SMOOTHING = 2.2
+DENSITY_LEVELS = (0.18, 0.36, 0.58, 1.01)
 PLOT_ASPECT_RATIO = 11.8 / 7.4
-PLOT_PADDING_RATIO = 0.16
+PLOT_PADDING_RATIO = 0.19
 BENCHMARK_COLORS = {
     "BioASQ": "#fb7185",
     "BioRED": "#f59e0b",
@@ -502,14 +508,14 @@ def reduce_embeddings(embeddings: np.ndarray) -> np.ndarray:
 
 
 # helper function to build same-benchmark neighbor edges
-def build_same_benchmark_edges(coords: np.ndarray, labels: np.ndarray) -> list[tuple[int, int, str]]:
+def build_same_benchmark_edges(features: np.ndarray, labels: np.ndarray) -> list[tuple[int, int, str]]:
     """
-    Build local graph edges inside each benchmark cluster.
+    Build local graph edges inside each benchmark cluster from embedding-space neighbors.
 
     Parameters
     ------------
-    coords: np.ndarray
-        2D t-SNE coordinates
+    features: np.ndarray
+        Normalized embedding matrix
     labels: np.ndarray
         Benchmark labels for each point
 
@@ -522,9 +528,9 @@ def build_same_benchmark_edges(coords: np.ndarray, labels: np.ndarray) -> list[t
         indices = np.flatnonzero(labels == benchmark)
         if len(indices) < 2:
             continue
-        neighbor_count = min(NEIGHBOR_COUNT, len(indices))
-        neighbors = NearestNeighbors(n_neighbors=neighbor_count).fit(coords[indices])
-        _, neighbor_indices = neighbors.kneighbors(coords[indices])
+        neighbor_count = min(NEIGHBOR_COUNT + 1, len(indices))
+        neighbors = NearestNeighbors(n_neighbors=neighbor_count, metric="cosine").fit(features[indices])
+        _, neighbor_indices = neighbors.kneighbors(features[indices])
         seen = set()
         for local_index, row in enumerate(neighbor_indices):
             for local_neighbor in row[1:]:
@@ -539,14 +545,14 @@ def build_same_benchmark_edges(coords: np.ndarray, labels: np.ndarray) -> list[t
 
 
 # helper function to build cross-benchmark neighbor edges
-def build_cross_benchmark_edges(coords: np.ndarray, labels: np.ndarray) -> list[tuple[int, int]]:
+def build_cross_benchmark_edges(features: np.ndarray, labels: np.ndarray) -> list[tuple[int, int]]:
     """
-    Build sparse nearest-neighbor edges between benchmark clusters.
+    Build sparse nearest-neighbor edges between benchmark clusters from embedding space.
 
     Parameters
     ------------
-    coords: np.ndarray
-        2D t-SNE coordinates
+    features: np.ndarray
+        Normalized embedding matrix
     labels: np.ndarray
         Benchmark labels for each point
 
@@ -554,21 +560,25 @@ def build_cross_benchmark_edges(coords: np.ndarray, labels: np.ndarray) -> list[
     ------------
     list[tuple[int, int]]
     """
-    neighbor_count = min(CROSS_NEIGHBOR_COUNT + 1, len(coords))
-    neighbors = NearestNeighbors(n_neighbors=neighbor_count).fit(coords)
-    distances, neighbor_indices = neighbors.kneighbors(coords)
-    edges = []
-    seen = set()
+    neighbor_count = min(CROSS_NEIGHBOR_SCAN_COUNT + 1, len(features))
+    neighbors = NearestNeighbors(n_neighbors=neighbor_count, metric="cosine").fit(features)
+    distances, neighbor_indices = neighbors.kneighbors(features)
+    best_edges = {}
     for source, row in enumerate(neighbor_indices):
+        cross_count = 0
         for distance, target in zip(distances[source][1:], row[1:], strict=False):
-            if labels[source] == labels[target] or distance > 0.42:
+            if labels[source] == labels[target]:
                 continue
             edge = tuple(sorted((int(source), int(target))))
-            if edge in seen:
-                continue
-            seen.add(edge)
-            edges.append(edge)
-    return edges
+            current_distance = best_edges.get(edge)
+            if current_distance is None or distance < current_distance:
+                best_edges[edge] = float(distance)
+            cross_count += 1
+            if cross_count >= CROSS_NEIGHBOR_COUNT:
+                break
+
+    ranked_edges = sorted(best_edges.items(), key=lambda item: item[1])
+    return [edge for edge, _ in ranked_edges[:CROSS_EDGE_MAX_COUNT]]
 
 
 # helper function to draw a quiet curved edge
@@ -595,10 +605,16 @@ def draw_curve(ax: plt.Axes, start: np.ndarray, end: np.ndarray, color: str, alp
     ax.add_patch(patch)
 
 
-# helper function to draw cluster graph strands
-def draw_network_edges(ax: plt.Axes, coords: np.ndarray, labels: np.ndarray) -> None:
+# helper function to draw density fields behind each cluster
+def draw_density_contours(
+    ax: plt.Axes,
+    coords: np.ndarray,
+    labels: np.ndarray,
+    xlim: tuple[float, float],
+    ylim: tuple[float, float],
+) -> None:
     """
-    Draw fine local and cross-cluster strands for the embedding map.
+    Draw subtle density contours in projected t-SNE space.
 
     Parameters
     ------------
@@ -608,16 +624,83 @@ def draw_network_edges(ax: plt.Axes, coords: np.ndarray, labels: np.ndarray) -> 
         2D t-SNE coordinates
     labels: np.ndarray
         Benchmark labels for each point
+    xlim: tuple[float, float]
+        Horizontal plot limits
+    ylim: tuple[float, float]
+        Vertical plot limits
 
     Returns
     ------------
     None
     """
-    for source, target in build_cross_benchmark_edges(coords, labels):
+    x_edges = np.linspace(xlim[0], xlim[1], DENSITY_GRID_SIZE + 1)
+    y_edges = np.linspace(ylim[0], ylim[1], DENSITY_GRID_SIZE + 1)
+    x_centers = (x_edges[:-1] + x_edges[1:]) / 2
+    y_centers = (y_edges[:-1] + y_edges[1:]) / 2
+    xx, yy = np.meshgrid(x_centers, y_centers)
+
+    for benchmark in BENCHMARK_ORDER:
+        benchmark_coords = coords[labels == benchmark]
+        if len(benchmark_coords) < 3:
+            continue
+        density, _, _ = np.histogram2d(
+            benchmark_coords[:, 0],
+            benchmark_coords[:, 1],
+            bins=(x_edges, y_edges),
+        )
+        density = gaussian_filter(density, sigma=DENSITY_SMOOTHING, mode="nearest")
+        peak = float(density.max())
+        if peak <= 0:
+            continue
+        density /= peak
+        color = BENCHMARK_COLORS[benchmark]
+        ax.contourf(
+            xx,
+            yy,
+            density.T,
+            levels=DENSITY_LEVELS,
+            colors=[color],
+            alpha=0.035,
+            antialiased=True,
+            zorder=0.6,
+        )
+        ax.contour(
+            xx,
+            yy,
+            density.T,
+            levels=DENSITY_LEVELS[1:-1],
+            colors=[color],
+            linewidths=0.36,
+            alpha=0.12,
+            zorder=0.7,
+        )
+
+
+# helper function to draw cluster graph strands
+def draw_network_edges(ax: plt.Axes, coords: np.ndarray, features: np.ndarray, labels: np.ndarray) -> None:
+    """
+    Draw embedding-space local and cross-cluster strands in projected space.
+
+    Parameters
+    ------------
+    ax: plt.Axes
+        Matplotlib axes
+    coords: np.ndarray
+        2D t-SNE coordinates
+    features: np.ndarray
+        Normalized embedding matrix
+    labels: np.ndarray
+        Benchmark labels for each point
+
+    Returns
+    ------------
+    None
+    """
+    for source, target in build_cross_benchmark_edges(features, labels):
         seed = source * 10_000 + target
         draw_curve(ax, coords[source], coords[target], "#b9c7d9", 0.028, 0.38, seed)
 
-    for source, target, color in build_same_benchmark_edges(coords, labels):
+    for source, target, color in build_same_benchmark_edges(features, labels):
         seed = source * 10_000 + target
         draw_curve(ax, coords[source], coords[target], color, 0.035, 2.2, seed)
         draw_curve(ax, coords[source], coords[target], color, 0.16, 0.46, seed)
@@ -736,7 +819,7 @@ def compute_plot_limits(coords: np.ndarray) -> tuple[tuple[float, float], tuple[
 
 
 # helper function to render the t-SNE plot
-def render_plot(records: list[dict], coords: np.ndarray, output_stem: Path) -> list[Path]:
+def render_plot(records: list[dict], embeddings: np.ndarray, coords: np.ndarray, output_stem: Path) -> list[Path]:
     """
     Render a black-background benchmark fossil embedding plot.
 
@@ -744,6 +827,8 @@ def render_plot(records: list[dict], coords: np.ndarray, output_stem: Path) -> l
     ------------
     records: list[dict]
         Records with benchmark labels
+    embeddings: np.ndarray
+        Normalized embedding matrix
     coords: np.ndarray
         2D t-SNE coordinates
     output_stem: Path
@@ -783,7 +868,8 @@ def render_plot(records: list[dict], coords: np.ndarray, output_stem: Path) -> l
         )
         ax.add_patch(circle)
 
-    draw_network_edges(ax, coords, labels)
+    draw_density_contours(ax, coords, labels, xlim, ylim)
+    draw_network_edges(ax, coords, embeddings, labels)
     draw_cluster_points(ax, coords, labels)
     draw_cluster_labels(ax, coords, labels, xlim, ylim)
 
@@ -815,7 +901,7 @@ def run_embedding_map(args: argparse.Namespace) -> None:
     texts = [record["text"] for record in records]
     embeddings = embed_texts(args.model_dir, texts, args.batch_size, args.max_tokens)
     coords = reduce_embeddings(embeddings)
-    outputs = render_plot(records, coords, args.output_stem)
+    outputs = render_plot(records, embeddings, coords, args.output_stem)
     for path in outputs:
         logger.info("Saved %s", path)
         print(path)
