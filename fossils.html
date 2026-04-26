@@ -24,7 +24,7 @@
         <a class="site-mark" href="index.html">scienceeval</a>
         <nav class="site-nav" aria-label="Primary">
           <a href="index.html#about">TLDR;</a>
-          <a href="index.html#benchmarks">Benchmarks</a>
+          <a href="benchmark.html">Benchmarks</a>
           <a href="fossils.html" aria-current="page">Fossils-M</a>
           <a href="fossils-b.html">Fossils-B</a>
         </nav>
@@ -66,7 +66,7 @@
                   <div>
                     <p class="model-sheet-entry-index">01</p>
                     <h2 class="model-sheet-entry-title">
-                      <a href="#fossil-frontierscience"
+                      <a href="benchmark.html#fossil-frontierscience"
                         >FrontierScience<sup class="benchmark-origin-marker">**</sup></a
                       >
                     </h2>
@@ -89,7 +89,7 @@
                   <div>
                     <p class="model-sheet-entry-index">02</p>
                     <h2 class="model-sheet-entry-title">
-                      <a href="#fossil-gpqa">GPQA<sup class="benchmark-origin-marker">**</sup></a>
+                      <a href="benchmark.html#fossil-gpqa">GPQA<sup class="benchmark-origin-marker">**</sup></a>
                     </h2>
                   </div>
                   <p class="model-sheet-entry-value">53.6%</p>
@@ -110,7 +110,7 @@
                   <div>
                     <p class="model-sheet-entry-index">03</p>
                     <h2 class="model-sheet-entry-title">
-                      <a href="#fossil-pubmedqa"
+                      <a href="benchmark.html#fossil-pubmedqa"
                         >PubMedQA<sup class="benchmark-origin-marker">**</sup></a
                       >
                     </h2>
@@ -133,7 +133,7 @@
                   <div>
                     <p class="model-sheet-entry-index">04</p>
                     <h2 class="model-sheet-entry-title">
-                      <a href="#fossil-bioasq">BioASQ<sup class="benchmark-origin-marker">**</sup></a>
+                      <a href="benchmark.html#fossil-bioasq">BioASQ<sup class="benchmark-origin-marker">**</sup></a>
                     </h2>
                   </div>
                   <p class="model-sheet-entry-value">86.19%</p>
@@ -154,7 +154,7 @@
                   <div>
                     <p class="model-sheet-entry-index">05</p>
                     <h2 class="model-sheet-entry-title">
-                      <a href="#fossil-biored">BioRED<sup class="benchmark-origin-marker">**</sup></a>
+                      <a href="benchmark.html#fossil-biored">BioRED<sup class="benchmark-origin-marker">**</sup></a>
                     </h2>
                   </div>
                   <p class="model-sheet-entry-value">72.45%</p>
@@ -175,7 +175,7 @@
                   <div>
                     <p class="model-sheet-entry-index">06</p>
                     <h2 class="model-sheet-entry-title">
-                      <a href="#fossil-scierc">SciERC<sup class="benchmark-origin-marker">**</sup></a>
+                      <a href="benchmark.html#fossil-scierc">SciERC<sup class="benchmark-origin-marker">**</sup></a>
                     </h2>
                   </div>
                   <p class="model-sheet-entry-value">70.35%</p>
@@ -196,7 +196,7 @@
                   <div>
                     <p class="model-sheet-entry-index">07</p>
                     <h2 class="model-sheet-entry-title">
-                      <a href="#fossil-mmlu">MMLU<sup class="benchmark-origin-marker">*</sup></a>
+                      <a href="benchmark.html#fossil-mmlu">MMLU<sup class="benchmark-origin-marker">*</sup></a>
                     </h2>
                   </div>
                   <p class="model-sheet-entry-value">85.7%</p>
@@ -217,7 +217,7 @@
                   <div>
                     <p class="model-sheet-entry-index">08</p>
                     <h2 class="model-sheet-entry-title">
-                      <a href="#fossil-simpleqa">SimpleQA<sup class="benchmark-origin-marker">*</sup></a>
+                      <a href="benchmark.html#fossil-simpleqa">SimpleQA<sup class="benchmark-origin-marker">*</sup></a>
                     </h2>
                   </div>
                   <p class="model-sheet-entry-value">38.2%</p>
@@ -238,7 +238,7 @@
                   <div>
                     <p class="model-sheet-entry-index">09</p>
                     <h2 class="model-sheet-entry-title">
-                      <a href="#fossil-sciriff">SciRIFF<sup class="benchmark-origin-marker">**</sup></a>
+                      <a href="benchmark.html#fossil-sciriff">SciRIFF<sup class="benchmark-origin-marker">**</sup></a>
                     </h2>
                   </div>
                   <p class="model-sheet-entry-value">60.4</p>
@@ -260,16 +260,16 @@
         <section class="section section-fossils-page reveal visible" id="fossils">
           <div class="section-heading">
             <p class="section-label">Fossils-M</p>
-            <h2>The benchmark specimens most worth inspecting for model capability.</h2>
+            <h2>The model sheet stays focused on measured model capability.</h2>
           </div>
 
           <div class="section-body">
             <p>
-              The full specimen cards sit below the model sheet. Open any fossil
-              to see what the benchmark is about, which capability slice it
-              probes, and the exact paper that introduced it. For a
-              benchmark-first reading of GPQA across the OpenAI GPT family, open
-              <a class="inline-link" href="fossils-b.html">Fossils-B</a>.
+              Benchmark definitions, source papers, and expandable specimen
+              cards now live on
+              <a class="inline-link" href="benchmark.html">Benchmarks</a>.
+              Use the benchmark names in the model ledger above to open the
+              exact fossil notes for each measurement.
             </p>
             <p class="benchmark-origin-legend">
               <span><sup class="benchmark-origin-marker">*</sup> general-purpose</span>
@@ -279,279 +279,6 @@
               General-purpose fossils stay in the record as contrast baselines
               for separating broad model strength from science-specific skill.
             </p>
-          </div>
-
-          <div class="benchmark-list" role="list" aria-label="Benchmark cards">
-            <article class="benchmark-card" role="listitem" id="fossil-frontierscience">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="frontierscience"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">01</span>
-                <p class="benchmark-card-kind">Research reasoning</p>
-                <h3>FrontierScience<sup class="benchmark-origin-marker">**</sup></h3>
-                <p class="benchmark-card-summary">
-                  Expert-level science reasoning across physics, chemistry, and
-                  biology.
-                </p>
-                <div class="benchmark-card-paper" aria-label="Introduction paper">
-                  <p class="benchmark-card-paper-label">Introduced in</p>
-                  <p class="benchmark-card-paper-title">
-                    FrontierScience: Evaluating AI's Ability to Perform
-                    Expert-Level Scientific Tasks
-                  </p>
-                </div>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem" id="fossil-gpqa">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="gpqa"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">02</span>
-                <p class="benchmark-card-kind">Graduate QA</p>
-                <h3>GPQA<sup class="benchmark-origin-marker">**</sup></h3>
-                <p class="benchmark-card-summary">
-                  Google-proof graduate science questions built to resist cheap
-                  lookup.
-                </p>
-                <div class="benchmark-card-paper" aria-label="Introduction paper">
-                  <p class="benchmark-card-paper-label">Introduced in</p>
-                  <p class="benchmark-card-paper-title">
-                    GPQA: A Graduate-Level Google-Proof Q&amp;A Benchmark
-                  </p>
-                </div>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem" id="fossil-pubmedqa">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="pubmedqa"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">03</span>
-                <p class="benchmark-card-kind">Biomedical QA</p>
-                <h3>PubMedQA<sup class="benchmark-origin-marker">**</sup></h3>
-                <p class="benchmark-card-summary">
-                  Question answering grounded in biomedical abstracts and
-                  evidence-sensitive reading.
-                </p>
-                <div class="benchmark-card-paper" aria-label="Introduction paper">
-                  <p class="benchmark-card-paper-label">Introduced in</p>
-                  <p class="benchmark-card-paper-title">
-                    PubMedQA: A Dataset for Biomedical Research Question
-                    Answering
-                  </p>
-                </div>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem" id="fossil-bioasq">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="bioasq"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">04</span>
-                <p class="benchmark-card-kind">Biomedical benchmark suite</p>
-                <h3>BioASQ<sup class="benchmark-origin-marker">**</sup></h3>
-                <p class="benchmark-card-summary">
-                  Factoid, list, and summary tasks that expose several answer
-                  modes at once.
-                </p>
-                <div class="benchmark-card-paper" aria-label="Introduction paper">
-                  <p class="benchmark-card-paper-label">Introduced in</p>
-                  <p class="benchmark-card-paper-title">
-                    An overview of the BIOASQ large-scale biomedical semantic
-                    indexing and question answering competition
-                  </p>
-                </div>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem" id="fossil-biored">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="biored"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">05</span>
-                <p class="benchmark-card-kind">Relation extraction</p>
-                <h3>BioRED<sup class="benchmark-origin-marker">**</sup></h3>
-                <p class="benchmark-card-summary">
-                  Dense biomedical text turned into structured entity and
-                  relation signals.
-                </p>
-                <div class="benchmark-card-paper" aria-label="Introduction paper">
-                  <p class="benchmark-card-paper-label">Introduced in</p>
-                  <p class="benchmark-card-paper-title">
-                    BioRED: A Rich Biomedical Relation Extraction Dataset
-                  </p>
-                </div>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem" id="fossil-scierc">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="scierc"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">06</span>
-                <p class="benchmark-card-kind">Scientific IE</p>
-                <h3>SciERC<sup class="benchmark-origin-marker">**</sup></h3>
-                <p class="benchmark-card-summary">
-                  Scientific entity and relation extraction at the document
-                  structure level.
-                </p>
-                <div class="benchmark-card-paper" aria-label="Introduction paper">
-                  <p class="benchmark-card-paper-label">Introduced in</p>
-                  <p class="benchmark-card-paper-title">
-                    Multi-Task Identification of Entities, Relations, and
-                    Coreference for Scientific Knowledge Graph Construction
-                  </p>
-                </div>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem" id="fossil-mmlu">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="mmlu"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">07</span>
-                <p class="benchmark-card-kind">General baseline</p>
-                <h3>MMLU<sup class="benchmark-origin-marker">*</sup></h3>
-                <p class="benchmark-card-summary">
-                  Broad knowledge coverage with science subdomains still useful
-                  as a reference baseline.
-                </p>
-                <div class="benchmark-card-paper" aria-label="Introduction paper">
-                  <p class="benchmark-card-paper-label">Introduced in</p>
-                  <p class="benchmark-card-paper-title">
-                    Measuring Massive Multitask Language Understanding
-                  </p>
-                </div>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem" id="fossil-simpleqa">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="simpleqa"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">08</span>
-                <p class="benchmark-card-kind">Direct QA</p>
-                <h3>SimpleQA<sup class="benchmark-origin-marker">*</sup></h3>
-                <p class="benchmark-card-summary">
-                  Concise factual QA for comparing direct answer quality against
-                  harder science tasks.
-                </p>
-                <div class="benchmark-card-paper" aria-label="Introduction paper">
-                  <p class="benchmark-card-paper-label">Introduced in</p>
-                  <p class="benchmark-card-paper-title">
-                    Measuring short-form factuality in large language models
-                  </p>
-                </div>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-
-            <article class="benchmark-card" role="listitem" id="fossil-sciriff">
-              <button
-                class="benchmark-card-button"
-                type="button"
-                data-benchmark="sciriff"
-                aria-expanded="false"
-              >
-                <span class="benchmark-index">09</span>
-                <p class="benchmark-card-kind">Scientific instruction following</p>
-                <h3>SciRIFF<sup class="benchmark-origin-marker">**</sup></h3>
-                <p class="benchmark-card-summary">
-                  Scientific literature instruction-following across extraction,
-                  summarization, QA, verification, and classification.
-                </p>
-                <div class="benchmark-card-paper" aria-label="Introduction paper">
-                  <p class="benchmark-card-paper-label">Introduced in</p>
-                  <p class="benchmark-card-paper-title">
-                    SciRIFF: A Resource to Enhance Language Model
-                    Instruction-Following over Scientific Literature
-                  </p>
-                </div>
-                <span class="benchmark-card-cta">Open fossil</span>
-              </button>
-            </article>
-            <div
-              class="benchmark-detail"
-              id="benchmark-detail"
-              hidden
-              role="region"
-              aria-live="polite"
-            >
-              <div class="benchmark-detail-shell">
-                <div class="benchmark-detail-header">
-                  <div>
-                    <p class="benchmark-detail-label">Selected fossil</p>
-                    <h3 class="benchmark-detail-title"></h3>
-                  </div>
-                  <button
-                    class="benchmark-detail-close"
-                    id="benchmark-detail-close"
-                    type="button"
-                    aria-label="Close benchmark detail"
-                  >
-                    Close
-                  </button>
-                </div>
-
-                <div class="benchmark-detail-meta">
-                  <p class="benchmark-detail-kind"></p>
-                  <p class="benchmark-detail-signal"></p>
-                </div>
-
-                <div class="benchmark-detail-body">
-                  <p class="benchmark-detail-summary"></p>
-                  <p class="benchmark-detail-about"></p>
-                </div>
-
-                <div class="benchmark-detail-paper">
-                  <p class="benchmark-detail-paper-label">Introduction paper</p>
-                  <a
-                    class="benchmark-detail-paper-link"
-                    target="_blank"
-                    rel="noreferrer"
-                  ></a>
-                  <p class="benchmark-detail-paper-note" hidden></p>
-                </div>
-
-                <a
-                  class="benchmark-detail-link"
-                  target="_blank"
-                  rel="noreferrer"
-                ></a>
-              </div>
-            </div>
           </div>
         </section>
       </main>

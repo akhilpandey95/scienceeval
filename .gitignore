@@ -37,6 +37,17 @@ htmlcov/
 .python-version
 .direnv/
 
+# Downloaded benchmark datasets
+data/bioasq/
+data/biored/
+data/frontierscience/
+data/gpqa/
+data/mmlu/
+data/pubmedqa/
+data/scierc/
+data/sciriff/
+data/simpleqa/
+
 # Editor and IDE files
 .idea/
 .vscode/
