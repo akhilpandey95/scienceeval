@@ -131,14 +131,41 @@ main {
 .hero {
   min-height: clamp(28rem, 62svh, 40rem);
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.05fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
   padding: clamp(2rem, 5vw, 4rem) 0 4rem;
 }
 
 .hero-copy {
   max-width: 48rem;
+}
+
+.hero-embedding-figure {
+  margin: 2rem 0 0;
+  display: grid;
+  gap: 0.8rem;
+  align-self: start;
+}
+
+.hero-embedding-image {
+  width: 100%;
+  height: clamp(20rem, 29vw, 24.5rem);
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 20px;
+  box-shadow: 0 28px 90px rgba(26, 20, 15, 0.18);
+}
+
+.hero-embedding-caption {
+  margin: 0;
+  max-width: 42rem;
+  justify-self: end;
+  text-align: right;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: rgba(23, 19, 16, 0.58);
 }
 
 .eyebrow {
@@ -155,25 +182,18 @@ h3 {
 }
 
 h1 {
-  font-size: clamp(1.875rem, 4.5vw, 4.25rem);
-  max-width: 11ch;
-  letter-spacing: -0.04em;
+  font-size: clamp(2rem, 3vw, 3rem);
+  max-width: 17ch;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
 }
 
 .hero-summary {
-  margin: 1.75rem 0 0;
-  max-width: 38rem;
-  font-size: clamp(1.15rem, 1.4vw, 1.45rem);
-  line-height: 1.65;
-  color: rgba(23, 19, 16, 0.82);
-}
-
-.hero-intro {
   margin: 1.5rem 0 0;
-  font-family: "Fraunces", "Source Serif 4", Georgia, serif;
-  font-size: clamp(1.15rem, 1.6vw, 1.45rem);
-  line-height: 1.2;
-  color: var(--accent);
+  max-width: 38rem;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: rgba(23, 19, 16, 0.82);
 }
 
 .hero-links {
@@ -1623,6 +1643,16 @@ h2 {
     grid-template-columns: 1fr;
   }
 
+  .hero-embedding-figure {
+    max-width: 42rem;
+    margin-top: 0;
+  }
+
+  .hero-embedding-caption {
+    justify-self: start;
+    text-align: left;
+  }
+
   .benchmark-sheet-shell {
     grid-template-areas:
       "toolbar"
@@ -1703,9 +1733,13 @@ h2 {
 
 @media (min-width: 700px) and (max-width: 980px) {
   .hero {
-    grid-template-columns: minmax(0, 1.06fr) minmax(220px, 0.74fr);
+    grid-template-columns: minmax(0, 0.92fr) minmax(260px, 0.82fr);
     gap: 2rem;
     align-items: start;
+  }
+
+  .hero-embedding-figure {
+    margin-top: 2rem;
   }
 
   .hero-summary {
@@ -1749,24 +1783,32 @@ h2 {
     padding: 3.25rem 0 3rem;
   }
 
-  .hero h1 {
-    max-width: 10.5ch;
-    font-size: clamp(2rem, 10vw, 2.85rem);
+  .hero-embedding-figure {
+    margin-top: 0;
   }
 
-  .hero-intro {
-    margin-top: 1.1rem;
-    font-size: 1.02rem;
+  .hero h1 {
+    max-width: none;
+    font-size: clamp(1.7rem, 8vw, 2.3rem);
   }
 
   .hero-summary {
     margin-top: 1.2rem;
-    font-size: 1rem;
-    line-height: 1.62;
+    font-size: 1.05rem;
+    line-height: 1.7;
   }
 
   .hero-links {
     margin-top: 1.55rem;
+  }
+
+  .hero-embedding-image {
+    height: clamp(15rem, 44vw, 20rem);
+    border-radius: 14px;
+  }
+
+  .hero-embedding-caption {
+    font-size: 0.72rem;
   }
 
   .hero-ledger li {
