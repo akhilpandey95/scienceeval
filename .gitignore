@@ -48,6 +48,9 @@ data/scierc/
 data/sciriff/
 data/simpleqa/
 
+# Generated embedding/projection artifacts
+output/
+
 # Editor and IDE files
 .idea/
 .vscode/

@@ -59,14 +59,15 @@
             <img
               class="hero-embedding-image"
               src="images/benchmark-fossil-embedding-tsne-plot.png"
-              width="3776"
-              height="2368"
+              width="3540"
+              height="2220"
               alt="Black t-SNE map of benchmark embeddings with labeled clusters for BioASQ, BioRED, FrontierScience, GPQA, MMLU, PubMedQA, SciERC, SciRIFF, and SimpleQA."
             />
             <figcaption class="hero-embedding-caption">
-              Each point is a sampled benchmark item embedded with
-              pplx-embed-v1-0.6B and projected with t-SNE. The labels mark which
-              fossil each cluster belongs to.
+              Visible points are a balanced sample from 69,315 benchmark items
+              embedded with pplx-embed-v1-0.6B, PCA-reduced to 50 dimensions,
+              and projected with t-SNE. Soft contours show the full-corpus
+              distribution.
             </figcaption>
           </figure>
         </section>

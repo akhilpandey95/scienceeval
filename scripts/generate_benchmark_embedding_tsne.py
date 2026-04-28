@@ -51,7 +51,7 @@ DEFAULT_OUTPUT_STEM = IMAGES_DIR / "benchmark-fossil-embedding-tsne"
 
 
 # embedding constants
-DEFAULT_LIMIT_PER_BENCHMARK = 48
+DEFAULT_LIMIT_PER_BENCHMARK = 100
 DEFAULT_BATCH_SIZE = 8
 DEFAULT_MAX_TOKENS = 384
 RANDOM_SEED = 7207
@@ -762,20 +762,6 @@ def draw_cluster_labels(ax: plt.Axes, coords: np.ndarray, labels: np.ndarray, xl
             zorder=7,
         )
         name_text.set_path_effects(LABEL_HALO)
-        count_text = ax.text(
-            label_position[0],
-            label_position[1] - 0.032,
-            f"{mask.sum()} samples",
-            color=INK_LIGHT,
-            fontsize=5.2,
-            fontfamily="DejaVu Serif",
-            ha="center",
-            va="center",
-            alpha=0.72,
-            zorder=7,
-        )
-        count_text.set_path_effects(LABEL_HALO)
-
 
 # helper function to compute tight art-directed plot limits
 def compute_plot_limits(coords: np.ndarray) -> tuple[tuple[float, float], tuple[float, float]]:
