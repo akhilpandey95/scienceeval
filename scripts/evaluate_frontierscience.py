@@ -373,11 +373,12 @@ def ensure_dataset_file(split: str, cache_path: Path, refresh: bool) -> None:
 # helper function to load jsonl rows
 def load_jsonl(path: Path, split: str) -> list[dict]:
     rows = []
-    for line in path.read_text(encoding="utf-8").splitlines():
+    for row_index, line in enumerate(path.read_text(encoding="utf-8").splitlines()):
         if not line.strip():
             continue
         row = json.loads(line)
         row["split"] = split
+        row["dataset_index"] = row_index
         rows.append(row)
     return rows
 
@@ -544,6 +545,66 @@ def get_recorded_attempts(state: dict) -> set[str]:
     return processed_ids
 
 
+# helper function to migrate legacy task-group-only attempt keys
+def migrate_recorded_attempt_keys(state: dict, examples: list[dict]) -> None:
+    """
+    Rewrite legacy result keys to row-indexed keys for reliable resume behavior.
+
+    Parameters
+    ------------
+    state: dict
+        Mutable run state
+    examples: list[dict]
+        Current filtered examples
+
+    Returns
+    ------------
+    None
+    """
+    legacy_map = build_legacy_example_key_map(examples)
+
+    for result in state.get("results", []):
+        result_example_key = result.get("example_key")
+        if result_example_key and is_row_indexed_example_key(result_example_key):
+            continue
+
+        legacy_key = result_example_key or f"{result['split']}:{result['task_group_id']}"
+        replacement_keys = legacy_map.get(legacy_key)
+        if not replacement_keys:
+            continue
+
+        result["legacy_example_key"] = legacy_key
+        result["example_key"] = replacement_keys[0]
+        result["attempt_key"] = format_attempt_key(result["example_key"], int(result.get("trial_index", 1)))
+
+
+# helper function to map legacy question ids to current row-indexed ids
+def build_legacy_example_key_map(examples: list[dict]) -> dict[str, list[str]]:
+    """
+    Build legacy-to-current example key mappings.
+
+    Parameters
+    ------------
+    examples: list[dict]
+        Current filtered examples
+
+    Returns
+    ------------
+    dict[str, list[str]]
+    """
+    legacy_map = defaultdict(list)
+
+    for example in examples:
+        legacy_map[legacy_example_key(example)].append(example_key(example))
+
+    return dict(legacy_map)
+
+
+# helper function to detect current row-indexed question ids
+def is_row_indexed_example_key(value: str) -> bool:
+    return bool(re.match(r"^[^:]+:\d+:", value))
+
+
 # helper function to build candidate config
 def build_candidate_config(args: argparse.Namespace, extra_body: dict) -> dict:
     return {
@@ -667,8 +728,10 @@ async def process_single_attempt(
         return {
             "attempt_key": attempt["attempt_key"],
             "example_key": example_key(example),
+            "legacy_example_key": legacy_example_key(example),
             "trial_index": attempt["trial_index"],
             "trial_count": attempt["trial_count"],
+            "dataset_index": example["dataset_index"],
             "task_group_id": example["task_group_id"],
             "split": example["split"],
             "subject": example["subject"],
@@ -824,7 +887,7 @@ def extract_max_points(rubric_text: str) -> float:
 # helper function to parse olympiad verdicts
 def parse_verdict_line(raw_text: str) -> str:
     for line in reversed(raw_text.splitlines()):
-        match = re.search(r'VERDICT:\s*(CORRECT|INCORRECT)\s*$', line.strip(), flags=re.IGNORECASE)
+        match = re.search(r'\bVERDICT:\s*(CORRECT|INCORRECT)\b', line.strip(), flags=re.IGNORECASE)
         if match:
             return match.group(1).upper()
     raise RuntimeError(f"Could not parse verdict line from judge response: {raw_text}")
@@ -833,7 +896,7 @@ def parse_verdict_line(raw_text: str) -> str:
 # helper function to parse research point verdicts
 def parse_research_verdict_points(raw_text: str) -> float:
     for line in reversed(raw_text.splitlines()):
-        match = re.search(r'VERDICT:\s*([0-9]+(?:\.[0-9]+)?)\s*$', line.strip(), flags=re.IGNORECASE)
+        match = re.search(r'\bVERDICT:\s*([0-9]+(?:\.[0-9]+)?)\b', line.strip(), flags=re.IGNORECASE)
         if match:
             return float(match.group(1))
     raise RuntimeError(f"Could not parse point verdict from judge response: {raw_text}")
@@ -943,6 +1006,11 @@ def save_state(output_path: Path, state: dict) -> None:
 
 # helper function to create stable question ids
 def example_key(example: dict) -> str:
+    return f"{example['split']}:{example['dataset_index']:04d}:{example['task_group_id']}"
+
+
+# helper function to create legacy question ids from older result files
+def legacy_example_key(example: dict) -> str:
     return f"{example['split']}:{example['task_group_id']}"
 
 
@@ -1483,6 +1551,7 @@ async def run_frontierscience_eval_async(args: argparse.Namespace) -> None:
     attempts = build_attempts(examples, args)
     output_path = resolve_output_path(args.candidate_model, args.split, args.output)
     state = load_or_init_state(args, output_path)
+    migrate_recorded_attempt_keys(state, examples)
     processed_ids = get_recorded_attempts(state)
 
     if args.dry_run:
