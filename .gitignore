@@ -41,6 +41,7 @@ htmlcov/
 data/bioasq/
 data/biored/
 data/frontierscience/
+data/fossil-results/
 data/gpqa/
 data/mmlu/
 data/pubmedqa/

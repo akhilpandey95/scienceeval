@@ -88,6 +88,22 @@ Results are written under:
 results/fossil-m/<model-slug>/
 ```
 
+## Generate the model fossil sheet
+
+Download the uploaded result bundle into the ignored local cache:
+
+```shell
+hf download akhilpandey95/scienceeval-fossil-results \
+  --repo-type dataset \
+  --local-dir data/fossil-results
+```
+
+Then generate the compact site catalog and plot image:
+
+```shell
+python scripts/fossil-m/generate_model_fossil_sheet.py
+```
+
 ## Current protocol notes
 
 - `FrontierScience` delegates to `scripts/evaluate_frontierscience.py` and uses
@@ -99,7 +115,6 @@ results/fossil-m/<model-slug>/
   pairs, not yet the final NER-slice metric used in the GPT-4o fossil.
 - `SciERC` is a marked-pair relation-classification protocol.
 - `SciRIFF` uses exact-output scoring over the 8192-token test split.
-
-The next step is to add the model-fossil summarizer and plot generator that
-turns these JSON files into the same visual sheet used by `fossils.html`.
-
+- `scripts/fossil-m/generate_model_fossil_sheet.py` turns the uploaded result
+  bundle into `data/fossils-m-catalog.json` and the gpt-oss-20b Fossils-M plot
+  consumed by `fossils.html`.

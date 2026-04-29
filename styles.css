@@ -756,6 +756,7 @@ h2 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-areas:
+    "toolbar toolbar toolbar"
     "visual visual visual"
     "intro intro intro"
     "meta meta meta"
@@ -786,10 +787,38 @@ h2 {
 
 .model-sheet-intro,
 .model-sheet-meta,
+.model-sheet-toolbar,
 .model-sheet-visual,
 .model-sheet-ledger {
   position: relative;
   z-index: 1;
+}
+
+.model-sheet-toolbar {
+  grid-area: toolbar;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  z-index: 6;
+}
+
+.model-sheet-toolbar-label {
+  margin: 0;
+}
+
+.model-sheet-controls {
+  grid-template-columns: var(--catalog-control-size);
+  width: var(--catalog-control-size);
+}
+
+.model-sheet-controls .catalog-select-icon[open],
+.model-sheet-controls .catalog-select-menu {
+  width: min(14.5rem, calc(100vw - 2rem));
+}
+
+.model-sheet-controls .catalog-select-menu {
+  min-width: min(14.5rem, calc(100vw - 2rem));
 }
 
 .model-sheet-intro {
@@ -899,12 +928,34 @@ h2 {
   border-top: 1px solid rgba(23, 19, 16, 0.12);
 }
 
+.model-sheet-ledger > [data-fossils-m-rows] {
+  display: contents;
+}
+
+.model-sheet-status {
+  position: relative;
+  z-index: 1;
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: rgba(23, 19, 16, 0.72);
+}
+
 .model-sheet-entry {
   display: grid;
   gap: 0.2rem;
   min-width: 0;
   padding-top: 0.28rem;
   border-top: 1px solid rgba(23, 19, 16, 0.12);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease;
+}
+
+.model-sheet-entry:hover {
+  transform: translateY(-1px);
+  border-color: rgba(111, 63, 43, 0.24);
 }
 
 .model-sheet-entry-head {
@@ -947,6 +998,10 @@ h2 {
   color: var(--accent);
   text-align: right;
   white-space: nowrap;
+}
+
+.model-sheet-entry-value.is-missing {
+  color: rgba(23, 19, 16, 0.44);
 }
 
 .model-sheet-entry-metric,
@@ -1664,6 +1719,10 @@ h2 {
     flex-wrap: wrap;
   }
 
+  .model-sheet-toolbar {
+    flex-wrap: wrap;
+  }
+
   .benchmark-sheet-toolbar-label {
     padding-top: 0;
   }
@@ -1680,6 +1739,7 @@ h2 {
   .model-sheet-shell {
     grid-template-columns: 1fr;
     grid-template-areas:
+      "toolbar"
       "visual"
       "intro"
       "meta"

@@ -1,0 +1,349 @@
+{
+  "defaults": {
+    "model": "gpt-4o"
+  },
+  "models": {
+    "gpt-4o": {
+      "label": "GPT-4o",
+      "status": "available",
+      "page_title": "scienceeval | fossils-m | GPT-4o",
+      "description": "Model-first fossil sheet for GPT-4o across science benchmark specimens.",
+      "plot": "images/gpt4o-fossil-imprint.png",
+      "plot_alt": "A fossil record plot of GPT-4o benchmark values over benchmark introduction year.",
+      "heading_label": "Model fossil",
+      "coverage": "9 / 9 fossils",
+      "model_type": "Private frontier model",
+      "reading_rule": "Compare within protocol",
+      "ledger_aria_label": "GPT-4o benchmark ledger",
+      "entries": [
+        {
+          "id": "frontierscience",
+          "title": "FrontierScience",
+          "origin": "**",
+          "href": "benchmark.html#fossil-frontierscience",
+          "value": "12.3 / 0.4",
+          "primary_value": 12.3,
+          "secondary_value": 0.4,
+          "metric": "Olympiad acc. / Research acc.",
+          "source_label": "FrontierScience paper, 2026",
+          "source_url": "https://cdn.openai.com/pdf/2fcd284c-b468-4c21-8ee0-7a783933efcc/frontierscience-paper.pdf"
+        },
+        {
+          "id": "gpqa",
+          "title": "GPQA",
+          "origin": "**",
+          "href": "benchmark.html#fossil-gpqa",
+          "value": "53.6%",
+          "primary_value": 53.6,
+          "metric": "GPQA (science)",
+          "source_label": "OpenAI, 2025",
+          "source_url": "https://openai.com/index/introducing-gpt-4-5/"
+        },
+        {
+          "id": "pubmedqa",
+          "title": "PubMedQA",
+          "origin": "**",
+          "href": "benchmark.html#fossil-pubmedqa",
+          "value": "53.65%",
+          "primary_value": 53.65,
+          "metric": "Label-F1, PubMedQA-labeled",
+          "source_label": "MedINST, 2024",
+          "source_url": "https://aclanthology.org/2024.findings-emnlp.482.pdf"
+        },
+        {
+          "id": "bioasq",
+          "title": "BioASQ",
+          "origin": "**",
+          "href": "benchmark.html#fossil-bioasq",
+          "value": "86.19%",
+          "primary_value": 86.19,
+          "metric": "Label-F1, Task-B yes/no",
+          "source_label": "MedINST, 2024",
+          "source_url": "https://aclanthology.org/2024.findings-emnlp.482.pdf"
+        },
+        {
+          "id": "biored",
+          "title": "BioRED",
+          "origin": "**",
+          "href": "benchmark.html#fossil-biored",
+          "value": "72.45%",
+          "primary_value": 72.45,
+          "metric": "Entity-F1, BioRED NER slice",
+          "source_label": "MedINST, 2024",
+          "source_url": "https://aclanthology.org/2024.findings-emnlp.482.pdf"
+        },
+        {
+          "id": "scierc",
+          "title": "SciERC",
+          "origin": "**",
+          "href": "benchmark.html#fossil-scierc",
+          "value": "70.35%",
+          "primary_value": 70.35,
+          "metric": "G-BS-F1, plotted on a percent scale",
+          "source_label": "GraphJudge, 2025",
+          "source_url": "https://aclanthology.org/2025.emnlp-main.554.pdf"
+        },
+        {
+          "id": "mmlu",
+          "title": "MMLU",
+          "origin": "*",
+          "href": "benchmark.html#fossil-mmlu",
+          "value": "85.7%",
+          "primary_value": 85.7,
+          "metric": "MMLU",
+          "source_label": "OpenAI, 2025",
+          "source_url": "https://openai.com/index/gpt-4-1/"
+        },
+        {
+          "id": "simpleqa",
+          "title": "SimpleQA",
+          "origin": "*",
+          "href": "benchmark.html#fossil-simpleqa",
+          "value": "38.2%",
+          "primary_value": 38.2,
+          "metric": "Correct",
+          "source_label": "OpenAI, 2024",
+          "source_url": "https://openai.com/index/introducing-simpleqa/"
+        },
+        {
+          "id": "sciriff",
+          "title": "SciRIFF",
+          "origin": "**",
+          "href": "benchmark.html#fossil-sciriff",
+          "value": "60.4",
+          "primary_value": 60.4,
+          "metric": "Avg., SciRIFF-Eval",
+          "source_label": "SciRIFF, 2025",
+          "source_url": "https://aclanthology.org/2025.emnlp-main.310.pdf"
+        }
+      ],
+      "plot_points": [
+        {
+          "id": "frontierscience",
+          "name": "Frontier O",
+          "year": 2026.05,
+          "value": 12.3
+        },
+        {
+          "id": "frontierscience_research",
+          "name": "Frontier R",
+          "year": 2026.18,
+          "value": 0.4
+        },
+        {
+          "id": "gpqa",
+          "name": "GPQA",
+          "year": 2023.92,
+          "value": 53.6
+        },
+        {
+          "id": "pubmedqa",
+          "name": "PubMedQA",
+          "year": 2019.92,
+          "value": 53.65
+        },
+        {
+          "id": "bioasq",
+          "name": "BioASQ",
+          "year": 2015.0,
+          "value": 86.19
+        },
+        {
+          "id": "biored",
+          "name": "BioRED",
+          "year": 2022.33,
+          "value": 72.45
+        },
+        {
+          "id": "scierc",
+          "name": "SciERC",
+          "year": 2018.83,
+          "value": 70.35
+        },
+        {
+          "id": "mmlu",
+          "name": "MMLU",
+          "year": 2020.75,
+          "value": 85.7
+        },
+        {
+          "id": "simpleqa",
+          "name": "SimpleQA",
+          "year": 2024.92,
+          "value": 38.2
+        },
+        {
+          "id": "sciriff",
+          "name": "SciRIFF",
+          "year": 2024.5,
+          "value": 60.4
+        }
+      ]
+    },
+    "gpt-oss-20b": {
+      "label": "gpt-oss-20b",
+      "status": "available",
+      "page_title": "scienceeval | fossils-m | gpt-oss-20b",
+      "description": "Model-first fossil sheet for gpt-oss-20b from the uploaded Fossils-M result bundle.",
+      "plot": "images/gpt-oss-20b-fossil-imprint.png",
+      "plot_alt": "A fossil record plot of gpt-oss-20b benchmark values over benchmark introduction year.",
+      "heading_label": "Model fossil",
+      "coverage": "7 / 9 fossils",
+      "model_type": "Open-weight model",
+      "reading_rule": "First-pass suite protocol",
+      "ledger_aria_label": "gpt-oss-20b benchmark ledger",
+      "entries": [
+        {
+          "id": "frontierscience",
+          "title": "FrontierScience",
+          "origin": "**",
+          "href": "benchmark.html#fossil-frontierscience",
+          "value": "27.2 / 2.8",
+          "primary_value": 27.15,
+          "secondary_value": 2.83,
+          "metric": "Olympiad pass rate / Research pass rate",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gpt-oss-20b"
+        },
+        {
+          "id": "gpqa",
+          "title": "GPQA",
+          "origin": "**",
+          "href": "benchmark.html#fossil-gpqa",
+          "value": "27.3%",
+          "primary_value": 27.27,
+          "metric": "Accuracy, GPQA Diamond",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gpt-oss-20b"
+        },
+        {
+          "id": "pubmedqa",
+          "title": "PubMedQA",
+          "origin": "**",
+          "href": "benchmark.html#fossil-pubmedqa",
+          "value": "50.2%",
+          "primary_value": 50.22,
+          "metric": "Macro-F1, PubMedQA-labeled",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gpt-oss-20b"
+        },
+        {
+          "id": "bioasq",
+          "title": "BioASQ",
+          "origin": "**",
+          "href": "benchmark.html#fossil-bioasq",
+          "value": "0.0%",
+          "primary_value": 0.0,
+          "metric": "Exact match, Task-B answer extraction",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gpt-oss-20b"
+        },
+        {
+          "id": "biored",
+          "title": "BioRED",
+          "origin": "**",
+          "href": "benchmark.html#fossil-biored",
+          "value": "24.4%",
+          "primary_value": 24.41,
+          "metric": "Macro-F1, relation classification",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gpt-oss-20b"
+        },
+        {
+          "id": "scierc",
+          "title": "SciERC",
+          "origin": "**",
+          "href": "benchmark.html#fossil-scierc",
+          "value": "16.9%",
+          "primary_value": 16.91,
+          "metric": "Macro-F1, marked-pair relations",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gpt-oss-20b"
+        },
+        {
+          "id": "mmlu",
+          "title": "MMLU",
+          "origin": "*",
+          "href": "benchmark.html#fossil-mmlu",
+          "value": "Not run",
+          "metric": "MMLU",
+          "missing": true,
+          "source_label": "Not included in this Fossils-M run",
+          "source_url": ""
+        },
+        {
+          "id": "simpleqa",
+          "title": "SimpleQA",
+          "origin": "*",
+          "href": "benchmark.html#fossil-simpleqa",
+          "value": "Not run",
+          "metric": "Correct",
+          "missing": true,
+          "source_label": "Not included in this Fossils-M run",
+          "source_url": ""
+        },
+        {
+          "id": "sciriff",
+          "title": "SciRIFF",
+          "origin": "**",
+          "href": "benchmark.html#fossil-sciriff",
+          "value": "0.0%",
+          "primary_value": 0.0,
+          "metric": "Exact match, SciRIFF 8192",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gpt-oss-20b"
+        }
+      ],
+      "plot_points": [
+        {
+          "id": "frontierscience",
+          "name": "Frontier O",
+          "year": 2026.05,
+          "value": 27.15
+        },
+        {
+          "id": "frontierscience_research",
+          "name": "Frontier R",
+          "year": 2026.18,
+          "value": 2.83
+        },
+        {
+          "id": "gpqa",
+          "name": "GPQA",
+          "year": 2023.92,
+          "value": 27.27
+        },
+        {
+          "id": "pubmedqa",
+          "name": "PubMedQA",
+          "year": 2019.92,
+          "value": 50.22
+        },
+        {
+          "id": "bioasq",
+          "name": "BioASQ",
+          "year": 2015.0,
+          "value": 0.0
+        },
+        {
+          "id": "biored",
+          "name": "BioRED",
+          "year": 2022.33,
+          "value": 24.41
+        },
+        {
+          "id": "scierc",
+          "name": "SciERC",
+          "year": 2018.83,
+          "value": 16.91
+        },
+        {
+          "id": "sciriff",
+          "name": "SciRIFF",
+          "year": 2024.5,
+          "value": 0.0
+        }
+      ]
+    }
+  }
+}
