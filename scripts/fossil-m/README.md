@@ -46,6 +46,44 @@ Check that the OpenAI-compatible endpoint is alive:
 curl http://127.0.0.1:30000/v1/models
 ```
 
+## Download benchmark datasets
+
+These commands recreate the local dataset layout read by the Fossils-M
+evaluators. GPQA is gated, so accept the terms on Hugging Face and run
+`hf auth login` first.
+
+```shell
+mkdir -p data/biored/extracted
+
+hf download Idavidrein/gpqa \
+  gpqa_diamond.csv gpqa_experts.csv gpqa_extended.csv gpqa_main.csv license.txt \
+  --repo-type dataset \
+  --local-dir data/gpqa/extracted/dataset
+hf download kroshan/BioASQ --repo-type dataset --local-dir data/bioasq
+hf download qiaojin/PubMedQA --repo-type dataset --local-dir data/pubmedqa
+hf download nsusemiehl/SciERC --repo-type dataset --local-dir data/scierc
+hf download allenai/SciRIFF --repo-type dataset --local-dir data/sciriff
+hf download cais/mmlu --repo-type dataset --include "all/*" --local-dir data/mmlu
+hf download basicv8vc/SimpleQA --repo-type dataset --local-dir data/simpleqa
+
+curl -L -o data/biored/BIORED.zip \
+  https://ftp.ncbi.nlm.nih.gov/pub/lu/BioRED/BIORED.zip
+curl -L -o data/biored/BioRED_Annotation_Guideline.pdf \
+  https://ftp.ncbi.nlm.nih.gov/pub/lu/BioRED/BioRED_Annotation_Guideline.pdf
+curl -L -o data/biored/README.txt \
+  https://ftp.ncbi.nlm.nih.gov/pub/lu/BioRED/README.txt
+unzip -o data/biored/BIORED.zip -d data/biored/extracted
+```
+
+FrontierScience is downloaded automatically into `.cache/frontierscience` by
+`scripts/evaluate_frontierscience.py`. To pre-seed that cache:
+
+```shell
+hf download openai/frontierscience \
+  --repo-type dataset \
+  --local-dir .cache/frontierscience
+```
+
 ## Smoke-test the suite
 
 Use a small limit first. FrontierScience requires a judge model for scored runs.

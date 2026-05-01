@@ -238,34 +238,23 @@ GPT4O_VALUES = {
 
 
 # label placement constants
-DEFAULT_LABEL_OFFSETS = {
-    "bioasq": (6, 8, "bottom"),
-    "scierc": (6, 8, "bottom"),
-    "pubmedqa": (2, -12, "top"),
-    "mmlu": (6, 8, "bottom"),
-    "biored": (6, -12, "top"),
-    "gpqa": (6, 8, "bottom"),
-    "sciriff": (6, -12, "top"),
-    "simpleqa": (6, 8, "bottom"),
-    "frontierscience": (6, 8, "bottom"),
-    "frontierscience_research": (6, -10, "top"),
-}
-
-GPT_OSS_LABEL_OFFSETS = {
-    "bioasq": (6, 8, "bottom"),
-    "scierc": (6, 8, "bottom"),
-    "pubmedqa": (6, 8, "bottom"),
-    "biored": (6, -12, "top"),
-    "gpqa": (6, 8, "bottom"),
-    "sciriff": (6, 8, "bottom"),
-    "frontierscience": (6, -12, "top"),
-    "frontierscience_research": (6, 8, "bottom"),
+ABOVE_DOT_LABEL_OFFSETS = {
+    "bioasq": (0, 12, "bottom"),
+    "scierc": (0, 12, "bottom"),
+    "pubmedqa": (0, 12, "bottom"),
+    "mmlu": (0, 12, "bottom"),
+    "biored": (0, 12, "bottom"),
+    "gpqa": (0, 12, "bottom"),
+    "sciriff": (0, 12, "bottom"),
+    "simpleqa": (0, 12, "bottom"),
+    "frontierscience": (0, 12, "bottom"),
+    "frontierscience_research": (0, 12, "bottom"),
 }
 
 MODEL_LABEL_OFFSETS = {
-    "gpt-4o": DEFAULT_LABEL_OFFSETS,
-    "gpt-oss-20b": GPT_OSS_LABEL_OFFSETS,
-    "gemma-4-31b-it": DEFAULT_LABEL_OFFSETS,
+    "gpt-4o": ABOVE_DOT_LABEL_OFFSETS,
+    "gpt-oss-20b": ABOVE_DOT_LABEL_OFFSETS,
+    "gemma-4-31b-it": ABOVE_DOT_LABEL_OFFSETS,
 }
 
 
@@ -854,7 +843,7 @@ def render_plot(model_id: str, model: dict, output_dir: Path) -> None:
     None
     """
     points = [point for point in model["plot_points"] if point.get("value") is not None]
-    offsets = MODEL_LABEL_OFFSETS.get(model_id, DEFAULT_LABEL_OFFSETS)
+    offsets = MODEL_LABEL_OFFSETS.get(model_id, ABOVE_DOT_LABEL_OFFSETS)
 
     fig, ax = plt.subplots(figsize=(12.6, 4.3), dpi=300)
     fig.patch.set_facecolor(PAPER)
@@ -920,7 +909,7 @@ def draw_launch_line(ax, launch_year: float) -> None:
 # helper function to draw all measured points
 def draw_points(ax, points: list[dict], offsets: dict[str, tuple[int, int, str]]) -> None:
     for point in points:
-        offset_x, offset_y, vertical_align = offsets.get(point["id"], (6, 8, "bottom"))
+        offset_x, offset_y, vertical_align = offsets.get(point["id"], (0, 12, "bottom"))
         value = point["value"]
 
         ax.vlines(
@@ -963,10 +952,10 @@ def draw_points(ax, points: list[dict], offsets: dict[str, tuple[int, int, str]]
             xy=(point["year"], value),
             xytext=(offset_x, offset_y),
             textcoords="offset points",
-            ha="left",
+            ha="center",
             va=vertical_align,
             color=INK,
-            fontsize=9.3,
+            fontsize=7.9,
             linespacing=1.12,
             fontfamily="DejaVu Serif",
             zorder=5,

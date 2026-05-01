@@ -353,7 +353,7 @@
       "plot": "images/gemma-4-31b-it-fossil-imprint.png",
       "plot_alt": "A fossil record plot of gemma-4-31B-it benchmark values over benchmark introduction year.",
       "heading_label": "Model fossil",
-      "coverage": "6 / 9 fossils",
+      "coverage": "9 / 9 fossils",
       "model_type": "Open-weight model",
       "reading_rule": "Final-output normalized protocol",
       "ledger_aria_label": "gemma-4-31B-it benchmark ledger",
@@ -363,11 +363,12 @@
           "title": "FrontierScience",
           "origin": "**",
           "href": "benchmark.html#fossil-frontierscience",
-          "value": "Not run",
+          "value": "45.9 / 5.3",
+          "primary_value": 45.85,
+          "secondary_value": 5.28,
           "metric": "Olympiad pass rate / Research pass rate",
-          "missing": true,
-          "source_label": "Not included in this Fossils-M run",
-          "source_url": ""
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gemma-4-31b-it"
         },
         {
           "id": "gpqa",
@@ -429,22 +430,22 @@
           "title": "MMLU",
           "origin": "*",
           "href": "benchmark.html#fossil-mmlu",
-          "value": "Not run",
-          "metric": "MMLU",
-          "missing": true,
-          "source_label": "Not included in this Fossils-M run",
-          "source_url": ""
+          "value": "86.5%",
+          "primary_value": 86.53,
+          "metric": "Accuracy, MMLU all-subject test",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gemma-4-31b-it"
         },
         {
           "id": "simpleqa",
           "title": "SimpleQA",
           "origin": "*",
           "href": "benchmark.html#fossil-simpleqa",
-          "value": "Not run",
-          "metric": "Correct",
-          "missing": true,
-          "source_label": "Not included in this Fossils-M run",
-          "source_url": ""
+          "value": "4.3%",
+          "primary_value": 4.32,
+          "metric": "Normalized exact answer, SimpleQA",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gemma-4-31b-it"
         },
         {
           "id": "sciriff",
@@ -459,6 +460,18 @@
         }
       ],
       "plot_points": [
+        {
+          "id": "frontierscience",
+          "name": "Frontier O",
+          "year": 2026.05,
+          "value": 45.85
+        },
+        {
+          "id": "frontierscience_research",
+          "name": "Frontier R",
+          "year": 2026.18,
+          "value": 5.28
+        },
         {
           "id": "gpqa",
           "name": "GPQA",
@@ -488,6 +501,18 @@
           "name": "SciERC",
           "year": 2018.83,
           "value": 64.25
+        },
+        {
+          "id": "mmlu",
+          "name": "MMLU",
+          "year": 2020.75,
+          "value": 86.53
+        },
+        {
+          "id": "simpleqa",
+          "name": "SimpleQA",
+          "year": 2024.92,
+          "value": 4.32
         },
         {
           "id": "sciriff",
