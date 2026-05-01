@@ -46,7 +46,7 @@ RESULTS_DIR = REPO_ROOT / "results" / "fossil-m"
 
 
 # benchmark constants
-BENCHMARKS = ("bioasq", "biored", "gpqa", "pubmedqa", "scierc", "sciriff")
+BENCHMARKS = ("bioasq", "biored", "gpqa", "mmlu", "pubmedqa", "scierc", "sciriff", "simpleqa")
 GPQA_SPLITS = ("diamond", "main", "experts", "extended")
 SCIRIFF_CONTEXT_LENGTH = "8192"
 SCIERC_LABELS = (
@@ -76,6 +76,20 @@ CHOICE_LABELS = ("A", "B", "C", "D")
 GPQA_PROMPT_TEMPLATE = """Answer the multiple-choice science question.
 
 Return only one letter: A, B, C, or D.
+
+Question:
+{question}
+
+Choices:
+{choices}
+"""
+
+MMLU_PROMPT_TEMPLATE = """Answer the multiple-choice question.
+
+Return only one letter: A, B, C, or D.
+
+Subject:
+{subject}
 
 Question:
 {question}
@@ -139,6 +153,14 @@ Instruction:
 {input_text}
 """
 
+SIMPLEQA_PROMPT_TEMPLATE = """Answer the question directly.
+
+Return only the shortest answer phrase. Do not explain.
+
+Question:
+{question}
+"""
+
 
 # helper function to parse CLI args
 def parse_args() -> argparse.Namespace:
@@ -196,9 +218,11 @@ def load_examples(args: argparse.Namespace) -> tuple[list[dict], list[str]]:
         "bioasq": load_bioasq_examples,
         "biored": load_biored_examples,
         "gpqa": lambda: load_gpqa_examples(args.gpqa_split),
+        "mmlu": load_mmlu_examples,
         "pubmedqa": load_pubmedqa_examples,
         "scierc": load_scierc_examples,
         "sciriff": load_sciriff_examples,
+        "simpleqa": load_simpleqa_examples,
     }
     examples, labels = loaders[args.benchmark]()
     examples = examples[args.start_index :]
@@ -246,6 +270,37 @@ def load_gpqa_examples(split_name: str) -> tuple[list[dict], list[str]]:
                     ],
                 }
             )
+    return examples, list(CHOICE_LABELS)
+
+
+# helper function to load MMLU examples
+def load_mmlu_examples() -> tuple[list[dict], list[str]]:
+    path = DATA_DIR / "mmlu" / "all" / "test-00000-of-00001.parquet"
+    rows = pq.read_table(path).to_pylist()
+    examples = []
+    for row_index, row in enumerate(rows):
+        choices = [str(choice).strip() for choice in row["choices"]]
+        formatted_choices = [f"{letter}. {choice}" for letter, choice in zip(CHOICE_LABELS, choices, strict=False)]
+        examples.append(
+            {
+                "id": f"mmlu-test-{row_index}",
+                "benchmark": "mmlu",
+                "metric": "accuracy",
+                "parse_mode": "choice",
+                "labels": list(CHOICE_LABELS),
+                "gold": CHOICE_LABELS[int(row["answer"])],
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": MMLU_PROMPT_TEMPLATE.format(
+                            subject=str(row["subject"]).replace("_", " "),
+                            question=row["question"].strip(),
+                            choices="\n".join(formatted_choices),
+                        ),
+                    }
+                ],
+            }
+        )
     return examples, list(CHOICE_LABELS)
 
 
@@ -411,6 +466,31 @@ def load_biored_examples() -> tuple[list[dict], list[str]]:
     return examples, list(BIORED_RELATION_LABELS)
 
 
+# helper function to load SimpleQA exact-answer examples
+def load_simpleqa_examples() -> tuple[list[dict], list[str]]:
+    path = DATA_DIR / "simpleqa" / "simple_qa_test_set.csv"
+    examples = []
+    with path.open(newline="", encoding="utf-8", errors="replace") as file:
+        for row_index, row in enumerate(csv.DictReader(file)):
+            examples.append(
+                {
+                    "id": f"simpleqa-test-{row_index}",
+                    "benchmark": "simpleqa",
+                    "metric": "exact_match",
+                    "parse_mode": "exact",
+                    "labels": [],
+                    "gold": normalize_answer(row["answer"]),
+                    "messages": [
+                        {
+                            "role": "user",
+                            "content": SIMPLEQA_PROMPT_TEMPLATE.format(question=row["problem"].strip()),
+                        }
+                    ],
+                }
+            )
+    return examples, []
+
+
 # helper function to collect BioRED entities by normalized identifier
 def collect_biored_entities(document: dict) -> dict[str, dict]:
     entities = {}
@@ -465,9 +545,11 @@ def protocol_note(benchmark: str) -> str:
         "bioasq": "First-pass BioASQ answer extraction from local valid_bio.csv.",
         "biored": "First-pass BioRED relation classification over gold entity pairs.",
         "gpqa": "Deterministic shuffled multiple choice with exact letter scoring.",
+        "mmlu": "MMLU all-subject test split multiple choice with exact letter scoring.",
         "pubmedqa": "PubMedQA labeled yes/no/maybe classification from context.",
         "scierc": "Marked-pair SciERC relation classification.",
         "sciriff": "SciRIFF 8192 test exact-output instruction following.",
+        "simpleqa": "SimpleQA local test CSV with normalized exact-answer scoring.",
     }
     return notes[benchmark]
 
@@ -620,4 +702,3 @@ if __name__ == "__main__":
     parsed_args = parse_args()
     validate_args(parsed_args)
     run_label_fossil_eval(parsed_args)
-

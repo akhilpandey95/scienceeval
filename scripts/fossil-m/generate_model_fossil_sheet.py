@@ -364,7 +364,17 @@ def load_result_summaries(results_dir: Path) -> dict[str, dict]:
     """
     summaries = {}
 
-    for benchmark in ("bioasq", "biored", "frontierscience", "gpqa", "pubmedqa", "scierc", "sciriff"):
+    for benchmark in (
+        "bioasq",
+        "biored",
+        "frontierscience",
+        "gpqa",
+        "mmlu",
+        "pubmedqa",
+        "scierc",
+        "sciriff",
+        "simpleqa",
+    ):
         path = results_dir / f"{benchmark}.json"
         if not path.exists():
             continue
@@ -680,6 +690,12 @@ def build_open_model_entry_payload(benchmark: str, summaries: dict[str, dict]) -
             "primary_value": percent(summaries["gpqa"]["accuracy"]),
             "metric": "Accuracy, GPQA Diamond",
         }
+    if benchmark == "mmlu":
+        return {
+            "value": format_percent(percent(summaries["mmlu"]["accuracy"])),
+            "primary_value": percent(summaries["mmlu"]["accuracy"]),
+            "metric": "Accuracy, MMLU all-subject test",
+        }
     if benchmark == "pubmedqa":
         return {
             "value": format_percent(percent(summaries["pubmedqa"]["macro_f1"])),
@@ -712,6 +728,12 @@ def build_open_model_entry_payload(benchmark: str, summaries: dict[str, dict]) -
             "value": format_percent(percent(value)),
             "primary_value": percent(value),
             "metric": "Final-output exact / canonical JSON, SciRIFF 8192",
+        }
+    if benchmark == "simpleqa":
+        return {
+            "value": format_percent(percent(summaries["simpleqa"]["accuracy"])),
+            "primary_value": percent(summaries["simpleqa"]["accuracy"]),
+            "metric": "Normalized exact answer, SimpleQA",
         }
 
     return {

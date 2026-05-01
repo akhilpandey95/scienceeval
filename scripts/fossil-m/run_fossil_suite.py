@@ -24,9 +24,18 @@ LABEL_SCRIPT = SCRIPT_DIR / "evaluate_label_fossils.py"
 
 
 # benchmark constants
-DEFAULT_BENCHMARKS = ("frontierscience", "gpqa", "pubmedqa", "bioasq", "biored", "scierc", "sciriff")
-LABEL_BENCHMARKS = ("gpqa", "pubmedqa", "bioasq", "biored", "scierc", "sciriff")
-EXCLUDED_BY_DESIGN = ("mmlu", "simpleqa")
+DEFAULT_BENCHMARKS = (
+    "frontierscience",
+    "gpqa",
+    "pubmedqa",
+    "bioasq",
+    "biored",
+    "scierc",
+    "mmlu",
+    "simpleqa",
+    "sciriff",
+)
+LABEL_BENCHMARKS = ("gpqa", "pubmedqa", "bioasq", "biored", "scierc", "mmlu", "simpleqa", "sciriff")
 
 
 # helper function to parse CLI args
@@ -61,9 +70,6 @@ def parse_args() -> argparse.Namespace:
 # helper function to validate args
 def validate_args(args: argparse.Namespace) -> None:
     requested = set(args.benchmarks)
-    blocked = requested & set(EXCLUDED_BY_DESIGN)
-    if blocked:
-        raise SystemExit(f"These Fossils-M runs are intentionally excluded here: {sorted(blocked)}")
     unsupported = requested - set(DEFAULT_BENCHMARKS)
     if unsupported:
         raise SystemExit(f"Unsupported benchmark(s): {sorted(unsupported)}")
@@ -162,7 +168,6 @@ def build_commands(args: argparse.Namespace) -> list[list[str]]:
 
 # orchestration function
 def run_fossil_suite(args: argparse.Namespace) -> None:
-    logger.info("Excluded by design in this suite: %s", ", ".join(EXCLUDED_BY_DESIGN))
     for cmd in build_commands(args):
         run_command(cmd, dry_run=args.dry_run)
 
@@ -172,4 +177,3 @@ if __name__ == "__main__":
     parsed_args = parse_args()
     validate_args(parsed_args)
     run_fossil_suite(parsed_args)
-

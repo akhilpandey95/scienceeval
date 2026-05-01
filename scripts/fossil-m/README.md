@@ -1,8 +1,7 @@
 # Fossils-M open-weight evals
 
 First-pass harness for turning an open-weight model into a model fossil sheet.
-This suite intentionally skips `MMLU` and `SimpleQA` because those are commonly
-reported during model launches. It focuses on:
+It covers:
 
 - `FrontierScience`
 - `GPQA`
@@ -10,6 +9,8 @@ reported during model launches. It focuses on:
 - `BioASQ`
 - `BioRED`
 - `SciERC`
+- `MMLU`
+- `SimpleQA`
 - `SciRIFF`
 
 ## Download `gpt-oss-20b` model weights
@@ -116,6 +117,9 @@ python scripts/fossil-m/generate_model_fossil_sheet.py
 - `BioRED` is a first-pass relation-classification protocol over gold entity
   pairs, not yet the final NER-slice metric used in the GPT-4o fossil.
 - `SciERC` is a marked-pair relation-classification protocol.
+- `MMLU` uses the all-subject test split with deterministic multiple-choice
+  letter scoring.
+- `SimpleQA` uses normalized exact-answer scoring over `simple_qa_test_set.csv`.
 - `SciRIFF` uses exact-output scoring over the 8192-token test split.
 - `scripts/fossil-m/generate_model_fossil_sheet.py` turns the uploaded result
   bundle into `data/fossils-m-catalog.json` and the Fossils-M plot images
