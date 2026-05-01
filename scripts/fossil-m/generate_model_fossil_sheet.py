@@ -10,6 +10,8 @@ from __future__ import annotations
 # stdlib
 import argparse
 import json
+import re
+import unicodedata
 from pathlib import Path
 
 # data
@@ -25,13 +27,13 @@ from fossil_m_common import REPO_ROOT, save_json
 
 
 # directory constants
-DEFAULT_RESULTS_DIR = REPO_ROOT / "data" / "fossil-results" / "fossil-m" / "gpt-oss-20b"
+DEFAULT_RESULTS_DIR = REPO_ROOT / "data" / "fossil-results" / "fossil-m"
 DATA_OUTPUT_PATH = REPO_ROOT / "data" / "fossils-m-catalog.json"
 IMAGE_OUTPUT_DIR = REPO_ROOT / "images"
 
 
 # source constants
-FOSSIL_RESULTS_URL = "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gpt-oss-20b"
+FOSSIL_RESULTS_ROOT_URL = "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m"
 GPT4O_FRONTIERSCIENCE_URL = "https://cdn.openai.com/pdf/2fcd284c-b468-4c21-8ee0-7a783933efcc/frontierscience-paper.pdf"
 GPT4O_OPENAI_45_URL = "https://openai.com/index/introducing-gpt-4-5/"
 GPT4O_OPENAI_41_URL = "https://openai.com/index/gpt-4-1/"
@@ -39,6 +41,12 @@ GPT4O_SIMPLEQA_URL = "https://openai.com/index/introducing-simpleqa/"
 GPT4O_MEDINST_URL = "https://aclanthology.org/2024.findings-emnlp.482.pdf"
 GPT4O_GRAPHJUDGE_URL = "https://aclanthology.org/2025.emnlp-main.554.pdf"
 GPT4O_SCIRIFF_URL = "https://aclanthology.org/2025.emnlp-main.310.pdf"
+
+
+# gpt-oss output constants
+FINAL_CHANNEL_MARKER = "<|channel|>final<|message|>"
+END_MARKER = "<|end|>"
+HYPHEN_TRANSLATION = str.maketrans({char: "-" for char in "‐‑‒–—−"})
 
 
 # plot constants
@@ -55,9 +63,21 @@ LAUNCH = "#b54b4b"
 MODEL_INTRO_YEARS = {
     "gpt-4o": 2024 + (4 + 13 / 31) / 12,
     "gpt-oss-20b": 2025 + (7 + 5 / 31) / 12,
+    "gemma-4-31b-it": 2026 + (3 + 2 / 30) / 12,
 }
 
-MODEL_ORDER = ("gpt-4o", "gpt-oss-20b")
+MODEL_ORDER = ("gpt-4o", "gpt-oss-20b", "gemma-4-31b-it")
+
+OPEN_MODEL_CONFIGS = {
+    "gpt-oss-20b": {
+        "label": "gpt-oss-20b",
+        "model_type": "Open-weight model",
+    },
+    "gemma-4-31b-it": {
+        "label": "gemma-4-31B-it",
+        "model_type": "Open-weight model",
+    },
+}
 
 
 # benchmark constants
@@ -139,6 +159,12 @@ BENCHMARK_META = {
         "year": 2024.50,
         "plot_label": "SciRIFF",
     },
+}
+
+MISSING_BENCHMARK_METRICS = {
+    "frontierscience": "Olympiad pass rate / Research pass rate",
+    "mmlu": "MMLU",
+    "simpleqa": "Correct",
 }
 
 
@@ -236,6 +262,12 @@ GPT_OSS_LABEL_OFFSETS = {
     "frontierscience_research": (6, 8, "bottom"),
 }
 
+MODEL_LABEL_OFFSETS = {
+    "gpt-4o": DEFAULT_LABEL_OFFSETS,
+    "gpt-oss-20b": GPT_OSS_LABEL_OFFSETS,
+    "gemma-4-31b-it": DEFAULT_LABEL_OFFSETS,
+}
+
 
 # helper function to parse CLI args
 def parse_args() -> argparse.Namespace:
@@ -251,7 +283,7 @@ def parse_args() -> argparse.Namespace:
         "--results-dir",
         type=Path,
         default=DEFAULT_RESULTS_DIR,
-        help="Directory containing gpt-oss-20b Fossils-M JSON results.",
+        help="Directory containing Fossils-M model result folders, or one model result folder.",
     )
     parser.add_argument(
         "--data-output",
@@ -285,6 +317,37 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+# helper function to resolve available model result directories
+def resolve_model_result_dirs(results_dir: Path) -> dict[str, Path]:
+    """
+    Resolve configured Fossils-M model result directories.
+
+    Parameters
+    ------------
+    results_dir: Path
+        Results root or a single model result directory
+
+    Returns
+    ------------
+    dict[str, Path]
+    """
+    if (results_dir / "gpqa.json").exists():
+        model_id = results_dir.name
+        if model_id not in OPEN_MODEL_CONFIGS:
+            raise RuntimeError(f"No Fossils-M model config for {model_id}.")
+        return {model_id: results_dir}
+
+    resolved = {}
+    for model_id in MODEL_ORDER:
+        if model_id not in OPEN_MODEL_CONFIGS:
+            continue
+        model_dir = results_dir / model_id
+        if model_dir.exists():
+            resolved[model_id] = model_dir
+
+    return resolved
+
+
 # helper function to load all benchmark summaries
 def load_result_summaries(results_dir: Path) -> dict[str, dict]:
     """
@@ -304,11 +367,194 @@ def load_result_summaries(results_dir: Path) -> dict[str, dict]:
     for benchmark in ("bioasq", "biored", "frontierscience", "gpqa", "pubmedqa", "scierc", "sciriff"):
         path = results_dir / f"{benchmark}.json"
         if not path.exists():
-            raise FileNotFoundError(f"Missing required result file: {path}")
+            continue
         payload = load_json(path)
-        summaries[benchmark] = payload["summary"]
+        summary = dict(payload["summary"])
+        if benchmark == "bioasq":
+            summary["final_channel_accuracy"] = final_channel_accuracy(payload)
+        if benchmark == "scierc":
+            summary["final_channel_macro_f1"] = final_channel_macro_f1(payload)
+        if benchmark == "sciriff":
+            summary["final_channel_canonical_accuracy"] = final_channel_canonical_accuracy(payload)
+        summaries[benchmark] = summary
 
     return summaries
+
+
+# helper function to extract gpt-oss final-channel text
+def extract_final_channel(raw_text: str) -> str:
+    """
+    Extract assistant final text from gpt-oss channel-formatted responses.
+
+    Parameters
+    ------------
+    raw_text: str
+        Raw model response
+
+    Returns
+    ------------
+    str
+    """
+    if FINAL_CHANNEL_MARKER not in raw_text:
+        return raw_text.strip()
+    final_text = raw_text.rsplit(FINAL_CHANNEL_MARKER, 1)[1]
+    final_text = final_text.split(END_MARKER, 1)[0]
+    return final_text.strip()
+
+
+# helper function to normalize exact-match text for display scoring
+def normalize_display_answer(value: object) -> str:
+    """
+    Normalize generated answers for corrected display metrics.
+
+    Parameters
+    ------------
+    value: object
+        Answer-like value
+
+    Returns
+    ------------
+    str
+    """
+    text = "" if value is None else str(value)
+    text = unicodedata.normalize("NFKC", text).translate(HYPHEN_TRANSLATION)
+    text = text.strip().lower()
+    text = re.sub(r"^answer\s*:\s*", "", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip(" \t\r\n`\"'.,;:")
+
+
+# helper function to compute final-channel exact accuracy
+def final_channel_accuracy(payload: dict) -> float:
+    """
+    Score final-channel text after normalized exact matching.
+
+    Parameters
+    ------------
+    payload: dict
+        Raw result payload
+
+    Returns
+    ------------
+    float
+    """
+    results = payload["results"]
+    correct = 0
+    for result in results:
+        final_text = extract_final_channel(result["raw_response"])
+        correct += normalize_display_answer(final_text) == normalize_display_answer(result["gold"])
+    return correct / len(results) if results else 0.0
+
+
+# helper function to compute final-channel macro-F1 for label tasks
+def final_channel_macro_f1(payload: dict) -> float:
+    """
+    Score final-channel labels with macro-F1.
+
+    Parameters
+    ------------
+    payload: dict
+        Raw result payload
+
+    Returns
+    ------------
+    float
+    """
+    labels = list(payload["config"]["labels"])
+    golds = []
+    predictions = []
+    for result in payload["results"]:
+        golds.append(result["gold"])
+        final_text = extract_final_channel(result["raw_response"])
+        predictions.append(parse_display_label(final_text, labels))
+    return macro_f1(golds, predictions, labels)
+
+
+# helper function to parse a label from final-channel text
+def parse_display_label(raw_text: str, labels: list[str]) -> str:
+    normalized_raw = normalize_display_answer(raw_text)
+    label_by_normalized = {normalize_display_answer(label): label for label in labels}
+    if normalized_raw in label_by_normalized:
+        return label_by_normalized[normalized_raw]
+
+    for normalized_label, label in label_by_normalized.items():
+        if re.search(rf"\b{re.escape(normalized_label)}\b", normalized_raw):
+            return label
+    return normalized_raw
+
+
+# helper function to compute macro-F1
+def macro_f1(golds: list[str], predictions: list[str], labels: list[str]) -> float:
+    scores = []
+    for label in labels:
+        true_positive = sum(gold == label and pred == label for gold, pred in zip(golds, predictions, strict=False))
+        false_positive = sum(gold != label and pred == label for gold, pred in zip(golds, predictions, strict=False))
+        false_negative = sum(gold == label and pred != label for gold, pred in zip(golds, predictions, strict=False))
+        precision = true_positive / (true_positive + false_positive) if true_positive + false_positive else 0.0
+        recall = true_positive / (true_positive + false_negative) if true_positive + false_negative else 0.0
+        score = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
+        scores.append(score)
+    return sum(scores) / len(scores) if scores else 0.0
+
+
+# helper function to parse JSON output when present
+def parse_json_output(value: object) -> object | None:
+    text = str(value).strip()
+    text = re.sub(r"^```(?:json)?\s*", "", text, flags=re.IGNORECASE).strip()
+    text = re.sub(r"\s*```$", "", text).strip()
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        return None
+
+
+# helper function to canonicalize JSON-style outputs
+def canonicalize_json(value: object) -> object:
+    if isinstance(value, dict):
+        return {
+            normalize_display_answer(key): canonicalize_json(item)
+            for key, item in sorted(value.items(), key=lambda pair: normalize_display_answer(pair[0]))
+        }
+    if isinstance(value, list):
+        items = [canonicalize_json(item) for item in value]
+        return sorted(items, key=lambda item: json.dumps(item, sort_keys=True, ensure_ascii=False))
+    if isinstance(value, str):
+        return normalize_display_answer(value)
+    return value
+
+
+# helper function to compute corrected SciRIFF display accuracy
+def final_channel_canonical_accuracy(payload: dict) -> float:
+    """
+    Score SciRIFF with final-channel exact matching and canonical JSON equality.
+
+    Parameters
+    ------------
+    payload: dict
+        Raw result payload
+
+    Returns
+    ------------
+    float
+    """
+    results = payload["results"]
+    correct = 0
+    for result in results:
+        final_text = extract_final_channel(result["raw_response"])
+        gold = result["gold"]
+        exact_match = normalize_display_answer(final_text) == normalize_display_answer(gold)
+        if exact_match or json_outputs_match(gold, final_text):
+            correct += 1
+    return correct / len(results) if results else 0.0
+
+
+# helper function to compare JSON outputs semantically
+def json_outputs_match(gold: object, prediction: object) -> bool:
+    gold_json = parse_json_output(gold)
+    prediction_json = parse_json_output(prediction)
+    if gold_json is None or prediction_json is None:
+        return False
+    return canonicalize_json(gold_json) == canonicalize_json(prediction_json)
 
 
 # helper function to convert result ratios to percentages
@@ -367,13 +613,15 @@ def build_gpt4o_model() -> dict:
     }
 
 
-# helper function to build gpt-oss-20b entries from result summaries
-def build_gpt_oss_entries(summaries: dict[str, dict]) -> list[dict]:
+# helper function to build entries from open-model result summaries
+def build_open_model_entries(model_id: str, summaries: dict[str, dict]) -> list[dict]:
     """
-    Convert gpt-oss-20b result summaries into ledger entries.
+    Convert open-model result summaries into ledger entries.
 
     Parameters
     ------------
+    model_id: str
+        Model identifier
     summaries: dict[str, dict]
         Benchmark summary blocks
 
@@ -381,62 +629,12 @@ def build_gpt_oss_entries(summaries: dict[str, dict]) -> list[dict]:
     ------------
     list[dict]
     """
-    frontierscience = summaries["frontierscience"]["by_split"]
-    values = {
-        "frontierscience": {
-            "value": f"{frontierscience['olympiad']['pass_rate'] * 100:.1f} / {frontierscience['research']['pass_rate'] * 100:.1f}",
-            "primary_value": percent(frontierscience["olympiad"]["pass_rate"]),
-            "secondary_value": percent(frontierscience["research"]["pass_rate"]),
-            "metric": "Olympiad pass rate / Research pass rate",
-        },
-        "gpqa": {
-            "value": format_percent(percent(summaries["gpqa"]["accuracy"])),
-            "primary_value": percent(summaries["gpqa"]["accuracy"]),
-            "metric": "Accuracy, GPQA Diamond",
-        },
-        "pubmedqa": {
-            "value": format_percent(percent(summaries["pubmedqa"]["macro_f1"])),
-            "primary_value": percent(summaries["pubmedqa"]["macro_f1"]),
-            "metric": "Macro-F1, PubMedQA-labeled",
-        },
-        "bioasq": {
-            "value": format_percent(percent(summaries["bioasq"]["accuracy"])),
-            "primary_value": percent(summaries["bioasq"]["accuracy"]),
-            "metric": "Exact match, Task-B answer extraction",
-        },
-        "biored": {
-            "value": format_percent(percent(summaries["biored"]["macro_f1"])),
-            "primary_value": percent(summaries["biored"]["macro_f1"]),
-            "metric": "Macro-F1, relation classification",
-        },
-        "scierc": {
-            "value": format_percent(percent(summaries["scierc"]["macro_f1"])),
-            "primary_value": percent(summaries["scierc"]["macro_f1"]),
-            "metric": "Macro-F1, marked-pair relations",
-        },
-        "mmlu": {
-            "value": "Not run",
-            "metric": "MMLU",
-            "missing": True,
-        },
-        "simpleqa": {
-            "value": "Not run",
-            "metric": "Correct",
-            "missing": True,
-        },
-        "sciriff": {
-            "value": format_percent(percent(summaries["sciriff"]["accuracy"])),
-            "primary_value": percent(summaries["sciriff"]["accuracy"]),
-            "metric": "Exact match, SciRIFF 8192",
-        },
-    }
-
     entries = []
     for benchmark in BENCHMARK_ORDER:
-        payload = values[benchmark]
+        payload = build_open_model_entry_payload(benchmark, summaries)
         if not payload.get("missing"):
             payload["source_label"] = "scienceeval fossil suite, 2026"
-            payload["source_url"] = FOSSIL_RESULTS_URL
+            payload["source_url"] = fossil_results_url(model_id)
         else:
             payload["source_label"] = "Not included in this Fossils-M run"
             payload["source_url"] = ""
@@ -445,24 +643,109 @@ def build_gpt_oss_entries(summaries: dict[str, dict]) -> list[dict]:
     return entries
 
 
-# helper function to build the gpt-oss-20b model sheet
-def build_gpt_oss_model(summaries: dict[str, dict]) -> dict:
-    entries = build_gpt_oss_entries(summaries)
+# helper function to build one open-model entry payload
+def build_open_model_entry_payload(benchmark: str, summaries: dict[str, dict]) -> dict:
+    """
+    Build one open-model ledger payload, including missing benchmarks.
+
+    Parameters
+    ------------
+    benchmark: str
+        Benchmark id
+    summaries: dict[str, dict]
+        Benchmark summary blocks
+
+    Returns
+    ------------
+    dict
+    """
+    if benchmark not in summaries:
+        return {
+            "value": "Not run",
+            "metric": MISSING_BENCHMARK_METRICS.get(benchmark, BENCHMARK_META[benchmark]["title"]),
+            "missing": True,
+        }
+
+    if benchmark == "frontierscience":
+        frontierscience = summaries["frontierscience"]["by_split"]
+        return {
+            "value": f"{frontierscience['olympiad']['pass_rate'] * 100:.1f} / {frontierscience['research']['pass_rate'] * 100:.1f}",
+            "primary_value": percent(frontierscience["olympiad"]["pass_rate"]),
+            "secondary_value": percent(frontierscience["research"]["pass_rate"]),
+            "metric": "Olympiad pass rate / Research pass rate",
+        }
+    if benchmark == "gpqa":
+        return {
+            "value": format_percent(percent(summaries["gpqa"]["accuracy"])),
+            "primary_value": percent(summaries["gpqa"]["accuracy"]),
+            "metric": "Accuracy, GPQA Diamond",
+        }
+    if benchmark == "pubmedqa":
+        return {
+            "value": format_percent(percent(summaries["pubmedqa"]["macro_f1"])),
+            "primary_value": percent(summaries["pubmedqa"]["macro_f1"]),
+            "metric": "Macro-F1, PubMedQA-labeled",
+        }
+    if benchmark == "bioasq":
+        value = summaries["bioasq"].get("final_channel_accuracy", summaries["bioasq"]["accuracy"])
+        return {
+            "value": format_percent(percent(value)),
+            "primary_value": percent(value),
+            "metric": "Final-output exact, Task-B answer extraction",
+        }
+    if benchmark == "biored":
+        return {
+            "value": format_percent(percent(summaries["biored"]["macro_f1"])),
+            "primary_value": percent(summaries["biored"]["macro_f1"]),
+            "metric": "Macro-F1, relation classification",
+        }
+    if benchmark == "scierc":
+        value = summaries["scierc"].get("final_channel_macro_f1", summaries["scierc"]["macro_f1"])
+        return {
+            "value": format_percent(percent(value)),
+            "primary_value": percent(value),
+            "metric": "Final-output Macro-F1, marked-pair relations",
+        }
+    if benchmark == "sciriff":
+        value = summaries["sciriff"].get("final_channel_canonical_accuracy", summaries["sciriff"]["accuracy"])
+        return {
+            "value": format_percent(percent(value)),
+            "primary_value": percent(value),
+            "metric": "Final-output exact / canonical JSON, SciRIFF 8192",
+        }
+
     return {
-        "label": "gpt-oss-20b",
+        "value": "Not run",
+        "metric": MISSING_BENCHMARK_METRICS.get(benchmark, BENCHMARK_META[benchmark]["title"]),
+        "missing": True,
+    }
+
+
+# helper function to build the open model sheet
+def build_open_model(model_id: str, summaries: dict[str, dict]) -> dict:
+    entries = build_open_model_entries(model_id, summaries)
+    measured_count = sum(not entry.get("missing") for entry in entries)
+    config = OPEN_MODEL_CONFIGS[model_id]
+    return {
+        "label": config["label"],
         "status": "available",
-        "page_title": "scienceeval | fossils-m | gpt-oss-20b",
-        "description": "Model-first fossil sheet for gpt-oss-20b from the uploaded Fossils-M result bundle.",
-        "plot": "images/gpt-oss-20b-fossil-imprint.png",
-        "plot_alt": "A fossil record plot of gpt-oss-20b benchmark values over benchmark introduction year.",
+        "page_title": f"scienceeval | fossils-m | {config['label']}",
+        "description": f"Model-first fossil sheet for {config['label']} from the uploaded Fossils-M result bundle.",
+        "plot": f"images/{model_id}-fossil-imprint.png",
+        "plot_alt": f"A fossil record plot of {config['label']} benchmark values over benchmark introduction year.",
         "heading_label": "Model fossil",
-        "coverage": "7 / 9 fossils",
-        "model_type": "Open-weight model",
-        "reading_rule": "First-pass suite protocol",
-        "ledger_aria_label": "gpt-oss-20b benchmark ledger",
+        "coverage": f"{measured_count} / {len(BENCHMARK_ORDER)} fossils",
+        "model_type": config["model_type"],
+        "reading_rule": "Final-output normalized protocol",
+        "ledger_aria_label": f"{config['label']} benchmark ledger",
         "entries": entries,
         "plot_points": build_plot_points(entries),
     }
+
+
+# helper function to build the Hugging Face result URL for one model
+def fossil_results_url(model_id: str) -> str:
+    return f"{FOSSIL_RESULTS_ROOT_URL}/{model_id}"
 
 
 # helper function to make plot point rows
@@ -510,15 +793,23 @@ def build_plot_points(entries: list[dict]) -> list[dict]:
 
 # helper function to build compact site catalog
 def build_catalog(results_dir: Path) -> dict:
-    summaries = load_result_summaries(results_dir)
+    model_result_dirs = resolve_model_result_dirs(results_dir)
+    if not model_result_dirs:
+        raise RuntimeError(f"No configured Fossils-M model result directories found in {results_dir}.")
+
+    models = {"gpt-4o": build_gpt4o_model()}
+    for model_id in MODEL_ORDER:
+        model_dir = model_result_dirs.get(model_id)
+        if not model_dir:
+            continue
+        summaries = load_result_summaries(model_dir)
+        models[model_id] = build_open_model(model_id, summaries)
+
     return {
         "defaults": {
             "model": "gpt-4o",
         },
-        "models": {
-            "gpt-4o": build_gpt4o_model(),
-            "gpt-oss-20b": build_gpt_oss_model(summaries),
-        },
+        "models": models,
     }
 
 
@@ -541,7 +832,7 @@ def render_plot(model_id: str, model: dict, output_dir: Path) -> None:
     None
     """
     points = [point for point in model["plot_points"] if point.get("value") is not None]
-    offsets = GPT_OSS_LABEL_OFFSETS if model_id == "gpt-oss-20b" else DEFAULT_LABEL_OFFSETS
+    offsets = MODEL_LABEL_OFFSETS.get(model_id, DEFAULT_LABEL_OFFSETS)
 
     fig, ax = plt.subplots(figsize=(12.6, 4.3), dpi=300)
     fig.patch.set_facecolor(PAPER)
@@ -728,7 +1019,10 @@ def run_model_fossil_sheet(args: argparse.Namespace) -> None:
     save_json(args.data_output, catalog)
     print(args.data_output)
 
-    render_plot("gpt-oss-20b", catalog["models"]["gpt-oss-20b"], args.image_output_dir)
+    for model_id in MODEL_ORDER:
+        if model_id == "gpt-4o" or model_id not in catalog["models"]:
+            continue
+        render_plot(model_id, catalog["models"][model_id], args.image_output_dir)
 
 
 if __name__ == "__main__":

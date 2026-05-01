@@ -190,7 +190,7 @@
       "heading_label": "Model fossil",
       "coverage": "7 / 9 fossils",
       "model_type": "Open-weight model",
-      "reading_rule": "First-pass suite protocol",
+      "reading_rule": "Final-output normalized protocol",
       "ledger_aria_label": "gpt-oss-20b benchmark ledger",
       "entries": [
         {
@@ -232,9 +232,9 @@
           "title": "BioASQ",
           "origin": "**",
           "href": "benchmark.html#fossil-bioasq",
-          "value": "0.0%",
-          "primary_value": 0.0,
-          "metric": "Exact match, Task-B answer extraction",
+          "value": "59.9%",
+          "primary_value": 59.86,
+          "metric": "Final-output exact, Task-B answer extraction",
           "source_label": "scienceeval fossil suite, 2026",
           "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gpt-oss-20b"
         },
@@ -254,9 +254,9 @@
           "title": "SciERC",
           "origin": "**",
           "href": "benchmark.html#fossil-scierc",
-          "value": "16.9%",
-          "primary_value": 16.91,
-          "metric": "Macro-F1, marked-pair relations",
+          "value": "59.4%",
+          "primary_value": 59.37,
+          "metric": "Final-output Macro-F1, marked-pair relations",
           "source_label": "scienceeval fossil suite, 2026",
           "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gpt-oss-20b"
         },
@@ -287,9 +287,9 @@
           "title": "SciRIFF",
           "origin": "**",
           "href": "benchmark.html#fossil-sciriff",
-          "value": "0.0%",
-          "primary_value": 0.0,
-          "metric": "Exact match, SciRIFF 8192",
+          "value": "17.6%",
+          "primary_value": 17.65,
+          "metric": "Final-output exact / canonical JSON, SciRIFF 8192",
           "source_label": "scienceeval fossil suite, 2026",
           "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gpt-oss-20b"
         }
@@ -323,7 +323,7 @@
           "id": "bioasq",
           "name": "BioASQ",
           "year": 2015.0,
-          "value": 0.0
+          "value": 59.86
         },
         {
           "id": "biored",
@@ -335,13 +335,165 @@
           "id": "scierc",
           "name": "SciERC",
           "year": 2018.83,
-          "value": 16.91
+          "value": 59.37
         },
         {
           "id": "sciriff",
           "name": "SciRIFF",
           "year": 2024.5,
-          "value": 0.0
+          "value": 17.65
+        }
+      ]
+    },
+    "gemma-4-31b-it": {
+      "label": "gemma-4-31B-it",
+      "status": "available",
+      "page_title": "scienceeval | fossils-m | gemma-4-31B-it",
+      "description": "Model-first fossil sheet for gemma-4-31B-it from the uploaded Fossils-M result bundle.",
+      "plot": "images/gemma-4-31b-it-fossil-imprint.png",
+      "plot_alt": "A fossil record plot of gemma-4-31B-it benchmark values over benchmark introduction year.",
+      "heading_label": "Model fossil",
+      "coverage": "6 / 9 fossils",
+      "model_type": "Open-weight model",
+      "reading_rule": "Final-output normalized protocol",
+      "ledger_aria_label": "gemma-4-31B-it benchmark ledger",
+      "entries": [
+        {
+          "id": "frontierscience",
+          "title": "FrontierScience",
+          "origin": "**",
+          "href": "benchmark.html#fossil-frontierscience",
+          "value": "Not run",
+          "metric": "Olympiad pass rate / Research pass rate",
+          "missing": true,
+          "source_label": "Not included in this Fossils-M run",
+          "source_url": ""
+        },
+        {
+          "id": "gpqa",
+          "title": "GPQA",
+          "origin": "**",
+          "href": "benchmark.html#fossil-gpqa",
+          "value": "44.4%",
+          "primary_value": 44.44,
+          "metric": "Accuracy, GPQA Diamond",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gemma-4-31b-it"
+        },
+        {
+          "id": "pubmedqa",
+          "title": "PubMedQA",
+          "origin": "**",
+          "href": "benchmark.html#fossil-pubmedqa",
+          "value": "60.3%",
+          "primary_value": 60.33,
+          "metric": "Macro-F1, PubMedQA-labeled",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gemma-4-31b-it"
+        },
+        {
+          "id": "bioasq",
+          "title": "BioASQ",
+          "origin": "**",
+          "href": "benchmark.html#fossil-bioasq",
+          "value": "52.1%",
+          "primary_value": 52.12,
+          "metric": "Final-output exact, Task-B answer extraction",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gemma-4-31b-it"
+        },
+        {
+          "id": "biored",
+          "title": "BioRED",
+          "origin": "**",
+          "href": "benchmark.html#fossil-biored",
+          "value": "50.8%",
+          "primary_value": 50.8,
+          "metric": "Macro-F1, relation classification",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gemma-4-31b-it"
+        },
+        {
+          "id": "scierc",
+          "title": "SciERC",
+          "origin": "**",
+          "href": "benchmark.html#fossil-scierc",
+          "value": "64.2%",
+          "primary_value": 64.25,
+          "metric": "Final-output Macro-F1, marked-pair relations",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gemma-4-31b-it"
+        },
+        {
+          "id": "mmlu",
+          "title": "MMLU",
+          "origin": "*",
+          "href": "benchmark.html#fossil-mmlu",
+          "value": "Not run",
+          "metric": "MMLU",
+          "missing": true,
+          "source_label": "Not included in this Fossils-M run",
+          "source_url": ""
+        },
+        {
+          "id": "simpleqa",
+          "title": "SimpleQA",
+          "origin": "*",
+          "href": "benchmark.html#fossil-simpleqa",
+          "value": "Not run",
+          "metric": "Correct",
+          "missing": true,
+          "source_label": "Not included in this Fossils-M run",
+          "source_url": ""
+        },
+        {
+          "id": "sciriff",
+          "title": "SciRIFF",
+          "origin": "**",
+          "href": "benchmark.html#fossil-sciriff",
+          "value": "19.1%",
+          "primary_value": 19.05,
+          "metric": "Final-output exact / canonical JSON, SciRIFF 8192",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/gemma-4-31b-it"
+        }
+      ],
+      "plot_points": [
+        {
+          "id": "gpqa",
+          "name": "GPQA",
+          "year": 2023.92,
+          "value": 44.44
+        },
+        {
+          "id": "pubmedqa",
+          "name": "PubMedQA",
+          "year": 2019.92,
+          "value": 60.33
+        },
+        {
+          "id": "bioasq",
+          "name": "BioASQ",
+          "year": 2015.0,
+          "value": 52.12
+        },
+        {
+          "id": "biored",
+          "name": "BioRED",
+          "year": 2022.33,
+          "value": 50.8
+        },
+        {
+          "id": "scierc",
+          "name": "SciERC",
+          "year": 2018.83,
+          "value": 64.25
+        },
+        {
+          "id": "sciriff",
+          "name": "SciRIFF",
+          "year": 2024.5,
+          "value": 19.05
         }
       ]
     }

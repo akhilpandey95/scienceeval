@@ -88,9 +88,10 @@ Results are written under:
 results/fossil-m/<model-slug>/
 ```
 
-## Generate the model fossil sheet
+## Generate the model fossil sheets
 
-Download the uploaded result bundle into the ignored local cache:
+Download the uploaded result bundle into the ignored local cache. The cache can
+contain multiple model folders under `fossil-m/`.
 
 ```shell
 hf download akhilpandey95/scienceeval-fossil-results \
@@ -98,7 +99,8 @@ hf download akhilpandey95/scienceeval-fossil-results \
   --local-dir data/fossil-results
 ```
 
-Then generate the compact site catalog and plot image:
+Then generate the compact site catalog and plot images for every configured
+model folder:
 
 ```shell
 python scripts/fossil-m/generate_model_fossil_sheet.py
@@ -116,5 +118,5 @@ python scripts/fossil-m/generate_model_fossil_sheet.py
 - `SciERC` is a marked-pair relation-classification protocol.
 - `SciRIFF` uses exact-output scoring over the 8192-token test split.
 - `scripts/fossil-m/generate_model_fossil_sheet.py` turns the uploaded result
-  bundle into `data/fossils-m-catalog.json` and the gpt-oss-20b Fossils-M plot
+  bundle into `data/fossils-m-catalog.json` and the Fossils-M plot images
   consumed by `fossils.html`.
