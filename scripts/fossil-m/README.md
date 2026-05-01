@@ -84,6 +84,16 @@ hf download openai/frontierscience \
   --local-dir .cache/frontierscience
 ```
 
+Download prior Fossils-M result JSON into the default run output layout when
+you want `--resume` to pick up work from another box:
+
+```shell
+hf download akhilpandey95/scienceeval-fossil-results \
+  --repo-type dataset \
+  --include "fossil-m/*" \
+  --local-dir results
+```
+
 ## Smoke-test the suite
 
 Use a small limit first. FrontierScience requires a judge model for scored runs.

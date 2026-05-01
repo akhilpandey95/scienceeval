@@ -64,9 +64,10 @@ MODEL_INTRO_YEARS = {
     "gpt-4o": 2024 + (4 + 13 / 31) / 12,
     "gpt-oss-20b": 2025 + (7 + 5 / 31) / 12,
     "gemma-4-31b-it": 2026 + (3 + 2 / 30) / 12,
+    "qwen3-6-27b": 2026 + (3 + 21 / 30) / 12,
 }
 
-MODEL_ORDER = ("gpt-4o", "gpt-oss-20b", "gemma-4-31b-it")
+MODEL_ORDER = ("gpt-4o", "gpt-oss-20b", "gemma-4-31b-it", "qwen3-6-27b")
 
 OPEN_MODEL_CONFIGS = {
     "gpt-oss-20b": {
@@ -75,6 +76,10 @@ OPEN_MODEL_CONFIGS = {
     },
     "gemma-4-31b-it": {
         "label": "gemma-4-31B-it",
+        "model_type": "Open-weight model",
+    },
+    "qwen3-6-27b": {
+        "label": "Qwen3.6-27B",
         "model_type": "Open-weight model",
     },
 }

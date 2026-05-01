@@ -521,6 +521,170 @@
           "value": 19.05
         }
       ]
+    },
+    "qwen3-6-27b": {
+      "label": "Qwen3.6-27B",
+      "status": "available",
+      "page_title": "scienceeval | fossils-m | Qwen3.6-27B",
+      "description": "Model-first fossil sheet for Qwen3.6-27B from the uploaded Fossils-M result bundle.",
+      "plot": "images/qwen3-6-27b-fossil-imprint.png",
+      "plot_alt": "A fossil record plot of Qwen3.6-27B benchmark values over benchmark introduction year.",
+      "heading_label": "Model fossil",
+      "coverage": "8 / 9 fossils",
+      "model_type": "Open-weight model",
+      "reading_rule": "Final-output normalized protocol",
+      "ledger_aria_label": "Qwen3.6-27B benchmark ledger",
+      "entries": [
+        {
+          "id": "frontierscience",
+          "title": "FrontierScience",
+          "origin": "**",
+          "href": "benchmark.html#fossil-frontierscience",
+          "value": "Not run",
+          "metric": "Olympiad pass rate / Research pass rate",
+          "missing": true,
+          "source_label": "Not included in this Fossils-M run",
+          "source_url": ""
+        },
+        {
+          "id": "gpqa",
+          "title": "GPQA",
+          "origin": "**",
+          "href": "benchmark.html#fossil-gpqa",
+          "value": "50.5%",
+          "primary_value": 50.51,
+          "metric": "Accuracy, GPQA Diamond",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/qwen3-6-27b"
+        },
+        {
+          "id": "pubmedqa",
+          "title": "PubMedQA",
+          "origin": "**",
+          "href": "benchmark.html#fossil-pubmedqa",
+          "value": "58.7%",
+          "primary_value": 58.69,
+          "metric": "Macro-F1, PubMedQA-labeled",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/qwen3-6-27b"
+        },
+        {
+          "id": "bioasq",
+          "title": "BioASQ",
+          "origin": "**",
+          "href": "benchmark.html#fossil-bioasq",
+          "value": "58.8%",
+          "primary_value": 58.83,
+          "metric": "Final-output exact, Task-B answer extraction",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/qwen3-6-27b"
+        },
+        {
+          "id": "biored",
+          "title": "BioRED",
+          "origin": "**",
+          "href": "benchmark.html#fossil-biored",
+          "value": "38.0%",
+          "primary_value": 38.0,
+          "metric": "Macro-F1, relation classification",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/qwen3-6-27b"
+        },
+        {
+          "id": "scierc",
+          "title": "SciERC",
+          "origin": "**",
+          "href": "benchmark.html#fossil-scierc",
+          "value": "60.0%",
+          "primary_value": 60.02,
+          "metric": "Final-output Macro-F1, marked-pair relations",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/qwen3-6-27b"
+        },
+        {
+          "id": "mmlu",
+          "title": "MMLU",
+          "origin": "*",
+          "href": "benchmark.html#fossil-mmlu",
+          "value": "85.6%",
+          "primary_value": 85.63,
+          "metric": "Accuracy, MMLU all-subject test",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/qwen3-6-27b"
+        },
+        {
+          "id": "simpleqa",
+          "title": "SimpleQA",
+          "origin": "*",
+          "href": "benchmark.html#fossil-simpleqa",
+          "value": "9.3%",
+          "primary_value": 9.27,
+          "metric": "Normalized exact answer, SimpleQA",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/qwen3-6-27b"
+        },
+        {
+          "id": "sciriff",
+          "title": "SciRIFF",
+          "origin": "**",
+          "href": "benchmark.html#fossil-sciriff",
+          "value": "18.9%",
+          "primary_value": 18.87,
+          "metric": "Final-output exact / canonical JSON, SciRIFF 8192",
+          "source_label": "scienceeval fossil suite, 2026",
+          "source_url": "https://huggingface.co/datasets/akhilpandey95/scienceeval-fossil-results/tree/main/fossil-m/qwen3-6-27b"
+        }
+      ],
+      "plot_points": [
+        {
+          "id": "gpqa",
+          "name": "GPQA",
+          "year": 2023.92,
+          "value": 50.51
+        },
+        {
+          "id": "pubmedqa",
+          "name": "PubMedQA",
+          "year": 2019.92,
+          "value": 58.69
+        },
+        {
+          "id": "bioasq",
+          "name": "BioASQ",
+          "year": 2015.0,
+          "value": 58.83
+        },
+        {
+          "id": "biored",
+          "name": "BioRED",
+          "year": 2022.33,
+          "value": 38.0
+        },
+        {
+          "id": "scierc",
+          "name": "SciERC",
+          "year": 2018.83,
+          "value": 60.02
+        },
+        {
+          "id": "mmlu",
+          "name": "MMLU",
+          "year": 2020.75,
+          "value": 85.63
+        },
+        {
+          "id": "simpleqa",
+          "name": "SimpleQA",
+          "year": 2024.92,
+          "value": 9.27
+        },
+        {
+          "id": "sciriff",
+          "name": "SciRIFF",
+          "year": 2024.5,
+          "value": 18.87
+        }
+      ]
     }
   }
 }
