@@ -119,6 +119,9 @@ python scripts/fossil-m/run_fossil_suite.py \
   --dry-run
 ```
 
+For Qwen3.5 and Gemma-4 merged-LoRA conda workflows, see
+`experiments/README.md`.
+
 ## Run the first-pass suite
 
 ```shell
