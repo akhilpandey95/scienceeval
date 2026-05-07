@@ -49,6 +49,8 @@ function renderFossilsM(catalog, modelId, model) {
   const modelMenu = document.querySelector("[data-fossils-m-model-menu]");
   const plot = document.querySelector("[data-fossils-m-plot]");
   const headingLabel = document.querySelector("[data-fossils-m-heading-label]");
+  const headingText = document.querySelector("[data-fossils-m-heading-text]");
+  const missingNote = document.querySelector("[data-fossils-m-missing-note]");
   const modelTitle = document.querySelector("[data-fossils-m-title]");
   const coverage = document.querySelector("[data-fossils-m-coverage]");
   const modelType = document.querySelector("[data-fossils-m-model-type]");
@@ -75,8 +77,16 @@ function renderFossilsM(catalog, modelId, model) {
     plot.alt = model.plot_alt;
   }
 
-  if (headingLabel) {
-    headingLabel.textContent = model.heading_label;
+  if (headingText) {
+    headingText.textContent = `${model.heading_label}:`;
+  } else if (headingLabel) {
+    headingLabel.textContent = `${model.heading_label}:`;
+  }
+
+  if (missingNote) {
+    const note = buildFossilsMMissingNote(model);
+    missingNote.textContent = note;
+    missingNote.hidden = !note;
   }
 
   if (modelTitle) {
@@ -105,6 +115,23 @@ function renderFossilsM(catalog, modelId, model) {
 
   renderFossilsMModelMenu(catalog, modelId, modelMenu);
   renderFossilsMRows(model.entries, rows);
+}
+
+function buildFossilsMMissingNote(model) {
+  const missingEntries = model.entries.filter((entry) => entry.missing);
+  if (!missingEntries.length) {
+    return "";
+  }
+
+  const missingTitles = missingEntries.map((entry) => entry.title);
+  if (missingTitles.length === 1) {
+    return `missing ${missingTitles[0]}`;
+  }
+  if (missingTitles.length === 2) {
+    return `missing ${missingTitles[0]} + ${missingTitles[1]}`;
+  }
+
+  return `missing ${missingTitles.length} fossils`;
 }
 
 function renderFossilsMModelMenu(catalog, currentModelId, menu) {

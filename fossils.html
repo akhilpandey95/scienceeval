@@ -77,7 +77,14 @@
             </figure>
 
             <div class="model-sheet-intro">
-              <p class="model-sheet-heading" data-fossils-m-heading-label>Model fossil</p>
+              <p class="model-sheet-heading" data-fossils-m-heading-label>
+                <span data-fossils-m-heading-text>Model fossil:</span>
+                <span
+                  class="model-sheet-heading-note"
+                  data-fossils-m-missing-note
+                  hidden
+                ></span>
+              </p>
               <h1 class="model-sheet-title" data-fossils-m-title>Loading...</h1>
             </div>
 
@@ -113,10 +120,17 @@
         <section class="section section-fossils-page reveal visible" id="fossils">
           <div class="section-heading">
             <p class="section-label">Fossils-M</p>
-            <h2>The model sheet stays focused on measured model capability.</h2>
+            <h2>The Qwen family sheet tracks reference, base, and SFT behavior.</h2>
           </div>
 
           <div class="section-body">
+            <p>
+              For the SciRIFF SFT experiment, read the largest available Qwen
+              run as a family reference, then compare the same small Qwen3.5-2B
+              model before and after SciRIFF SFT. The selector keeps those
+              sheets separate so the trained target is not conflated with the
+              high-capability family reference.
+            </p>
             <p>
               Benchmark definitions, source papers, and expandable specimen
               cards now live on

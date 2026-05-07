@@ -142,20 +142,24 @@ results/fossil-m/<model-slug>/
 
 ## Generate the model fossil sheets
 
-Download the uploaded result bundle into the ignored local cache. The cache can
-contain multiple model folders under `fossil-m/`.
+The generator reads model result folders from `results/fossil-m/` by default.
+That directory can include both downloaded public bundles and local experiment
+runs.
+
+```shell
+python scripts/fossil-m/generate_model_fossil_sheet.py
+```
+
+To regenerate from a downloaded Hugging Face cache instead, pass the cache root
+explicitly:
 
 ```shell
 hf download akhilpandey95/scienceeval-fossil-results \
   --repo-type dataset \
   --local-dir data/fossil-results
-```
 
-Then generate the compact site catalog and plot images for every configured
-model folder:
-
-```shell
-python scripts/fossil-m/generate_model_fossil_sheet.py
+python scripts/fossil-m/generate_model_fossil_sheet.py \
+  --results-dir data/fossil-results/fossil-m
 ```
 
 ## Current protocol notes

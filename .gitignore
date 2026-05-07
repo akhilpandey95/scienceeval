@@ -66,3 +66,6 @@ netrwhist
 # OS files
 .DS_Store
 Thumbs.db
+
+# Local/generated result artifacts
+results/

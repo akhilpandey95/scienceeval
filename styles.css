@@ -832,11 +832,22 @@ h2 {
 
 .model-sheet-heading {
   margin: 0;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem;
   font-family: "Fraunces", "Source Serif 4", Georgia, serif;
   font-size: 1.05rem;
   line-height: 1;
   letter-spacing: 0;
   color: rgba(23, 19, 16, 0.74);
+}
+
+.model-sheet-heading-note {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 0.72rem;
+  line-height: 1.25;
+  color: rgba(111, 63, 43, 0.8);
 }
 
 .model-sheet-kicker {

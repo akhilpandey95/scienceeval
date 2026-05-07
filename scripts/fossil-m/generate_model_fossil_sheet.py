@@ -27,7 +27,7 @@ from fossil_m_common import REPO_ROOT, save_json
 
 
 # directory constants
-DEFAULT_RESULTS_DIR = REPO_ROOT / "data" / "fossil-results" / "fossil-m"
+DEFAULT_RESULTS_DIR = REPO_ROOT / "results" / "fossil-m"
 DATA_OUTPUT_PATH = REPO_ROOT / "data" / "fossils-m-catalog.json"
 IMAGE_OUTPUT_DIR = REPO_ROOT / "images"
 
@@ -63,16 +63,46 @@ LAUNCH = "#b54b4b"
 MODEL_INTRO_YEARS = {
     "gpt-4o": 2024 + (4 + 13 / 31) / 12,
     "gpt-oss-20b": 2025 + (7 + 5 / 31) / 12,
+    "qwen3-5-2b-base": 2026 + (1 + 28 / 28) / 12,
+    "qwen3-5-2b-sciriff4096": 2026 + (1 + 28 / 28) / 12,
     "gemma-4-31b-it": 2026 + (3 + 2 / 30) / 12,
     "qwen3-6-27b": 2026 + (3 + 21 / 30) / 12,
 }
 
-MODEL_ORDER = ("gpt-4o", "gpt-oss-20b", "gemma-4-31b-it", "qwen3-6-27b")
+MODEL_ORDER = (
+    "gpt-4o",
+    "qwen3-6-27b",
+    "qwen3-5-2b-base",
+    "qwen3-5-2b-sciriff4096",
+    "gpt-oss-20b",
+    "gemma-4-31b-it",
+)
+
+MODEL_RESULT_DIR_ALIASES = {
+    "qwen3-5-2b-sciriff4096": (
+        "qwen35-2b-sciriff4096",
+        "qwen3-5-2b-sciriff4096-merged",
+    ),
+}
 
 OPEN_MODEL_CONFIGS = {
     "gpt-oss-20b": {
         "label": "gpt-oss-20b",
         "model_type": "Open-weight model",
+    },
+    "qwen3-5-2b-base": {
+        "label": "Qwen3.5-2B base",
+        "model_type": "Open-weight small model before SciRIFF SFT",
+        "reading_rule": "Small-base control before SFT",
+        "source_label": "local scienceeval Fossils-M run, 2026",
+        "source_url": "",
+    },
+    "qwen3-5-2b-sciriff4096": {
+        "label": "Qwen3.5-2B SciRIFF SFT",
+        "model_type": "Open-weight small model after SciRIFF SFT",
+        "reading_rule": "Compare directly to Qwen3.5-2B base",
+        "source_label": "local scienceeval Fossils-M run, 2026",
+        "source_url": "",
     },
     "gemma-4-31b-it": {
         "label": "gemma-4-31B-it",
@@ -80,7 +110,8 @@ OPEN_MODEL_CONFIGS = {
     },
     "qwen3-6-27b": {
         "label": "Qwen3.6-27B",
-        "model_type": "Open-weight model",
+        "model_type": "Open-weight family reference",
+        "reading_rule": "Family reference, not the trained target",
     },
 }
 
@@ -335,11 +366,65 @@ def resolve_model_result_dirs(results_dir: Path) -> dict[str, Path]:
     for model_id in MODEL_ORDER:
         if model_id not in OPEN_MODEL_CONFIGS:
             continue
-        model_dir = results_dir / model_id
+        model_dir = resolve_model_result_dir(results_dir, model_id)
         if model_dir.exists():
             resolved[model_id] = model_dir
 
     return resolved
+
+
+# helper function to resolve canonical and legacy result directory names
+def resolve_model_result_dir(results_dir: Path, model_id: str) -> Path:
+    """
+    Resolve the best available result directory for one configured model.
+
+    Parameters
+    ------------
+    results_dir: Path
+        Results root
+    model_id: str
+        Canonical model identifier
+
+    Returns
+    ------------
+    Path
+    """
+    candidates = (model_id, *MODEL_RESULT_DIR_ALIASES.get(model_id, ()))
+    existing = [results_dir / candidate for candidate in candidates if (results_dir / candidate).exists()]
+    if not existing:
+        return results_dir / model_id
+
+    return max(existing, key=result_dir_completeness_score)
+
+
+# helper function to score result directories by completed benchmark rows
+def result_dir_completeness_score(result_dir: Path) -> tuple[int, int]:
+    """
+    Score a model result directory by benchmark coverage and example count.
+
+    Parameters
+    ------------
+    result_dir: Path
+        Candidate model result directory
+
+    Returns
+    ------------
+    tuple[int, int]
+    """
+    completed_benchmarks = 0
+    total_examples = 0
+
+    for benchmark in BENCHMARK_ORDER:
+        path = result_dir / f"{benchmark}.json"
+        if not path.exists():
+            continue
+        payload = load_json(path)
+        example_count = len(payload.get("results", []))
+        total_examples += example_count
+        if example_count > 5:
+            completed_benchmarks += 1
+
+    return completed_benchmarks, total_examples
 
 
 # helper function to load all benchmark summaries
@@ -618,7 +703,7 @@ def build_gpt4o_model() -> dict:
 
 
 # helper function to build entries from open-model result summaries
-def build_open_model_entries(model_id: str, summaries: dict[str, dict]) -> list[dict]:
+def build_open_model_entries(model_id: str, summaries: dict[str, dict], config: dict) -> list[dict]:
     """
     Convert open-model result summaries into ledger entries.
 
@@ -628,17 +713,21 @@ def build_open_model_entries(model_id: str, summaries: dict[str, dict]) -> list[
         Model identifier
     summaries: dict[str, dict]
         Benchmark summary blocks
+    config: dict
+        Model configuration
 
     Returns
     ------------
     list[dict]
     """
     entries = []
+    source_label = config.get("source_label", "scienceeval fossil suite, 2026")
+    source_url = config.get("source_url", fossil_results_url(model_id))
     for benchmark in BENCHMARK_ORDER:
         payload = build_open_model_entry_payload(benchmark, summaries)
         if not payload.get("missing"):
-            payload["source_label"] = "scienceeval fossil suite, 2026"
-            payload["source_url"] = fossil_results_url(model_id)
+            payload["source_label"] = source_label
+            payload["source_url"] = source_url
         else:
             payload["source_label"] = "Not included in this Fossils-M run"
             payload["source_url"] = ""
@@ -739,20 +828,24 @@ def build_open_model_entry_payload(benchmark: str, summaries: dict[str, dict]) -
 
 # helper function to build the open model sheet
 def build_open_model(model_id: str, summaries: dict[str, dict]) -> dict:
-    entries = build_open_model_entries(model_id, summaries)
-    measured_count = sum(not entry.get("missing") for entry in entries)
     config = OPEN_MODEL_CONFIGS[model_id]
+    entries = build_open_model_entries(model_id, summaries, config)
+    measured_count = sum(not entry.get("missing") for entry in entries)
+    reading_rule = config.get("reading_rule", "Final-output normalized protocol")
     return {
         "label": config["label"],
         "status": "available",
         "page_title": f"scienceeval | fossils-m | {config['label']}",
-        "description": f"Model-first fossil sheet for {config['label']} from the uploaded Fossils-M result bundle.",
+        "description": config.get(
+            "description",
+            f"Model-first fossil sheet for {config['label']} from the local Fossils-M result bundle.",
+        ),
         "plot": f"images/{model_id}-fossil-imprint.png",
         "plot_alt": f"A fossil record plot of {config['label']} benchmark values over benchmark introduction year.",
         "heading_label": "Model fossil",
         "coverage": f"{measured_count} / {len(BENCHMARK_ORDER)} fossils",
         "model_type": config["model_type"],
-        "reading_rule": "Final-output normalized protocol",
+        "reading_rule": reading_rule,
         "ledger_aria_label": f"{config['label']} benchmark ledger",
         "entries": entries,
         "plot_points": build_plot_points(entries),
@@ -821,9 +914,10 @@ def build_catalog(results_dir: Path) -> dict:
         summaries = load_result_summaries(model_dir)
         models[model_id] = build_open_model(model_id, summaries)
 
+    default_model = "qwen3-6-27b" if "qwen3-6-27b" in models else "gpt-4o"
     return {
         "defaults": {
-            "model": "gpt-4o",
+            "model": default_model,
         },
         "models": models,
     }
