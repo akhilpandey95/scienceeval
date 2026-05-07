@@ -12,8 +12,10 @@ CUDA_HOME="${CUDA_HOME:-/usr/local/cuda-12.8}"
 CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1}"
 PYTHON_VERSION="${PYTHON_VERSION:-3.11}"
 TORCH_CUDA_INDEX_URL="${TORCH_CUDA_INDEX_URL:-https://download.pytorch.org/whl/cu128}"
-TORCH_PACKAGE_SPEC="${TORCH_PACKAGE_SPEC:-torch==2.8.0 torchvision==0.23.0 torchaudio==2.8.0}"
-PIP_PACKAGE_SPEC="${PIP_PACKAGE_SPEC:-sglang transformers accelerate safetensors sentencepiece protobuf datasets pyarrow pandas huggingface_hub}"
+TORCH_PACKAGE_SPEC="${TORCH_PACKAGE_SPEC:-torch==2.9.1 torchvision==0.24.1 torchaudio==2.9.1}"
+SGLANG_PACKAGE_SPEC="${SGLANG_PACKAGE_SPEC:-sglang==0.5.10.post1}"
+TRANSFORMERS_PACKAGE_SPEC="${TRANSFORMERS_PACKAGE_SPEC:-transformers==5.3.0}"
+PIP_PACKAGE_SPEC="${PIP_PACKAGE_SPEC:-accelerate safetensors sentencepiece protobuf<7,>=6.31.1 datasets pyarrow pandas huggingface_hub}"
 
 # Fossils-M defaults. FrontierScience is intentionally excluded.
 BENCHMARKS="${BENCHMARKS:-gpqa pubmedqa bioasq biored scierc mmlu simpleqa sciriff}"
@@ -28,14 +30,14 @@ DRY_RUN="${DRY_RUN:-0}"
 
 # SGLang defaults
 HOST="${HOST:-0.0.0.0}"
-TP="${TP:-2}"
+TP="${TP:-1}"
 CONTEXT_LENGTH="${CONTEXT_LENGTH:-8192}"
 SERVER_START_TIMEOUT_SECONDS="${SERVER_START_TIMEOUT_SECONDS:-900}"
 if [[ -z "${SGLANG_EXTRA_ARGS+x}" ]]; then
-  SGLANG_EXTRA_ARGS="--attention-backend triton --sampling-backend pytorch"
+  SGLANG_EXTRA_ARGS="--attention-backend triton --sampling-backend pytorch --disable-custom-all-reduce --cuda-graph-max-bs 16 --mem-fraction-static 0.75"
 fi
 
-SETUP_VERSION="cu128-v1"
+SETUP_VERSION="cu128-v2"
 SGLANG_PID=""
 
 
@@ -99,10 +101,11 @@ ensure_conda_env() {
   conda activate "${env_name}"
   export CUDA_HOME
   export CUDA_VISIBLE_DEVICES
+  export TP
   export PATH="${CUDA_HOME}/bin:${PATH}"
   export LD_LIBRARY_PATH="${CUDA_HOME}/lib64:${LD_LIBRARY_PATH:-}"
   export TOKENIZERS_PARALLELISM="${TOKENIZERS_PARALLELISM:-false}"
-  export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"
+  export PYTORCH_ALLOC_CONF="${PYTORCH_ALLOC_CONF:-expandable_segments:True}"
   export SGLANG_API_KEY="${SGLANG_API_KEY:-EMPTY}"
 }
 
@@ -122,7 +125,19 @@ install_workflow_packages() {
   read -r -a torch_packages <<< "${TORCH_PACKAGE_SPEC}"
   python -m pip install "${torch_packages[@]}" --index-url "${TORCH_CUDA_INDEX_URL}"
 
-  log "Installing Fossils-M serving and evaluation packages"
+  log "Installing SGLang package: ${SGLANG_PACKAGE_SPEC}"
+  local sglang_packages=()
+  read -r -a sglang_packages <<< "${SGLANG_PACKAGE_SPEC}"
+  python -m pip install --upgrade "${sglang_packages[@]}"
+
+  if [[ -n "${TRANSFORMERS_PACKAGE_SPEC}" ]]; then
+    log "Installing Transformers package: ${TRANSFORMERS_PACKAGE_SPEC}"
+    local transformers_packages=()
+    read -r -a transformers_packages <<< "${TRANSFORMERS_PACKAGE_SPEC}"
+    python -m pip install --upgrade "${transformers_packages[@]}"
+  fi
+
+  log "Installing Fossils-M evaluation packages"
   local pip_packages=()
   read -r -a pip_packages <<< "${PIP_PACKAGE_SPEC}"
   python -m pip install --upgrade "${pip_packages[@]}"
@@ -149,8 +164,25 @@ print_gpu_context() {
 }
 
 
+print_python_package_context() {
+  python - <<'PY'
+import importlib.metadata as metadata
+import torch
+
+print(f"[torch] version={torch.__version__}")
+print(f"[torch] cuda_runtime={torch.version.cuda}")
+for package_name in ("sglang", "transformers"):
+    try:
+        print(f"[{package_name}] version={metadata.version(package_name)}")
+    except metadata.PackageNotFoundError:
+        print(f"[{package_name}] not_installed")
+PY
+}
+
+
 verify_torch_cuda() {
   python - <<'PY'
+import os
 import torch
 
 print(f"[torch] version={torch.__version__}")
@@ -159,8 +191,9 @@ print(f"[torch] cuda_available={torch.cuda.is_available()}")
 print(f"[torch] device_count={torch.cuda.device_count()}")
 if not torch.cuda.is_available():
     raise SystemExit("Torch cannot see CUDA.")
-if torch.cuda.device_count() < 2:
-    raise SystemExit("Expected at least 2 CUDA devices for the default TP=2 workflow.")
+expected_devices = int(os.environ.get("TP", "1"))
+if torch.cuda.device_count() < expected_devices:
+    raise SystemExit(f"Expected at least {expected_devices} CUDA device(s) for TP={expected_devices}.")
 for index in range(torch.cuda.device_count()):
     props = torch.cuda.get_device_properties(index)
     print(f"[torch] gpu{index}={props.name} total_memory_gb={props.total_memory / 1024**3:.1f}")
@@ -195,6 +228,7 @@ start_sglang_server() {
   fi
 
   log "Starting SGLang for ${served_model_name}"
+  log "SGLang extra args: ${SGLANG_EXTRA_ARGS:-<none>}"
   log "Server log: ${log_path}"
   python -m sglang.launch_server \
     --model-path "${model_path}" \
@@ -335,6 +369,7 @@ run_family_workflow() {
     ensure_conda_env "${env_name}"
     install_workflow_packages
     print_gpu_context
+    print_python_package_context
     verify_torch_cuda
   else
     log "DRY_RUN=1; skipping conda setup and server launch"

@@ -39,6 +39,7 @@ env:   scienceeval-fossils-qwen35-cu128
 base:  /root/models/Qwen3.5-2B
 lora:  /root/models/Qwen3.5-2B-sciriff4096-merged
 port:  30000
+tp:    1
 ```
 
 The Gemma-4 workflow uses:
@@ -48,6 +49,7 @@ env:   scienceeval-fossils-gemma4-cu128
 base:  /root/models/google/gemma-4-E2B-it
 lora:  /root/models/google/gemma-4-E2B-it-sciriff4096-merged
 port:  30001
+tp:    1
 ```
 
 The wrappers install PyTorch CUDA 12.8 wheels from
@@ -55,6 +57,16 @@ The wrappers install PyTorch CUDA 12.8 wheels from
 If `nvidia-smi` reports `CUDA Version: 12.7` while `nvcc` reports 12.8, treat
 that as a driver/runtime mismatch to resolve before a full run if Torch cannot
 see CUDA.
+
+Qwen3.5 uses the PyPI SGLang release by default. Gemma-4 currently uses SGLang
+from `main` plus the Gemma-4 Transformers commit because the PyPI SGLang and
+Transformers combination may fail with `model_type: gemma4` not recognized.
+
+The default launch is intentionally conservative for these small checkpoints:
+`TP=1`, Triton attention, PyTorch sampling, custom all-reduce disabled, CUDA
+graph batch size capped at 16, and `--mem-fraction-static 0.75`. The 2xH100
+box is still the assumed host, but tensor parallelism is not needed for these
+2B/E2B-family checkpoints.
 
 Useful overrides:
 
@@ -65,8 +77,12 @@ RUN_BASELINE=0 bash scripts/fossil-m/workflows/run_qwen35_lora_fossils_m.sh
 # Increase or reduce request concurrency inside each benchmark.
 MAX_CONCURRENT=8 bash scripts/fossil-m/workflows/run_gemma4_lora_fossils_m.sh
 
-# Use one GPU instead of tensor parallelism across two GPUs.
+# Choose one specific GPU.
 CUDA_VISIBLE_DEVICES=0 TP=1 bash scripts/fossil-m/workflows/run_qwen35_lora_fossils_m.sh
+
+# Try tensor parallelism after the single-GPU path is stable.
+TP=2 SGLANG_EXTRA_ARGS="--attention-backend triton --sampling-backend pytorch --disable-custom-all-reduce --cuda-graph-max-bs 16 --mem-fraction-static 0.75" \
+  bash scripts/fossil-m/workflows/run_qwen35_lora_fossils_m.sh
 
 # Reinstall Python packages in an existing conda env.
 FORCE_REINSTALL=1 bash scripts/fossil-m/workflows/run_gemma4_lora_fossils_m.sh
@@ -77,6 +93,10 @@ SGLANG_EXTRA_ARGS="--attention-backend triton --sampling-backend pytorch" \
 
 # Use SGLang's default kernel choices instead of the conservative fallback.
 SGLANG_EXTRA_ARGS= bash scripts/fossil-m/workflows/run_gemma4_lora_fossils_m.sh
+
+# If CUDA graph capture still fails, use the most conservative launch.
+SGLANG_EXTRA_ARGS="--attention-backend triton --sampling-backend pytorch --disable-custom-all-reduce --disable-cuda-graph --mem-fraction-static 0.70" \
+  bash scripts/fossil-m/workflows/run_qwen35_lora_fossils_m.sh
 ```
 
 Results are written under:
