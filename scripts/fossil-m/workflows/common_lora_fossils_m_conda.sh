@@ -13,8 +13,11 @@ CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0,1}"
 PYTHON_VERSION="${PYTHON_VERSION:-3.11}"
 TORCH_CUDA_INDEX_URL="${TORCH_CUDA_INDEX_URL:-https://download.pytorch.org/whl/cu128}"
 TORCH_PACKAGE_SPEC="${TORCH_PACKAGE_SPEC:-torch==2.9.1 torchvision==0.24.1 torchaudio==2.9.1}"
+SGLANG_PREINSTALL_PACKAGE_SPEC="${SGLANG_PREINSTALL_PACKAGE_SPEC:-}"
 SGLANG_PACKAGE_SPEC="${SGLANG_PACKAGE_SPEC:-sglang==0.5.10.post1}"
+SGLANG_INSTALL_NO_DEPS="${SGLANG_INSTALL_NO_DEPS:-0}"
 TRANSFORMERS_PACKAGE_SPEC="${TRANSFORMERS_PACKAGE_SPEC:-transformers==5.3.0}"
+TRANSFORMERS_INSTALL_NO_DEPS="${TRANSFORMERS_INSTALL_NO_DEPS:-0}"
 PIP_PACKAGE_SPEC="${PIP_PACKAGE_SPEC:-accelerate safetensors sentencepiece protobuf<7,>=6.31.1 datasets pyarrow pandas huggingface_hub}"
 
 # Fossils-M defaults. FrontierScience is intentionally excluded.
@@ -125,16 +128,31 @@ install_workflow_packages() {
   read -r -a torch_packages <<< "${TORCH_PACKAGE_SPEC}"
   python -m pip install "${torch_packages[@]}" --index-url "${TORCH_CUDA_INDEX_URL}"
 
+  if [[ -n "${SGLANG_PREINSTALL_PACKAGE_SPEC}" ]]; then
+    log "Preinstalling SGLang dependency package: ${SGLANG_PREINSTALL_PACKAGE_SPEC}"
+    local sglang_preinstall_packages=()
+    read -r -a sglang_preinstall_packages <<< "${SGLANG_PREINSTALL_PACKAGE_SPEC}"
+    python -m pip install --upgrade "${sglang_preinstall_packages[@]}"
+  fi
+
   log "Installing SGLang package: ${SGLANG_PACKAGE_SPEC}"
   local sglang_packages=()
   read -r -a sglang_packages <<< "${SGLANG_PACKAGE_SPEC}"
-  python -m pip install --upgrade "${sglang_packages[@]}"
+  local sglang_install_args=(--upgrade)
+  if [[ "${SGLANG_INSTALL_NO_DEPS}" == "1" ]]; then
+    sglang_install_args+=(--no-deps)
+  fi
+  python -m pip install "${sglang_install_args[@]}" "${sglang_packages[@]}"
 
   if [[ -n "${TRANSFORMERS_PACKAGE_SPEC}" ]]; then
     log "Installing Transformers package: ${TRANSFORMERS_PACKAGE_SPEC}"
     local transformers_packages=()
     read -r -a transformers_packages <<< "${TRANSFORMERS_PACKAGE_SPEC}"
-    python -m pip install --upgrade "${transformers_packages[@]}"
+    local transformers_install_args=(--upgrade)
+    if [[ "${TRANSFORMERS_INSTALL_NO_DEPS}" == "1" ]]; then
+      transformers_install_args+=(--no-deps)
+    fi
+    python -m pip install "${transformers_install_args[@]}" "${transformers_packages[@]}"
   fi
 
   log "Installing Fossils-M evaluation packages"

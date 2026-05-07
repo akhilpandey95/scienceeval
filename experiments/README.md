@@ -58,9 +58,11 @@ If `nvidia-smi` reports `CUDA Version: 12.7` while `nvcc` reports 12.8, treat
 that as a driver/runtime mismatch to resolve before a full run if Torch cannot
 see CUDA.
 
-Qwen3.5 uses the PyPI SGLang release by default. Gemma-4 currently uses SGLang
-from `main` plus the Gemma-4 Transformers commit because the PyPI SGLang and
-Transformers combination may fail with `model_type: gemma4` not recognized.
+Qwen3.5 uses the PyPI SGLang release by default. Gemma-4 currently preinstalls
+the PyPI SGLang dependency stack, then installs SGLang from `main` and the
+Gemma-4 Transformers commit with `--no-deps`. This preserves the cu128 Torch
+stack on hosts whose driver cannot run CUDA 13 Torch wheels while still getting
+the source-level Gemma-4 support.
 
 The default launch is intentionally conservative for these small checkpoints:
 `TP=1`, Triton attention, PyTorch sampling, custom all-reduce disabled, CUDA
