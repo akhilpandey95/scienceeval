@@ -10,6 +10,7 @@
       "sectionLabel": "Measured record",
       "sectionHeadingTemplate": "Public {measure} values across {family} models.",
       "sectionMeasureLabel": "GPQA Diamond",
+      "scoreFields": ["gpqa_value", "gpqa_diamond"],
       "sectionCopy": "",
       "families": {
         "openai": {
@@ -60,6 +61,63 @@
           "plotAlt": "A botanical scientific fossil for GPQA in which Google Gemma and Gemini releases branch from one shared root and rise to their measured GPQA Diamond values.",
           "data": "data/gpqa-google-models.json",
           "ledgerAriaLabel": "Google Gemma and Gemini GPQA Diamond record"
+        }
+      }
+    },
+    "mmlu": {
+      "status": "available",
+      "label": "MMLU",
+      "sectionLabel": "Measured record",
+      "sectionHeadingTemplate": "Public {measure} values across {family} models.",
+      "sectionMeasureLabel": "MMLU",
+      "scoreColumnLabel": "MMLU",
+      "scoreFields": ["mmlu_value"],
+      "sectionCopy": "",
+      "families": {
+        "openai": {
+          "label": "OpenAI",
+          "pageTitle": "scienceeval | fossils-b | mmlu | openai",
+          "description": "Benchmark-first fossil sheet for MMLU across OpenAI GPT-family releases with public MMLU records.",
+          "plot": "images/mmlu-fossil-grove.png",
+          "plotAlt": "A botanical scientific fossil for MMLU in which OpenAI GPT-family models branch from one shared root and rise to their measured MMLU values.",
+          "data": "data/mmlu-openai-gpt-models.json",
+          "ledgerAriaLabel": "OpenAI GPT MMLU record"
+        },
+        "anthropic": {
+          "label": "Anthropic",
+          "pageTitle": "scienceeval | fossils-b | mmlu | anthropic",
+          "description": "Benchmark-first fossil sheet for MMLU across Anthropic Claude-family releases with public MMLU records.",
+          "plot": "images/mmlu-fossil-grove-anthropic.png",
+          "plotAlt": "A botanical scientific fossil for MMLU in which Anthropic Claude-family models branch from one shared root and rise to their measured MMLU values.",
+          "data": "data/mmlu-anthropic-claude-models.json",
+          "ledgerAriaLabel": "Anthropic Claude MMLU record"
+        },
+        "qwen": {
+          "label": "Qwen",
+          "pageTitle": "scienceeval | fossils-b | mmlu | qwen",
+          "description": "Benchmark-first fossil sheet for MMLU across Qwen text and reasoning releases with public MMLU records.",
+          "plot": "images/mmlu-fossil-grove-qwen.png",
+          "plotAlt": "A botanical scientific fossil for MMLU in which Qwen text and reasoning models branch from one shared root and rise to their measured MMLU values.",
+          "data": "data/mmlu-qwen-models.json",
+          "ledgerAriaLabel": "Qwen MMLU record"
+        },
+        "meta": {
+          "label": "Meta",
+          "pageTitle": "scienceeval | fossils-b | mmlu | meta",
+          "description": "Benchmark-first fossil sheet for MMLU across Meta Llama releases with public MMLU records.",
+          "plot": "images/mmlu-fossil-grove-meta.png",
+          "plotAlt": "A botanical scientific fossil for MMLU in which Meta Llama releases branch from one shared root and rise to their measured MMLU values.",
+          "data": "data/mmlu-meta-models.json",
+          "ledgerAriaLabel": "Meta Llama MMLU record"
+        },
+        "google": {
+          "label": "Google",
+          "pageTitle": "scienceeval | fossils-b | mmlu | google",
+          "description": "Benchmark-first fossil sheet for MMLU across Google Gemma and Gemini releases with public MMLU records.",
+          "plot": "images/mmlu-fossil-grove-google.png",
+          "plotAlt": "A botanical scientific fossil for MMLU in which Google Gemma and Gemini releases branch from one shared root and rise to their measured MMLU values.",
+          "data": "data/mmlu-google-models.json",
+          "ledgerAriaLabel": "Google Gemma and Gemini MMLU record"
         }
       }
     },

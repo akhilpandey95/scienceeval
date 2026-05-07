@@ -180,9 +180,19 @@ FAMILY_STYLES = {
 }
 
 
-def load_catalog() -> dict[str, dict]:
+def load_catalog() -> dict:
     catalog = json.loads(CATALOG_PATH.read_text())
-    return catalog["specimens"]["gpqa"]["families"]
+    return catalog
+
+
+def resolve_specimen(specimen_id: str, catalog: dict) -> dict:
+    specimen = catalog["specimens"].get(specimen_id)
+    if not specimen:
+        raise ValueError(f"Unknown specimen id: {specimen_id}")
+    if specimen.get("status") != "available":
+        raise ValueError(f"Specimen is not available: {specimen_id}")
+
+    return specimen
 
 
 def resolve_family_ids(requested: list[str], catalog_families: dict[str, dict]) -> list[str]:
@@ -200,18 +210,37 @@ def resolve_family_ids(requested: list[str], catalog_families: dict[str, dict]) 
     return requested
 
 
-def detect_score_key(rows: list[dict]) -> str:
-    if any(row.get("gpqa_diamond") is not None for row in rows):
-        return "gpqa_diamond"
-    if any(row.get("gpqa_value") is not None for row in rows):
-        return "gpqa_value"
-    raise ValueError("Could not find GPQA score field in rows.")
+def detect_score_key(rows: list[dict], score_fields: list[str]) -> str:
+    for score_field in score_fields:
+        if any(row.get(score_field) is not None for row in rows):
+            return score_field
+
+    raise ValueError(f"Could not find score fields in rows: {', '.join(score_fields)}")
 
 
-def load_rows(data_path: Path) -> tuple[list[dict], str]:
+def score_axis_label(score_key: str, specimen: dict, family_meta: dict) -> str:
+    if family_meta.get("plotScoreLabel"):
+        return family_meta["plotScoreLabel"]
+    if score_key == "gpqa_diamond":
+        return "GPQA Diamond (%)"
+    if score_key == "gpqa_value":
+        return "GPQA value (%)"
+    if score_key == "mmlu_value":
+        return "MMLU (%)"
+
+    label = family_meta.get("scoreColumnLabel") or specimen.get("scoreColumnLabel") or specimen["label"]
+    return f"{label} (%)"
+
+
+def load_rows(data_path: Path, specimen: dict, family_meta: dict) -> tuple[list[dict], str]:
     raw_rows = json.loads(data_path.read_text())
-    score_key = detect_score_key(raw_rows)
-    score_axis_label = "GPQA Diamond (%)" if score_key == "gpqa_diamond" else "GPQA value (%)"
+    score_fields = family_meta.get("scoreFields") or specimen.get("scoreFields") or [
+        "gpqa_diamond",
+        "gpqa_value",
+        "mmlu_value",
+    ]
+    score_key = detect_score_key(raw_rows, score_fields)
+    axis_label = score_axis_label(score_key, specimen, family_meta)
 
     rows = []
     for raw_row in raw_rows:
@@ -227,7 +256,7 @@ def load_rows(data_path: Path) -> tuple[list[dict], str]:
         rows.append(row)
 
     rows.sort(key=lambda item: (item["release_dt"], item["model"]))
-    return rows, score_axis_label
+    return rows, axis_label
 
 
 def cluster_offsets(size: int, style: FamilyStyle) -> list[float]:
@@ -533,7 +562,13 @@ def draw_release_labels(ax: plt.Axes, rows: list[dict], style: FamilyStyle) -> N
         date_label.set_path_effects(TEXT_HALO)
 
 
-def render_family(rows: list[dict], style: FamilyStyle, score_axis_label: str, output_stem: Path) -> list[Path]:
+def render_family(
+    rows: list[dict],
+    style: FamilyStyle,
+    score_axis_label: str,
+    specimen_label: str,
+    output_stem: Path,
+) -> list[Path]:
     assign_tip_positions(rows, style)
     groups = assign_lineage_structure(rows)
     label_rows = assign_right_side_labels(rows, style)
@@ -579,7 +614,7 @@ def render_family(rows: list[dict], style: FamilyStyle, score_axis_label: str, o
     ax.text(
         0.0,
         1.09,
-        "GPQA Fossil",
+        f"{specimen_label} Fossil",
         transform=ax.transAxes,
         ha="left",
         va="bottom",
@@ -613,20 +648,31 @@ def render_family(rows: list[dict], style: FamilyStyle, score_axis_label: str, o
     return outputs
 
 
-def generate_family(family_id: str, family_meta: dict, style: FamilyStyle, output_dir: Path) -> list[Path]:
+def generate_family(
+    family_id: str,
+    specimen: dict,
+    family_meta: dict,
+    style: FamilyStyle,
+    output_dir: Path,
+) -> list[Path]:
     data_path = REPO_ROOT / family_meta["data"]
     plot_path = Path(family_meta["plot"])
     output_stem = output_dir / plot_path.stem
-    rows, score_axis_label = load_rows(data_path)
-    return render_family(rows, style, score_axis_label, output_stem)
+    rows, axis_label = load_rows(data_path, specimen, family_meta)
+    return render_family(rows, style, axis_label, specimen["label"], output_stem)
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Generate GPQA fossil grove plots.")
+    parser = argparse.ArgumentParser(description="Generate Fossils-B fossil grove plots.")
     parser.add_argument(
         "families",
         nargs="*",
         help="Family ids to generate (openai, anthropic, meta, qwen) or 'all'. Defaults to all.",
+    )
+    parser.add_argument(
+        "--specimen",
+        default="gpqa",
+        help="Specimen id to generate from data/fossils-b-catalog.json. Defaults to gpqa.",
     )
     parser.add_argument(
         "--output-dir",
@@ -639,9 +685,10 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    catalog_families = load_catalog()
+    catalog = load_catalog()
     try:
-        family_ids = resolve_family_ids(args.families, catalog_families)
+        specimen = resolve_specimen(args.specimen, catalog)
+        family_ids = resolve_family_ids(args.families, specimen["families"])
     except ValueError as error:
         raise SystemExit(str(error)) from error
 
@@ -650,7 +697,8 @@ def main() -> None:
     for family_id in family_ids:
         outputs = generate_family(
             family_id=family_id,
-            family_meta=catalog_families[family_id],
+            specimen=specimen,
+            family_meta=specimen["families"][family_id],
             style=FAMILY_STYLES[family_id],
             output_dir=args.output_dir,
         )

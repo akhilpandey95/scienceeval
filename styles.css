@@ -2272,7 +2272,7 @@ h2 {
   }
 
   .gpqa-ledger-score::before {
-    content: "GPQA";
+    content: attr(data-score-label);
   }
 
   .gpqa-ledger-source::before {

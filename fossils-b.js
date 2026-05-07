@@ -118,7 +118,7 @@ function renderFossilsB(catalog, specimenId, specimen, familyId, family, rows) {
   }
 
   if (scoreHeading) {
-    scoreHeading.textContent = family.scoreColumnLabel || specimen.scoreColumnLabel || "GPQA value";
+    scoreHeading.textContent = resolveScoreLabel(specimen, family);
   }
 
   if (ledger) {
@@ -131,7 +131,7 @@ function renderFossilsB(catalog, specimenId, specimen, familyId, family, rows) {
 
   renderSpecimenMenu(catalog, specimenId, familyId, specimenMenu);
   renderFamilyMenu(catalog.defaults, specimen, specimenId, familyId, familyMenu);
-  renderLedgerRows(rows, ledgerRows);
+  renderLedgerRows(rows, ledgerRows, specimen, family);
 }
 
 function renderSpecimenMenu(catalog, currentSpecimenId, currentFamilyId, menu) {
@@ -200,14 +200,16 @@ function renderFamilyMenu(defaults, specimen, specimenId, currentFamilyId, menu)
   menu.replaceChildren(...items);
 }
 
-function renderLedgerRows(rows, container) {
+function renderLedgerRows(rows, container, specimen, family) {
   if (!container) {
     return;
   }
 
+  const scoreLabel = escapeAttribute(resolveScoreLabel(specimen, family));
+
   container.innerHTML = rows
     .map((row, index) => {
-      const rawScore = row.gpqa_value ?? row.gpqa_diamond;
+      const rawScore = resolveScore(row, specimen, family);
       const score = rawScore == null ? "&mdash;" : escapeHTML(Number(rawScore).toFixed(1));
       const scoreClass = rawScore == null ? "gpqa-ledger-score is-missing" : "gpqa-ledger-score";
 
@@ -218,7 +220,7 @@ function renderLedgerRows(rows, container) {
             <a href="${escapeAttribute(row.release_source_url)}" target="_blank" rel="noreferrer">${escapeHTML(row.model)}</a>
           </p>
           <p class="gpqa-ledger-release" role="cell">${escapeHTML(row.release_label)}</p>
-          <p class="${scoreClass}" role="cell">${score}</p>
+          <p class="${scoreClass}" role="cell" data-score-label="${scoreLabel}">${score}</p>
           <p class="gpqa-ledger-source" role="cell">
             <a href="${escapeAttribute(row.score_source_url)}" target="_blank" rel="noreferrer">${escapeHTML(row.score_source_label)}</a>
           </p>
@@ -227,6 +229,22 @@ function renderLedgerRows(rows, container) {
       `;
     })
     .join("");
+}
+
+function resolveScoreLabel(specimen, family) {
+  return family.scoreColumnLabel || specimen.scoreColumnLabel || specimen.sectionMeasureLabel || "Score";
+}
+
+function resolveScore(row, specimen, family) {
+  const scoreFields = family.scoreFields || specimen.scoreFields || ["gpqa_value", "gpqa_diamond", "mmlu_value"];
+
+  for (const field of scoreFields) {
+    if (row[field] != null) {
+      return row[field];
+    }
+  }
+
+  return null;
 }
 
 function initCatalogSelects() {
