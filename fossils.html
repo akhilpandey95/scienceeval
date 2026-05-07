@@ -121,16 +121,18 @@
         <section class="section section-fossils-page reveal visible" id="fossils">
           <div class="section-heading">
             <p class="section-label">Fossils-M</p>
-            <h2>The Qwen family sheet tracks reference, base, and SFT behavior.</h2>
+            <h2>The model sheets compare references, controls, and SFT behavior.</h2>
           </div>
 
           <div class="section-body">
             <p>
-              For the SciRIFF SFT experiment, read the largest available Qwen
-              run as a family reference, then compare the same small Qwen3.5-2B
-              model before and after SciRIFF SFT. The selector keeps those
-              sheets separate so the trained target is not conflated with the
-              high-capability family reference.
+              For the SciRIFF SFT experiment, use GPT-4o as a public frontier
+              anchor; read Gemma 4-31B-it, Qwen3.6-27B,
+              OLMo-3.1-32B-Think, and gpt-oss-20B as reference checkpoints;
+              then compare Qwen3.5-2B base against the same model after
+              SciRIFF SFT. The selector keeps those sheets separate, and
+              missing rows stay marked Not run when a result bundle lacks that
+              benchmark.
             </p>
             <p>
               Benchmark definitions, source papers, and expandable specimen

@@ -63,6 +63,7 @@ LAUNCH = "#b54b4b"
 MODEL_INTRO_YEARS = {
     "gpt-4o": 2024 + (4 + 13 / 31) / 12,
     "gpt-oss-20b": 2025 + (7 + 5 / 31) / 12,
+    "olmo-3-1-32b-think": 2025 + (11 + 15 / 31) / 12,
     "qwen3-5-2b-base": 2026 + (1 + 28 / 28) / 12,
     "qwen3-5-2b-sciriff4096": 2026 + (1 + 28 / 28) / 12,
     "gemma-4-31b-it": 2026 + (3 + 2 / 30) / 12,
@@ -72,6 +73,7 @@ MODEL_INTRO_YEARS = {
 MODEL_ORDER = (
     "gpt-4o",
     "qwen3-6-27b",
+    "olmo-3-1-32b-think",
     "qwen3-5-2b-base",
     "qwen3-5-2b-sciriff4096",
     "gpt-oss-20b",
@@ -112,6 +114,11 @@ OPEN_MODEL_CONFIGS = {
         "label": "Qwen3.6-27B",
         "model_type": "Open-weight family reference",
         "reading_rule": "Family reference, not the trained target",
+    },
+    "olmo-3-1-32b-think": {
+        "label": "OLMo-3.1-32B-Think",
+        "model_type": "Open-weight reasoning model",
+        "reading_rule": "Reasoning-model reference, not the trained target",
     },
 }
 
